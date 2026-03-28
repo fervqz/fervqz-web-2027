@@ -8,7 +8,7 @@ const { class: className, ...props } = Astro.props;
 
 <a
   class:list={[
-    "text-[rgb(67_56_202)] underline underline-offset-2 hover:text-[rgb(55_48_163)]",
+    "text-[var(--link-color)] underline underline-offset-2 hover:text-[var(--link-hover-color)]",
     className,
   ]}
   {...props}

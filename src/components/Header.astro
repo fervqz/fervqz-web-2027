@@ -5,14 +5,56 @@ import HeaderLink from "./HeaderLink.astro";
 
 <header class="m-0 p-4">
   <Container>
-    <nav class="flex items-center justify-between">
+    <nav class="flex items-center justify-between gap-4">
       <img src="/public/img/avatar.png" alt="avatar" width="50" />
-      <div class="internal-links flex items-center">
+      <div class="internal-links flex items-center gap-1">
         <HeaderLink href="/">About</HeaderLink>
         <HeaderLink href="/projects">Projects</HeaderLink>
         <HeaderLink href="/blog">Blog</HeaderLink>
         <HeaderLink href="/contact">Contact</HeaderLink>
+        <button
+          id="theme-toggle"
+          class="ml-2 inline-flex h-9 w-9 items-center justify-center rounded-md border border-(--surface-border) bg-(--surface-color) p-0 text-lg leading-none text-(--nav-link-color) hover:text-(--nav-link-hover-color)"
+          type="button"
+          aria-label="Toggle dark mode"
+          title="Toggle dark mode"
+        >
+          <span id="theme-toggle-icon" aria-hidden="true">🌙</span>
+        </button>
       </div>
     </nav>
   </Container>
 </header>
+
+<script is:inline>
+  (() => {
+    const root = document.documentElement;
+    const button = document.getElementById("theme-toggle");
+    const icon = document.getElementById("theme-toggle-icon");
+
+    if (!button || !icon) return;
+
+    const getTheme = () => root.getAttribute("data-theme") || "light";
+    const setIcon = (theme) => {
+      icon.textContent = theme === "dark" ? "☀️" : "🌙";
+      button.setAttribute(
+        "aria-label",
+        theme === "dark" ? "Switch to light mode" : "Switch to dark mode",
+      );
+      button.setAttribute(
+        "title",
+        theme === "dark" ? "Switch to light mode" : "Switch to dark mode",
+      );
+    };
+
+    setIcon(getTheme());
+
+    button.addEventListener("click", () => {
+      const nextTheme = getTheme() === "dark" ? "light" : "dark";
+      root.setAttribute("data-theme", nextTheme);
+      root.style.colorScheme = nextTheme;
+      localStorage.setItem("theme", nextTheme);
+      setIcon(nextTheme);
+    });
+  })();
+</script>

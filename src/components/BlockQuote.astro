@@ -8,7 +8,7 @@ const { class: className, ...props } = Astro.props;
 
 <blockquote
   class:list={[
-    "mb-4 border-l-4 border-slate-300 pl-4 italic text-slate-600",
+    "mb-4 border-l-4 border-[var(--blockquote-border)] pl-4 italic text-[var(--blockquote-text)]",
     className,
   ]}
   {...props}

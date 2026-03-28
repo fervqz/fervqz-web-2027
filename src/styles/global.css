@@ -2,8 +2,73 @@
 @import "@fontsource-variable/jetbrains-mono";
 @import "@fontsource-variable/zalando-sans";
 
+:root {
+  --bg-color: #f8fafc;
+  --text-color: #0f172a;
+  --muted-text-color: #334155;
+  --soft-text-color: #64748b;
+  --surface-color: rgba(255, 255, 255, 0.8);
+  --surface-border: #e2e8f0;
+  --field-bg: #ffffff;
+  --field-border: #cbd5e1;
+  --field-text: #0f172a;
+  --inline-code-bg: #e2e8f0;
+  --button-bg: transparent;
+  --button-text: #0f172a;
+  --button-border: #0f172a;
+  --button-hover-bg: #0f172a;
+  --button-hover-text: #ffffff;
+  --details-bg: rgba(255, 255, 255, 0.8);
+  --link-color: rgb(67 56 202);
+  --link-hover-color: rgb(55 48 163);
+  --nav-link-color: #0f172a;
+  --nav-link-hover-color: rgb(67 56 202);
+  --nav-link-active-color: rgb(67 56 202);
+  --blockquote-border: #cbd5e1;
+  --blockquote-text: #475569;
+  --dots-color: #d1d5db;
+  --code-bg: #1f1f1f;
+  --code-border: #3c3c3c;
+  --code-text: #d4d4d4;
+}
+
+html[data-theme="dark"] {
+  --bg-color: #0b1220;
+  --text-color: #e2e8f0;
+  --muted-text-color: #cbd5e1;
+  --soft-text-color: #94a3b8;
+  --surface-color: rgba(15, 23, 42, 0.82);
+  --surface-border: #334155;
+  --field-bg: #0f172a;
+  --field-border: #334155;
+  --field-text: #e2e8f0;
+  --inline-code-bg: #1e293b;
+  --button-bg: transparent;
+  --button-text: #e2e8f0;
+  --button-border: #475569;
+  --button-hover-bg: #e2e8f0;
+  --button-hover-text: #0f172a;
+  --details-bg: rgba(15, 23, 42, 0.82);
+  --link-color: #93c5fd;
+  --link-hover-color: #bfdbfe;
+  --nav-link-color: #e2e8f0;
+  --nav-link-hover-color: #93c5fd;
+  --nav-link-active-color: #93c5fd;
+  --blockquote-border: #475569;
+  --blockquote-text: #cbd5e1;
+  --dots-color: #334155;
+  --code-bg: #1e1e1e;
+  --code-border: #3c3c3c;
+  --code-text: #d4d4d4;
+}
+
 body {
+  background: var(--bg-color);
+  color: var(--text-color);
   font-family: "JetBrains Mono Variable", "JetBrains Mono", monospace;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
 }
 
 h1,
@@ -62,7 +127,7 @@ h6 {
 }
 
 p {
-  color: rgb(51 65 85);
+  color: var(--muted-text-color);
   margin-bottom: 1rem;
 }
 
@@ -81,15 +146,15 @@ li {
 }
 
 :not(pre) > code {
-  background: rgb(226 232 240);
+  background: var(--inline-code-bg);
   border-radius: 0.125rem;
   padding: 0.125rem 0.25rem;
 }
 
 pre {
-  background: rgb(31 31 31);
-  border: 1px solid rgb(60 60 60);
-  color: rgb(212 212 212);
+  background: var(--code-bg);
+  border: 1px solid var(--code-border);
+  color: var(--code-text);
   margin: 0 0 1rem;
   overflow-x: auto;
   padding: 1rem;
@@ -102,8 +167,8 @@ pre code {
 }
 
 pre.astro-code {
-  background: rgb(31 31 31) !important;
-  color: rgb(212 212 212) !important;
+  background: var(--code-bg) !important;
+  color: var(--code-text) !important;
 }
 
 table {
@@ -114,17 +179,17 @@ table {
 }
 
 thead {
-  background: rgb(241 245 249 / 0.8);
+  background: color-mix(in oklab, var(--surface-color) 85%, transparent);
 }
 
 th,
 td {
-  border-bottom: 1px solid rgb(226 232 240);
+  border-bottom: 1px solid var(--surface-border);
   padding: 0.75rem 1rem;
 }
 
 label {
-  color: rgb(51 65 85);
+  color: var(--muted-text-color);
   display: block;
   font-size: 0.875rem;
   margin-bottom: 0.5rem;
@@ -132,9 +197,9 @@ label {
 
 input,
 textarea {
-  background: rgb(255 255 255);
-  border: 1px solid rgb(203 213 225);
-  color: rgb(15 23 42);
+  background: var(--field-bg);
+  border: 1px solid var(--field-border);
+  color: var(--field-text);
   padding: 0.5rem 0.75rem;
   width: 100%;
 }
@@ -145,22 +210,22 @@ textarea::placeholder {
 }
 
 button {
-  background: transparent;
-  border: 1px solid rgb(15 23 42);
-  color: rgb(15 23 42);
+  background: var(--button-bg);
+  border: 1px solid var(--button-border);
+  color: var(--button-text);
   font-size: 0.875rem;
   font-weight: 600;
   padding: 0.5rem 1rem;
 }
 
 button:hover {
-  background: rgb(15 23 42);
-  color: rgb(255 255 255);
+  background: var(--button-hover-bg);
+  color: var(--button-hover-text);
 }
 
 details {
-  background: rgb(255 255 255 / 0.8);
-  border: 1px solid rgb(226 232 240);
+  background: var(--details-bg);
+  border: 1px solid var(--surface-border);
   margin-bottom: 1rem;
   padding: 1rem;
 }
@@ -168,4 +233,9 @@ details {
 summary {
   cursor: pointer;
   font-weight: 600;
+}
+
+blockquote {
+  border-left: 4px solid var(--blockquote-border);
+  color: var(--blockquote-text);
 }
