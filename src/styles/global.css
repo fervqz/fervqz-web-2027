@@ -80,10 +80,30 @@ li {
   margin-bottom: 0.25rem;
 }
 
-code {
+:not(pre) > code {
   background: rgb(226 232 240);
   border-radius: 0.125rem;
   padding: 0.125rem 0.25rem;
+}
+
+pre {
+  background: rgb(31 31 31);
+  border: 1px solid rgb(60 60 60);
+  color: rgb(212 212 212);
+  margin: 0 0 1rem;
+  overflow-x: auto;
+  padding: 1rem;
+}
+
+pre code {
+  background: transparent;
+  border-radius: 0;
+  padding: 0;
+}
+
+pre.astro-code {
+  background: rgb(31 31 31) !important;
+  color: rgb(212 212 212) !important;
 }
 
 table {
