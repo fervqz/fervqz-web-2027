@@ -23,10 +23,13 @@ const posts = (await getCollection("blog")).sort(
     <Header />
     <main class="pb-20 pt-12">
       <Container>
-        <section class="mx-auto flex w-full max-w-190 flex-col gap-6">
+        <section
+          id="blog-list"
+          class="mx-auto flex w-full max-w-190 flex-col gap-6"
+        >
           {
             posts.map((post) => (
-              <article class="group">
+              <article class="blog-list-item group">
                 <a
                   href={`/blog/${post.id}/`}
                   class="grid grid-cols-1 items-start gap-4 no-underline sm:grid-cols-[170px_1fr]"
@@ -57,5 +60,33 @@ const posts = (await getCollection("blog")).sort(
       </Container>
     </main>
     <Footer />
+
+    <script>
+      import { gsap } from "gsap";
+
+      const prefersReducedMotion = window.matchMedia(
+        "(prefers-reduced-motion: reduce)",
+      ).matches;
+      const items = document.querySelectorAll(".blog-list-item");
+
+      if (items.length > 0) {
+        if (prefersReducedMotion) {
+          gsap.set(items, { opacity: 1, y: 0 });
+        } else {
+          gsap.fromTo(
+            items,
+            { opacity: 0, y: 18 },
+            {
+              opacity: 1,
+              y: 0,
+              duration: 0.7,
+              stagger: 0.12,
+              ease: "power2.out",
+              clearProps: "opacity,transform",
+            },
+          );
+        }
+      }
+    </script>
   </body>
 </html>
