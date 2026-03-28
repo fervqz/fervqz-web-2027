@@ -1,9 +1,9 @@
 ---
-import "../styles/global.css";
 import BaseHead from "../components/BaseHead.astro";
 import Footer from "../components/Footer.astro";
 import Header from "../components/Header.astro";
 import { SITE_DESCRIPTION, SITE_TITLE } from "../consts";
+import Container from "../components/Container.astro";
 ---
 
 <!doctype html>
@@ -11,10 +11,75 @@ import { SITE_DESCRIPTION, SITE_TITLE } from "../consts";
   <head>
     <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
   </head>
-  <body>
+  <body class="flex flex-col min-h-screen">
     <Header />
-    <main>
-      <h1 class="text-3xl font-bold underline">Hello world!</h1>
+    <main class="flex-1">
+      <Container class="flex-1 py-12 flex flex-col gap-16">
+        <section>
+          <h1 class="text-3xl font-bold underline">Hello world!</h1>
+          <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam,
+            suscipit maiores ab sint iure cum non, qui reiciendis, quaerat harum
+            esse quisquam dolorem nihil? Adipisci qui laborum sint aliquam
+            aliquid. Voluptates laudantium, placeat perferendis ipsam dicta non
+            cupiditate doloremque similique possimus voluptate sint sed eveniet
+            delectus praesentium in corporis fugiat unde magni soluta natus,
+            deleniti eaque fugit quidem porro. Asperiores. Eius laboriosam,
+            exercitationem amet placeat velit vel consectetur nesciunt
+            voluptates facilis eos unde ipsum, obcaecati aliquid earum?
+            Accusantium, pariatur? Eveniet voluptatibus sapiente placeat dolorum
+            optio minima, officia doloribus deleniti! Pariatur!
+          </p>
+        </section>
+        <section>
+          <h1 class="text-3xl font-bold underline">Hello world!</h1>
+          <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam,
+            suscipit maiores ab sint iure cum non, qui reiciendis, quaerat harum
+            esse quisquam dolorem nihil? Adipisci qui laborum sint aliquam
+            aliquid. Voluptates laudantium, placeat perferendis ipsam dicta non
+            cupiditate doloremque similique possimus voluptate sint sed eveniet
+            delectus praesentium in corporis fugiat unde magni soluta natus,
+            deleniti eaque fugit quidem porro. Asperiores. Eius laboriosam,
+            exercitationem amet placeat velit vel consectetur nesciunt
+            voluptates facilis eos unde ipsum, obcaecati aliquid earum?
+            Accusantium, pariatur? Eveniet voluptatibus sapiente placeat dolorum
+            optio minima, officia doloribus deleniti! Pariatur!
+          </p>
+        </section>
+        <section>
+          <h1 class="text-3xl font-bold underline">Hello world!</h1>
+          <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam,
+            suscipit maiores ab sint iure cum non, qui reiciendis, quaerat harum
+            esse quisquam dolorem nihil? Adipisci qui laborum sint aliquam
+            aliquid. Voluptates laudantium, placeat perferendis ipsam dicta non
+            cupiditate doloremque similique possimus voluptate sint sed eveniet
+            delectus praesentium in corporis fugiat unde magni soluta natus,
+            deleniti eaque fugit quidem porro. Asperiores. Eius laboriosam,
+            exercitationem amet placeat velit vel consectetur nesciunt
+            voluptates facilis eos unde ipsum, obcaecati aliquid earum?
+            Accusantium, pariatur? Eveniet voluptatibus sapiente placeat dolorum
+            optio minima, officia doloribus deleniti! Pariatur!
+          </p>
+        </section>
+        <section>
+          <h1 class="text-3xl font-bold underline">Hello world!</h1>
+          <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam,
+            suscipit maiores ab sint iure cum non, qui reiciendis, quaerat harum
+            esse quisquam dolorem nihil? Adipisci qui laborum sint aliquam
+            aliquid. Voluptates laudantium, placeat perferendis ipsam dicta non
+            cupiditate doloremque similique possimus voluptate sint sed eveniet
+            delectus praesentium in corporis fugiat unde magni soluta natus,
+            deleniti eaque fugit quidem porro. Asperiores. Eius laboriosam,
+            exercitationem amet placeat velit vel consectetur nesciunt
+            voluptates facilis eos unde ipsum, obcaecati aliquid earum?
+            Accusantium, pariatur? Eveniet voluptatibus sapiente placeat dolorum
+            optio minima, officia doloribus deleniti! Pariatur!
+          </p>
+        </section>
+      </Container>
     </main>
     <Footer />
   </body>
