@@ -1,0 +1,31 @@
+---
+import type { HTMLAttributes } from "astro/types";
+
+type HeadingTag = "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
+type HeadingVariant = "default" | "hero" | "section" | "subsection";
+
+interface Props extends HTMLAttributes<"h1"> {
+  as?: HeadingTag;
+  variant?: HeadingVariant;
+}
+
+const {
+  as = "h2",
+  variant = "default",
+  class: className,
+  ...props
+} = Astro.props;
+
+const variantClasses: Record<HeadingVariant, string> = {
+  default: "",
+  hero: "max-w-3xl text-balance",
+  section: "mb-0",
+  subsection: "mb-1",
+};
+
+const Tag = as;
+---
+
+<Tag class:list={[variantClasses[variant], className]} {...props}>
+  <slot />
+</Tag>

@@ -3,9 +3,11 @@ import { Image } from "astro:assets";
 import { getCollection } from "astro:content";
 import BaseHead from "../../components/BaseHead.astro";
 import Footer from "../../components/Footer.astro";
-import Container from "../../components/Container.astro";
 import DotsBackground from "../../components/DotsBackground.astro";
 import Header from "../../components/Header.astro";
+import Container from "../../components/ui/Container.astro";
+import Section from "../../components/ui/Section.astro";
+import Heading from "../../components/ui/Heading.astro";
 import { SITE_DESCRIPTION, SITE_TITLE } from "../../consts";
 
 const posts = (await getCollection("blog")).sort(
@@ -23,7 +25,7 @@ const posts = (await getCollection("blog")).sort(
     <Header />
     <main class="pb-20 pt-12">
       <Container>
-        <section
+        <Section
           id="blog-list"
           class="mx-auto flex w-full max-w-190 flex-col gap-6"
         >
@@ -45,9 +47,12 @@ const posts = (await getCollection("blog")).sort(
                     />
                   )}
                   <div class="space-y-2">
-                    <h3 class="mb-0 transition-colors group-hover:text-indigo-700">
+                    <Heading
+                      as="h3"
+                      class="mb-0 transition-colors group-hover:text-indigo-700"
+                    >
                       {post.data.title}
-                    </h3>
+                    </Heading>
                     <p class="mb-0 text-[14px] leading-5 text-slate-700">
                       {post.data.description} — quick notes, context, tech
                       stack, and progress updates from ongoing work.
@@ -57,7 +62,7 @@ const posts = (await getCollection("blog")).sort(
               </article>
             ))
           }
-        </section>
+        </Section>
       </Container>
     </main>
     <Footer />
@@ -69,9 +74,26 @@ const posts = (await getCollection("blog")).sort(
         "(prefers-reduced-motion: reduce)",
       ).matches;
       const items = document.querySelectorAll(".blog-list-item");
+      const navigationEntry = performance.getEntriesByType("navigation")[0] as
+        | PerformanceNavigationTiming
+        | undefined;
+
+      let cameFromBlogEntry = false;
+
+      if (document.referrer) {
+        const referrerUrl = new URL(document.referrer);
+        cameFromBlogEntry =
+          referrerUrl.origin === window.location.origin &&
+          /^\/blog\/.+/.test(referrerUrl.pathname) &&
+          referrerUrl.pathname !== "/blog/";
+      }
+
+      const isHistoryNavigation = navigationEntry?.type === "back_forward";
+      const shouldAnimate =
+        !prefersReducedMotion && !cameFromBlogEntry && !isHistoryNavigation;
 
       if (items.length > 0) {
-        if (prefersReducedMotion) {
+        if (!shouldAnimate) {
           gsap.set(items, { opacity: 1, y: 0 });
         } else {
           gsap.fromTo(

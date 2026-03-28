@@ -3,11 +3,14 @@ import BaseHead from "../components/BaseHead.astro";
 import Footer from "../components/Footer.astro";
 import Header from "../components/Header.astro";
 import { SITE_DESCRIPTION, SITE_TITLE } from "../consts";
-import Container from "../components/Container.astro";
 import DotsBackground from "../components/DotsBackground.astro";
-import Link from "../components/Link.astro";
-import BlockQuote from "../components/BlockQuote.astro";
-import CodeBlock from "../components/CodeBlock.astro";
+import Container from "../components/ui/Container.astro";
+import Link from "../components/ui/Link.astro";
+import BlockQuote from "../components/ui/BlockQuote.astro";
+import CodeBlock from "../components/ui/CodeBlock.astro";
+import Heading from "../components/ui/Heading.astro";
+import Section from "../components/ui/Section.astro";
+import Card from "../components/ui/Card.astro";
 ---
 
 <!doctype html>
@@ -20,24 +23,26 @@ import CodeBlock from "../components/CodeBlock.astro";
     <Header />
     <main class="flex-1">
       <Container class="flex-1 py-12 flex flex-col gap-14">
-        <section class="space-y-5">
+        <Section variant="content">
           <p class="text-sm uppercase tracking-[0.2em] text-slate-500">
             Content Test / Placeholder
           </p>
-          <h1 class="max-w-3xl">Typography & blog layout preview page</h1>
+          <Heading as="h1" variant="hero"
+            >Typography & blog layout preview page</Heading
+          >
           <p class="max-w-3xl text-slate-700">
             This page is a visual testbed for headings, body copy, lists,
             callouts, and blog cards. Replace this content as your real copy
             becomes available.
           </p>
-        </section>
+        </Section>
 
-        <section class="space-y-3">
-          <h2>Heading scale sample</h2>
-          <h3>Heading level 3</h3>
-          <h4>Heading level 4</h4>
-          <h5>Heading level 5</h5>
-          <h6>Heading level 6</h6>
+        <Section class="space-y-3">
+          <Heading as="h2" variant="section">Heading scale sample</Heading>
+          <Heading as="h3" variant="subsection">Heading level 3</Heading>
+          <Heading as="h4" variant="subsection">Heading level 4</Heading>
+          <Heading as="h5" variant="subsection">Heading level 5</Heading>
+          <Heading as="h6" variant="subsection">Heading level 6</Heading>
           <p>
             Body paragraph sample with a <Link href="#">text link</Link>, <strong
               >bold text</strong
@@ -49,37 +54,37 @@ import CodeBlock from "../components/CodeBlock.astro";
             “Design systems are not about making pages look the same. They are
             about making decisions consistent.”
           </BlockQuote>
-        </section>
+        </Section>
 
-        <section class="grid gap-6 md:grid-cols-2">
-          <article
-            class="rounded-none border border-slate-200 bg-white/80 p-5 shadow-sm backdrop-blur"
-          >
+        <Section variant="grid" class="md:grid-cols-2">
+          <Card class="shadow-sm backdrop-blur">
             <p class="mb-2 text-xs uppercase tracking-wider text-slate-500">
               Featured Post
             </p>
-            <h3 class="mb-2">Building a scalable content architecture</h3>
+            <Heading as="h3" class="mb-2"
+              >Building a scalable content architecture</Heading
+            >
             <p class="mb-4 text-slate-700">
               A placeholder summary for a featured article, showing title
               hierarchy, metadata spacing, and card readability.
             </p>
             <p class="text-sm text-slate-500">Mar 28, 2026 · 7 min read</p>
-          </article>
+          </Card>
 
-          <article
-            class="rounded-none border border-slate-200 bg-white/80 p-5 shadow-sm backdrop-blur"
-          >
+          <Card class="shadow-sm backdrop-blur">
             <p class="mb-2 text-xs uppercase tracking-wider text-slate-500">
               Latest Note
             </p>
-            <h3 class="mb-2">How I structure reusable UI components</h3>
+            <Heading as="h3" class="mb-2"
+              >How I structure reusable UI components</Heading
+            >
             <p class="mb-4 text-slate-700">
               Another placeholder card to test density, alignment, and
               typography in list views.
             </p>
             <p class="text-sm text-slate-500">Mar 20, 2026 · 4 min read</p>
-          </article>
-        </section>
+          </Card>
+        </Section>
 
         <section class="space-y-4">
           <h2>Blog section layout test</h2>
@@ -264,51 +269,6 @@ import CodeBlock from "../components/CodeBlock.astro";
           </article>
 
           <article class="space-y-4 border border-slate-200 bg-white/80 p-5">
-            <h2>TypeScript example</h2>
-            <CodeBlock lang="ts"
-              >{
-                `type Post = {
-  title: string;
-  tags: string[];
-  publishedAt: Date;
-};
-
-const formatPost = (post: Post) =>
-  \`${"${post.title}"} — ${"${post.tags.join(', ')}"}\`;
-
-console.log(formatPost({
-  title: "Design Tokens",
-  tags: ["css", "system"],
-  publishedAt: new Date(),
-}));`
-              }</CodeBlock
-            >
-          </article>
-        </section>
-
-        <section class="grid gap-6 lg:grid-cols-2">
-          <article class="space-y-4 border border-slate-200 bg-white/80 p-5">
-            <h2>JavaScript example</h2>
-            <CodeBlock lang="js"
-              >{
-                `const cards = document.querySelectorAll('[data-card]');
-
-cards.forEach((card, index) => {
-  card.addEventListener('mouseenter', () => {
-    card.style.transform = 'translateY(-2px)';
-  });
-
-  card.addEventListener('mouseleave', () => {
-    card.style.transform = '';
-  });
-
-  card.dataset.order = String(index + 1);
-});`
-              }</CodeBlock
-            >
-          </article>
-
-          <article class="space-y-4 border border-slate-200 bg-white/80 p-5">
             <h2>Code block sample</h2>
             <CodeBlock lang="ts"
               >{
@@ -323,49 +283,6 @@ cards.forEach((card, index) => {
               Use this block to verify contrast, overflow behavior, and
               monospace rendering.
             </p>
-          </article>
-        </section>
-
-        <section class="grid gap-6 lg:grid-cols-2">
-          <article class="space-y-4 border border-slate-200 bg-white/80 p-5">
-            <h2>CSS example</h2>
-            <CodeBlock lang="css"
-              >{
-                `:root {
-  --surface: #ffffff;
-  --muted: #64748b;
-  --ring: #cbd5e1;
-}
-
-.card {
-  border: 1px solid var(--ring);
-  background: color-mix(in oklab, var(--surface) 80%, transparent);
-  padding: 1.25rem;
-}`
-              }</CodeBlock
-            >
-          </article>
-
-          <article class="space-y-4 border border-slate-200 bg-white/80 p-5">
-            <h2>JSON + CLI examples</h2>
-            <CodeBlock lang="json"
-              >{
-                `{
-  "name": "content-sandbox",
-  "scripts": {
-    "dev": "astro dev",
-    "build": "astro build"
-  }
-}`
-              }</CodeBlock
-            >
-            <CodeBlock lang="bash"
-              >{
-                `npm install
-npm run dev
-npm run build`
-              }</CodeBlock
-            >
           </article>
         </section>
 

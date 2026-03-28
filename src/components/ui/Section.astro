@@ -1,0 +1,21 @@
+---
+import type { HTMLAttributes } from "astro/types";
+
+type SectionVariant = "default" | "content" | "grid";
+
+interface Props extends HTMLAttributes<"section"> {
+  variant?: SectionVariant;
+}
+
+const { variant = "default", class: className, ...props } = Astro.props;
+
+const variantClasses: Record<SectionVariant, string> = {
+  default: "space-y-4",
+  content: "space-y-5",
+  grid: "grid gap-6",
+};
+---
+
+<section class:list={[variantClasses[variant], className]} {...props}>
+  <slot />
+</section>

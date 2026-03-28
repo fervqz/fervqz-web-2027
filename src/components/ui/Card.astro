@@ -1,0 +1,29 @@
+---
+import type { HTMLAttributes } from "astro/types";
+
+type CardTag = "article" | "div";
+type CardVariant = "default" | "soft";
+
+interface Props extends HTMLAttributes<"article"> {
+  as?: CardTag;
+  variant?: CardVariant;
+}
+
+const {
+  as = "article",
+  variant = "default",
+  class: className,
+  ...props
+} = Astro.props;
+
+const variantClasses: Record<CardVariant, string> = {
+  default: "border border-(--surface-border) bg-(--surface-color) p-5",
+  soft: "border border-(--surface-border) bg-(--surface-color) p-4",
+};
+
+const Tag = as;
+---
+
+<Tag class:list={[variantClasses[variant], className]} {...props}>
+  <slot />
+</Tag>
