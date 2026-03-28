@@ -66,50 +66,5 @@ const posts = (await getCollection("blog")).sort(
       </Container>
     </main>
     <Footer />
-
-    <script>
-      import { gsap } from "gsap";
-
-      const prefersReducedMotion = window.matchMedia(
-        "(prefers-reduced-motion: reduce)",
-      ).matches;
-      const items = document.querySelectorAll(".blog-list-item");
-      const navigationEntry = performance.getEntriesByType("navigation")[0] as
-        | PerformanceNavigationTiming
-        | undefined;
-
-      let cameFromBlogEntry = false;
-
-      if (document.referrer) {
-        const referrerUrl = new URL(document.referrer);
-        cameFromBlogEntry =
-          referrerUrl.origin === window.location.origin &&
-          /^\/blog\/.+/.test(referrerUrl.pathname) &&
-          referrerUrl.pathname !== "/blog/";
-      }
-
-      const isHistoryNavigation = navigationEntry?.type === "back_forward";
-      const shouldAnimate =
-        !prefersReducedMotion && !cameFromBlogEntry && !isHistoryNavigation;
-
-      if (items.length > 0) {
-        if (!shouldAnimate) {
-          gsap.set(items, { opacity: 1, y: 0 });
-        } else {
-          gsap.fromTo(
-            items,
-            { opacity: 0, y: 18 },
-            {
-              opacity: 1,
-              y: 0,
-              duration: 0.7,
-              stagger: 0.12,
-              ease: "power2.out",
-              clearProps: "opacity,transform",
-            },
-          );
-        }
-      }
-    </script>
   </body>
 </html>
