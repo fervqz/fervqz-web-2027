@@ -41,6 +41,7 @@ const posts = (await getCollection("blog")).sort(
                       src={post.data.heroImage}
                       alt={post.data.title}
                       class="h-30 w-full rounded-md object-cover sm:w-42.5"
+                      style={`view-transition-name: blog-image-${post.id};`}
                     />
                   )}
                   <div class="space-y-2">

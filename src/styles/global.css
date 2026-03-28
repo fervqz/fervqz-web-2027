@@ -2,6 +2,10 @@
 @import "@fontsource-variable/jetbrains-mono";
 @import "@fontsource-variable/zalando-sans";
 
+@view-transition {
+  navigation: auto;
+}
+
 :root {
   --bg-color: #f8fafc;
   --text-color: #0f172a;
@@ -238,4 +242,14 @@ summary {
 blockquote {
   border-left: 4px solid var(--blockquote-border);
   color: var(--blockquote-text);
+}
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 280ms;
+}
+
+::view-transition-old(*),
+::view-transition-new(*) {
+  animation-timing-function: ease;
 }
