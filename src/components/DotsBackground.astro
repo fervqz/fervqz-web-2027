@@ -1,0 +1,38 @@
+---
+/**
+ * Dots background
+ * Tweak these values to match your mockups.
+ */
+const DOT_SIZE = 1.4; // px
+const DOT_DISTANCE = 24; // px
+const DOT_COLOR = "#d1d5db";
+const BG_COLOR = "#f8fafc";
+---
+
+<div aria-hidden="true" class="pointer-events-none fixed inset-0 -z-10">
+  <svg
+    class="h-full w-full"
+    xmlns="http://www.w3.org/2000/svg"
+    preserveAspectRatio="none"
+  >
+    <defs>
+      <pattern
+        id="dots-pattern"
+        x="0"
+        y="0"
+        width={DOT_DISTANCE}
+        height={DOT_DISTANCE}
+        patternUnits="userSpaceOnUse"
+      >
+        <circle
+          cx={DOT_DISTANCE / 2}
+          cy={DOT_DISTANCE / 2}
+          r={DOT_SIZE / 2}
+          fill={DOT_COLOR}></circle>
+      </pattern>
+    </defs>
+
+    <rect width="100%" height="100%" fill={BG_COLOR}></rect>
+    <rect width="100%" height="100%" fill="url(#dots-pattern)"></rect>
+  </svg>
+</div>

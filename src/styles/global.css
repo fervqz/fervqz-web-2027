@@ -13,22 +13,139 @@ h4,
 h5,
 h6 {
   font-family: "Zalando Sans Variable", "Zalando Sans", sans-serif;
+  font-weight: 700;
 }
 
 h1 {
+  font-size: 2.125rem;
+  line-height: 1.2059;
+  letter-spacing: 0.4px;
   margin-bottom: 1rem;
 }
 
 h2 {
+  font-size: 1.75rem;
+  line-height: 1.2143;
+  letter-spacing: 0.38px;
   margin-bottom: 0.75rem;
 }
 
 h3 {
+  font-size: 1.375rem;
+  line-height: 1.2727;
+  letter-spacing: -0.26px;
   margin-bottom: 0.5rem;
+}
+
+h4 {
+  font-size: 1.25rem;
+  line-height: 1.25;
+  letter-spacing: -0.45px;
+}
+
+h5 {
+  font-size: 1.0625rem;
+  line-height: 1.2941;
+  letter-spacing: -0.43px;
+}
+
+h6 {
+  font-size: 1rem;
+  line-height: 1.3125;
+  letter-spacing: -0.31px;
 }
 
 h4,
 h5,
 h6 {
   margin-bottom: 0.25rem;
+}
+
+p {
+  color: rgb(51 65 85);
+  margin-bottom: 1rem;
+}
+
+strong {
+  font-weight: 700;
+}
+
+ul,
+ol {
+  margin: 0 0 1rem;
+  padding-left: 1.25rem;
+}
+
+li {
+  margin-bottom: 0.25rem;
+}
+
+code {
+  background: rgb(226 232 240);
+  border-radius: 0.125rem;
+  padding: 0.125rem 0.25rem;
+}
+
+table {
+  border-collapse: collapse;
+  font-size: 0.875rem;
+  text-align: left;
+  width: 100%;
+}
+
+thead {
+  background: rgb(241 245 249 / 0.8);
+}
+
+th,
+td {
+  border-bottom: 1px solid rgb(226 232 240);
+  padding: 0.75rem 1rem;
+}
+
+label {
+  color: rgb(51 65 85);
+  display: block;
+  font-size: 0.875rem;
+  margin-bottom: 0.5rem;
+}
+
+input,
+textarea {
+  background: rgb(255 255 255);
+  border: 1px solid rgb(203 213 225);
+  color: rgb(15 23 42);
+  padding: 0.5rem 0.75rem;
+  width: 100%;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: rgb(148 163 184);
+}
+
+button {
+  background: transparent;
+  border: 1px solid rgb(15 23 42);
+  color: rgb(15 23 42);
+  font-size: 0.875rem;
+  font-weight: 600;
+  padding: 0.5rem 1rem;
+}
+
+button:hover {
+  background: rgb(15 23 42);
+  color: rgb(255 255 255);
+}
+
+details {
+  background: rgb(255 255 255 / 0.8);
+  border: 1px solid rgb(226 232 240);
+  margin-bottom: 1rem;
+  padding: 1rem;
+}
+
+summary {
+  cursor: pointer;
+  font-weight: 600;
 }

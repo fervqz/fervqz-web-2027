@@ -1,0 +1,16 @@
+---
+import type { HTMLAttributes } from "astro/types";
+
+type Props = HTMLAttributes<"pre">;
+
+const { class: className, ...props } = Astro.props;
+---
+
+<pre
+  class:list={[
+    "mb-4 overflow-x-auto border border-slate-300 bg-slate-950 p-4 text-sm text-slate-100",
+    className,
+  ]}
+  {...props}>
+  <code class="bg-transparent rounded-none p-0"><slot /></code>
+</pre>
