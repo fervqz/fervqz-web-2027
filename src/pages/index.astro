@@ -264,8 +264,53 @@ import CodeBlock from "../components/CodeBlock.astro";
           </article>
 
           <article class="space-y-4 border border-slate-200 bg-white/80 p-5">
+            <h2>TypeScript example</h2>
+            <CodeBlock lang="ts"
+              >{
+                `type Post = {
+  title: string;
+  tags: string[];
+  publishedAt: Date;
+};
+
+const formatPost = (post: Post) =>
+  \`${"${post.title}"} — ${"${post.tags.join(', ')}"}\`;
+
+console.log(formatPost({
+  title: "Design Tokens",
+  tags: ["css", "system"],
+  publishedAt: new Date(),
+}));`
+              }</CodeBlock
+            >
+          </article>
+        </section>
+
+        <section class="grid gap-6 lg:grid-cols-2">
+          <article class="space-y-4 border border-slate-200 bg-white/80 p-5">
+            <h2>JavaScript example</h2>
+            <CodeBlock lang="js"
+              >{
+                `const cards = document.querySelectorAll('[data-card]');
+
+cards.forEach((card, index) => {
+  card.addEventListener('mouseenter', () => {
+    card.style.transform = 'translateY(-2px)';
+  });
+
+  card.addEventListener('mouseleave', () => {
+    card.style.transform = '';
+  });
+
+  card.dataset.order = String(index + 1);
+});`
+              }</CodeBlock
+            >
+          </article>
+
+          <article class="space-y-4 border border-slate-200 bg-white/80 p-5">
             <h2>Code block sample</h2>
-            <CodeBlock
+            <CodeBlock lang="ts"
               >{
                 `const typography = {
   h1: { size: 34, lineHeight: 41, tracking: 0.4 },
@@ -278,6 +323,49 @@ import CodeBlock from "../components/CodeBlock.astro";
               Use this block to verify contrast, overflow behavior, and
               monospace rendering.
             </p>
+          </article>
+        </section>
+
+        <section class="grid gap-6 lg:grid-cols-2">
+          <article class="space-y-4 border border-slate-200 bg-white/80 p-5">
+            <h2>CSS example</h2>
+            <CodeBlock lang="css"
+              >{
+                `:root {
+  --surface: #ffffff;
+  --muted: #64748b;
+  --ring: #cbd5e1;
+}
+
+.card {
+  border: 1px solid var(--ring);
+  background: color-mix(in oklab, var(--surface) 80%, transparent);
+  padding: 1.25rem;
+}`
+              }</CodeBlock
+            >
+          </article>
+
+          <article class="space-y-4 border border-slate-200 bg-white/80 p-5">
+            <h2>JSON + CLI examples</h2>
+            <CodeBlock lang="json"
+              >{
+                `{
+  "name": "content-sandbox",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build"
+  }
+}`
+              }</CodeBlock
+            >
+            <CodeBlock lang="bash"
+              >{
+                `npm install
+npm run dev
+npm run build`
+              }</CodeBlock
+            >
           </article>
         </section>
 

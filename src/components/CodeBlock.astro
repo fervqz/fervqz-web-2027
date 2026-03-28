@@ -1,16 +1,48 @@
 ---
+import { Code } from "astro:components";
 import type { HTMLAttributes } from "astro/types";
 
-type Props = HTMLAttributes<"pre">;
+interface Props extends HTMLAttributes<"div"> {
+  code?: string;
+  lang?: string;
+  theme?: string;
+}
 
-const { class: className, ...props } = Astro.props;
+const {
+  code,
+  lang = "ts",
+  theme = "dark-plus",
+  class: className,
+  ...props
+} = Astro.props;
+
+const renderedCode =
+  code ??
+  (Astro.slots.has("default") ? await Astro.slots.render("default") : "");
 ---
 
-<pre
+<div
   class:list={[
-    "mb-4 overflow-x-auto border border-slate-300 bg-slate-950 p-4 text-sm text-slate-100",
+    "mb-4 overflow-hidden border border-[#3c3c3c] bg-[#1f1f1f] text-sm text-[#d4d4d4]",
     className,
   ]}
-  {...props}>
-  <code class="bg-transparent rounded-none p-0"><slot /></code>
-</pre>
+  {...props}
+>
+  <Code code={renderedCode} lang={lang as any} theme={theme as any} />
+</div>
+
+<style>
+  div :global(pre) {
+    background: transparent !important;
+    border: 0;
+    margin: 0;
+    overflow-x: auto;
+    padding: 1rem;
+  }
+
+  div :global(pre code) {
+    background: transparent;
+    border-radius: 0;
+    padding: 0;
+  }
+</style>
