@@ -65,8 +65,18 @@ const { class: className, ...props } = Astro.props;
   }
 
   .typography :global(p) {
-    color: var(--muted-text-color);
+    color: var(--text-default-color);
     margin-bottom: 1rem;
+  }
+
+  .typography :global(a) {
+    color: var(--link-color);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  .typography :global(a:hover) {
+    color: var(--link-hover-color);
   }
 
   .typography :global(strong) {

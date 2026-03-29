@@ -22,9 +22,9 @@ interface Props extends HTMLAttributes<"p"> {
 const { as = "p", tone = "default", class: className, ...props } = Astro.props;
 
 const toneClasses: Record<TextTone, string> = {
-  default: "text-slate-700",
-  muted: "text-slate-500",
-  soft: "text-slate-600",
+  default: "text-(--text-default-color)",
+  muted: "text-(--muted-text-color)",
+  soft: "text-(--soft-text-color)",
 };
 
 const Tag = as;
@@ -37,17 +37,3 @@ const Tag = as;
 >
   <slot />
 </Tag>
-
-<style>
-  :global(html[data-theme="dark"]) .ui-text[data-tone="default"] {
-    color: rgb(241 245 249);
-  }
-
-  :global(html[data-theme="dark"]) .ui-text[data-tone="muted"] {
-    color: rgb(203 213 225);
-  }
-
-  :global(html[data-theme="dark"]) .ui-text[data-tone="soft"] {
-    color: rgb(226 232 240);
-  }
-</style>

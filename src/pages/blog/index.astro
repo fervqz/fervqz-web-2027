@@ -8,6 +8,7 @@ import Header from "../../components/Header.astro";
 import Container from "../../components/ui/Container.astro";
 import Section from "../../components/ui/Section.astro";
 import Heading from "../../components/ui/Heading.astro";
+import Text from "../../components/ui/Text.astro";
 import { SITE_DESCRIPTION, SITE_TITLE } from "../../consts";
 
 const posts = (await getCollection("blog")).sort(
@@ -49,14 +50,14 @@ const posts = (await getCollection("blog")).sort(
                   <div class="space-y-2">
                     <Heading
                       as="h3"
-                      class="mb-0 transition-colors group-hover:text-indigo-700"
+                      class="mb-0 transition-colors group-hover:text-(--link-hover-color)"
                     >
                       {post.data.title}
                     </Heading>
-                    <p class="mb-0 text-[14px] leading-5 text-slate-700">
+                    <Text class="mb-0 text-[14px] leading-5">
                       {post.data.description} — quick notes, context, tech
                       stack, and progress updates from ongoing work.
-                    </p>
+                    </Text>
                   </div>
                 </a>
               </article>

@@ -8,7 +8,7 @@ const { class: className, ...props } = Astro.props;
 
 <textarea
   class:list={[
-    "w-full border border-(--field-border) bg-(--field-bg) px-3 py-2 text-(--field-text) placeholder:text-slate-400",
+    "w-full border border-(--field-border) bg-(--field-bg) px-3 py-2 text-(--field-text) placeholder:text-(--placeholder-text-color)",
     className,
   ]}
   {...props}

@@ -9,6 +9,7 @@
 :root {
   --bg-color: #f8fafc;
   --text-color: #0f172a;
+  --text-default-color: #334155;
   --muted-text-color: #334155;
   --soft-text-color: #64748b;
   --surface-color: rgba(255, 255, 255, 0.8);
@@ -25,6 +26,7 @@
   --details-bg: rgba(255, 255, 255, 0.8);
   --link-color: rgb(67 56 202);
   --link-hover-color: rgb(55 48 163);
+  --placeholder-text-color: rgb(148 163 184);
   --nav-link-color: #0f172a;
   --nav-link-hover-color: rgb(67 56 202);
   --nav-link-active-color: rgb(220 38 38);
@@ -42,6 +44,7 @@
 html[data-theme="dark"] {
   --bg-color: #070a11;
   --text-color: #e2e8f0;
+  --text-default-color: rgb(241 245 249);
   --muted-text-color: #cbd5e1;
   --soft-text-color: #94a3b8;
   --surface-color: rgba(15, 23, 42, 0.82);
@@ -58,6 +61,7 @@ html[data-theme="dark"] {
   --details-bg: rgba(15, 23, 42, 0.82);
   --link-color: #93c5fd;
   --link-hover-color: #bfdbfe;
+  --placeholder-text-color: rgb(148 163 184);
   --nav-link-color: #e2e8f0;
   --nav-link-hover-color: #93c5fd;
   --nav-link-active-color: rgb(248 113 113);

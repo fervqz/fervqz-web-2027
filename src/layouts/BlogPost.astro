@@ -10,6 +10,7 @@ import Container from "../components/ui/Container.astro";
 import Heading from "../components/ui/Heading.astro";
 import Link from "../components/ui/Link.astro";
 import Section from "../components/ui/Section.astro";
+import Text from "../components/ui/Text.astro";
 import Typography from "../components/ui/Typography.astro";
 import WavyDivider from "../components/ui/WavyDivider.astro";
 
@@ -61,10 +62,10 @@ const { title, description, pubDate, updatedDate, heroImage, slug } =
             <Heading as="h1" variant="hero" class="mb-0 max-w-3xl"
               >{title}</Heading
             >
-            <p class="mb-0 max-w-3xl text-[14px] leading-5 text-slate-700">
+            <Text class="mb-0 max-w-3xl text-[14px] leading-5">
               {description}
-            </p>
-            <div class="text-[12px] leading-5 text-slate-500">
+            </Text>
+            <Text as="div" tone="muted" class="text-[12px] leading-5">
               <FormattedDate date={pubDate} />
               {
                 updatedDate && (
@@ -73,7 +74,7 @@ const { title, description, pubDate, updatedDate, heroImage, slug } =
                   </div>
                 )
               }
-            </div>
+            </Text>
           </header>
 
           <WavyDivider />
