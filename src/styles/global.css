@@ -40,7 +40,7 @@
 }
 
 html[data-theme="dark"] {
-  --bg-color: #0b1220;
+  --bg-color: #070a11;
   --text-color: #e2e8f0;
   --muted-text-color: #cbd5e1;
   --soft-text-color: #94a3b8;
@@ -91,41 +91,6 @@ body {
   transition:
     background-color 0.2s ease,
     color 0.2s ease;
-}
-
-label {
-  color: var(--muted-text-color);
-  display: block;
-  font-size: 0.875rem;
-  margin-bottom: 0.5rem;
-}
-
-input,
-textarea {
-  background: var(--field-bg);
-  border: 1px solid var(--field-border);
-  color: var(--field-text);
-  padding: 0.5rem 0.75rem;
-  width: 100%;
-}
-
-input::placeholder,
-textarea::placeholder {
-  color: rgb(148 163 184);
-}
-
-button {
-  background: var(--button-bg);
-  border: 1px solid var(--button-border);
-  color: var(--button-text);
-  font-size: 0.875rem;
-  font-weight: 600;
-  padding: 0.5rem 1rem;
-}
-
-button:hover {
-  background: var(--button-hover-bg);
-  color: var(--button-hover-text);
 }
 
 ::view-transition-old(root),

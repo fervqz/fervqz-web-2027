@@ -9,6 +9,7 @@ import Container from "../components/ui/Container.astro";
 import Heading from "../components/ui/Heading.astro";
 import Link from "../components/ui/Link.astro";
 import Section from "../components/ui/Section.astro";
+import Text from "../components/ui/Text.astro";
 ---
 
 <!doctype html>
@@ -25,77 +26,89 @@ import Section from "../components/ui/Section.astro";
     <main class="flex-1">
       <Container class="flex flex-col gap-12 py-12">
         <Section variant="content">
-          <p class="text-sm uppercase tracking-[0.2em] text-slate-500">
+          <Text as="p" tone="muted" class="text-sm uppercase tracking-[0.2em]">
             Projects
-          </p>
+          </Text>
           <Heading as="h1" variant="hero"
             >Selected work, product experiments, and things in progress</Heading
           >
-          <p class="max-w-3xl text-slate-700">
+          <Text class="max-w-3xl">
             This is placeholder content for the projects page. Use it to test
             layouts for case studies, project summaries, timelines, links, and
             call-to-action blocks.
-          </p>
+          </Text>
         </Section>
 
         <Section variant="grid" class="md:grid-cols-2 xl:grid-cols-3">
           <Card class="space-y-4 shadow-sm backdrop-blur">
             <div>
-              <p class="mb-2 text-xs uppercase tracking-wider text-slate-500">
+              <Text
+                as="p"
+                tone="muted"
+                class="mb-2 text-xs uppercase tracking-wider"
+              >
                 Featured build
-              </p>
+              </Text>
               <Heading as="h3">Personal portfolio v3</Heading>
             </div>
-            <p class="text-slate-700">
+            <Text>
               A placeholder case study for a design-forward Astro portfolio with
               content collections, dark mode, animated transitions, and a
               lightweight component system.
-            </p>
-            <ul class="list-disc space-y-1 pl-5 text-sm text-slate-600">
+            </Text>
+            <Text as="ul" tone="soft" class="list-disc space-y-1 pl-5 text-sm">
               <li>Astro + Tailwind v4</li>
               <li>GSAP interactions</li>
               <li>Reusable UI primitives</li>
-            </ul>
+            </Text>
             <Link href="#">View case study</Link>
           </Card>
 
           <Card class="space-y-4 shadow-sm backdrop-blur">
             <div>
-              <p class="mb-2 text-xs uppercase tracking-wider text-slate-500">
+              <Text
+                as="p"
+                tone="muted"
+                class="mb-2 text-xs uppercase tracking-wider"
+              >
                 Client work
-              </p>
+              </Text>
               <Heading as="h3">Internal tooling dashboard</Heading>
             </div>
-            <p class="text-slate-700">
+            <Text>
               Placeholder summary for a productized internal dashboard focused
               on performance, operational visibility, and clean information
               architecture.
-            </p>
-            <ul class="list-disc space-y-1 pl-5 text-sm text-slate-600">
+            </Text>
+            <Text as="ul" tone="soft" class="list-disc space-y-1 pl-5 text-sm">
               <li>Role-based views</li>
               <li>Analytics widgets</li>
               <li>Optimized data loading</li>
-            </ul>
+            </Text>
             <Link href="#">Read project notes</Link>
           </Card>
 
           <Card class="space-y-4 shadow-sm backdrop-blur">
             <div>
-              <p class="mb-2 text-xs uppercase tracking-wider text-slate-500">
+              <Text
+                as="p"
+                tone="muted"
+                class="mb-2 text-xs uppercase tracking-wider"
+              >
                 Experiment
-              </p>
+              </Text>
               <Heading as="h3">Motion design playground</Heading>
             </div>
-            <p class="text-slate-700">
+            <Text>
               A sandbox for prototyping transitions, shared element effects, and
               scroll-triggered interactions before integrating them into
               production pages.
-            </p>
-            <ul class="list-disc space-y-1 pl-5 text-sm text-slate-600">
+            </Text>
+            <Text as="ul" tone="soft" class="list-disc space-y-1 pl-5 text-sm">
               <li>View transitions</li>
               <li>Micro-interactions</li>
               <li>Accessible motion patterns</li>
-            </ul>
+            </Text>
             <Link href="#">Open prototype log</Link>
           </Card>
         </Section>
