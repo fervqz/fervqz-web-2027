@@ -3,10 +3,10 @@ import Container from "./ui/Container.astro";
 import HeaderLink from "./HeaderLink.astro";
 ---
 
-<header class="m-0 p-4">
-  <Container>
+<header class="m-0 py-4">
+  <Container class="relative">
     <nav class="flex items-center justify-between gap-4">
-      <div class="flex flex-row gap-2 items-center">
+      <div class="flex items-center gap-2">
         <img
           src="/public/img/logo.svg"
           alt="logo"
@@ -16,36 +16,91 @@ import HeaderLink from "./HeaderLink.astro";
         <span class="text-2xl font-black font-[JetBrains Mono]">Fervqz</span>
       </div>
 
-      <div class="internal-links flex items-center gap-1">
-        <HeaderLink href="/">About</HeaderLink>
-        <HeaderLink href="/projects">Projects</HeaderLink>
-        <HeaderLink href="/blog">Blog</HeaderLink>
-        <HeaderLink href="/contact">Contact</HeaderLink>
+      <div class="flex items-center gap-2">
+        <div class="internal-links hidden items-center gap-1 md:flex">
+          <HeaderLink href="/">About</HeaderLink>
+          <HeaderLink href="/projects">Projects</HeaderLink>
+          <HeaderLink href="/blog">Blog</HeaderLink>
+          <HeaderLink href="/contact">Contact</HeaderLink>
+        </div>
+
         <button
-          id="theme-toggle"
-          class="ml-2 inline-flex h-9 w-9 items-center justify-center rounded-full border border-(--button-border) bg-(--surface-color) p-0 text-lg leading-none text-(--nav-link-color) hover:text-(--nav-link-hover-color) hover:cursor-pointer"
+          data-theme-toggle
+          class="ml-2 hidden h-9 w-9 items-center justify-center rounded-full border border-(--button-border) bg-(--surface-color) p-0 text-lg leading-none text-(--nav-link-color) hover:cursor-pointer hover:text-(--nav-link-hover-color) md:inline-flex"
           type="button"
           aria-label="Toggle dark mode"
           title="Toggle dark mode"
         >
-          <span id="theme-toggle-icon" aria-hidden="true">🌙</span>
+          <span data-theme-toggle-icon aria-hidden="true">🌙</span>
+        </button>
+
+        <button
+          id="mobile-menu-toggle"
+          class="inline-flex h-9 w-9 items-center justify-center rounded-md border border-(--button-border) bg-(--surface-color) text-(--nav-link-color) md:hidden"
+          type="button"
+          aria-label="Toggle navigation menu"
+          aria-expanded="false"
+          aria-controls="mobile-menu"
+        >
+          <span id="mobile-menu-icon" aria-hidden="true">☰</span>
         </button>
       </div>
     </nav>
+
+    <div
+      id="mobile-menu"
+      class="absolute inset-x-0 top-full z-50 mt-2 rounded-xl border border-(--button-border) bg-(--surface-color) p-3 shadow-lg transition-all duration-200 ease-out md:hidden"
+      data-open="false"
+    >
+      <div class="flex flex-col">
+        <HeaderLink href="/" class="py-2!" data-mobile-menu-close
+          >About</HeaderLink
+        >
+        <HeaderLink href="/projects" class="py-2!" data-mobile-menu-close
+          >Projects</HeaderLink
+        >
+        <HeaderLink href="/blog" class="py-2!" data-mobile-menu-close
+          >Blog</HeaderLink
+        >
+        <HeaderLink href="/contact" class="py-2!" data-mobile-menu-close
+          >Contact</HeaderLink
+        >
+      </div>
+      <div class="mt-2 border-t border-(--button-border) pt-3">
+        <button
+          data-theme-toggle
+          class="inline-flex h-9 items-center gap-2 rounded-md border border-(--button-border) bg-(--surface-color) px-3 text-sm text-(--nav-link-color)"
+          type="button"
+          aria-label="Toggle dark mode"
+          title="Toggle dark mode"
+        >
+          <span data-theme-toggle-icon aria-hidden="true">🌙</span>
+          <span>Toggle theme</span>
+        </button>
+      </div>
+    </div>
   </Container>
 </header>
 
 <script is:inline>
   (() => {
     const root = document.documentElement;
-    const button = document.getElementById("theme-toggle");
-    const icon = document.getElementById("theme-toggle-icon");
+    const themeButtons = Array.from(
+      document.querySelectorAll("[data-theme-toggle]"),
+    );
+    const menuButton = document.getElementById("mobile-menu-toggle");
+    const menu = document.getElementById("mobile-menu");
+    const menuIcon = document.getElementById("mobile-menu-icon");
+    const closeMenuLinks = Array.from(
+      document.querySelectorAll("[data-mobile-menu-close]"),
+    );
 
-    if (!button || !icon) return;
+    if (themeButtons.length === 0) return;
 
     const getTheme = () => root.getAttribute("data-theme") || "light";
-    const setIcon = (theme) => {
-      icon.textContent = theme === "dark" ? "☀️" : "🌙";
+    const setButtonState = (button, theme) => {
+      const icon = button.querySelector("[data-theme-toggle-icon]");
+      if (icon) icon.textContent = theme === "dark" ? "☀️" : "🌙";
       button.setAttribute(
         "aria-label",
         theme === "dark" ? "Switch to light mode" : "Switch to dark mode",
@@ -56,14 +111,67 @@ import HeaderLink from "./HeaderLink.astro";
       );
     };
 
-    setIcon(getTheme());
+    const closeMobileMenu = () => {
+      if (!menu || !menuButton || !menuIcon) return;
+      menu.setAttribute("data-open", "false");
+      menuButton.setAttribute("aria-expanded", "false");
+      menuIcon.textContent = "☰";
+    };
 
-    button.addEventListener("click", () => {
-      const nextTheme = getTheme() === "dark" ? "light" : "dark";
-      root.setAttribute("data-theme", nextTheme);
-      root.style.colorScheme = nextTheme;
-      localStorage.setItem("theme", nextTheme);
-      setIcon(nextTheme);
+    const openMobileMenu = () => {
+      if (!menu || !menuButton || !menuIcon) return;
+      menu.setAttribute("data-open", "true");
+      menuButton.setAttribute("aria-expanded", "true");
+      menuIcon.textContent = "✕";
+    };
+
+    themeButtons.forEach((button) => setButtonState(button, getTheme()));
+
+    themeButtons.forEach((button) => {
+      button.addEventListener("click", () => {
+        const nextTheme = getTheme() === "dark" ? "light" : "dark";
+        root.setAttribute("data-theme", nextTheme);
+        root.style.colorScheme = nextTheme;
+        localStorage.setItem("theme", nextTheme);
+        themeButtons.forEach((btn) => setButtonState(btn, nextTheme));
+      });
     });
+
+    if (menu && menuButton && menuIcon) {
+      menuButton.addEventListener("click", () => {
+        const isClosed = menu.getAttribute("data-open") !== "true";
+        if (isClosed) {
+          openMobileMenu();
+        } else {
+          closeMobileMenu();
+        }
+      });
+
+      closeMenuLinks.forEach((link) => {
+        link.addEventListener("click", () => closeMobileMenu());
+      });
+
+      window.addEventListener("resize", () => {
+        if (window.innerWidth >= 768) {
+          closeMobileMenu();
+        }
+      });
+    }
   })();
 </script>
+
+<style>
+  #mobile-menu {
+    display: none;
+    opacity: 0;
+    transform: translateY(-4px);
+    pointer-events: none;
+  }
+
+  #mobile-menu[data-open="true"] {
+    display: block;
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+</style>

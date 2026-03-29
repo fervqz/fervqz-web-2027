@@ -1,10 +1,10 @@
 ---
 import { Image } from "astro:assets";
 import { getCollection } from "astro:content";
-import BaseHead from "../../components/BaseHead.astro";
 import Footer from "../../components/Footer.astro";
 import DotsBackground from "../../components/DotsBackground.astro";
 import Header from "../../components/Header.astro";
+import AppLayout from "../../layouts/AppLayout.astro";
 import Container from "../../components/ui/Container.astro";
 import Section from "../../components/ui/Section.astro";
 import Heading from "../../components/ui/Heading.astro";
@@ -16,56 +16,55 @@ const posts = (await getCollection("blog")).sort(
 );
 ---
 
-<!doctype html>
-<html lang="en">
-  <head>
-    <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
-  </head>
-  <body class="min-h-screen">
-    <DotsBackground />
-    <Header />
-    <main class="pb-20 pt-12">
-      <Container>
-        <Section
-          id="blog-list"
-          class="mx-auto flex w-full max-w-190 flex-col gap-6"
-        >
-          {
-            posts.map((post) => (
-              <article class="blog-list-item group">
-                <a
-                  href={`/blog/${post.id}/`}
-                  class="grid grid-cols-1 items-start gap-4 no-underline sm:grid-cols-[170px_1fr]"
-                >
-                  {post.data.heroImage && (
-                    <Image
-                      width={340}
-                      height={220}
-                      src={post.data.heroImage}
-                      alt={post.data.title}
-                      class="h-30 w-full object-cover sm:w-42.5"
-                      style={`view-transition-name: blog-image-${post.id};`}
-                    />
-                  )}
-                  <div class="space-y-2">
-                    <Heading
-                      as="h3"
-                      class="mb-0 transition-colors group-hover:text-(--link-hover-color)"
-                    >
-                      {post.data.title}
-                    </Heading>
-                    <Text class="mb-0 text-[14px] leading-5">
-                      {post.data.description} — quick notes, context, tech
-                      stack, and progress updates from ongoing work.
-                    </Text>
-                  </div>
-                </a>
-              </article>
-            ))
-          }
-        </Section>
-      </Container>
-    </main>
-    <Footer />
-  </body>
-</html>
+<AppLayout
+  title={SITE_TITLE}
+  description={SITE_DESCRIPTION}
+  bodyClass="min-h-screen px-4"
+>
+  <DotsBackground />
+  <Header />
+  <main class="pb-20 pt-12">
+    <Container>
+      <Section
+        id="blog-list"
+        class="mx-auto flex w-full max-w-190 flex-col gap-6"
+      >
+        {
+          posts.map((post) => (
+            <article class="blog-list-item group">
+              <a
+                href={`/blog/${post.id}/`}
+                class="grid grid-cols-1 items-start gap-4 no-underline sm:grid-cols-[170px_1fr]"
+              >
+                {post.data.heroImage && (
+                  <Image
+                    width={340}
+                    height={220}
+                    src={post.data.heroImage}
+                    alt={post.data.title}
+                    class="h:44 md:h-30 w-full object-cover sm:w-42.5"
+                    style={`view-transition-name: blog-image-${post.id};`}
+                  />
+                )}
+                <div class="space-y-2">
+                  <Heading
+                    as="h3"
+                    class="mb-0 transition-colors group-hover:text-(--link-hover-color)"
+                  >
+                    {post.data.title}
+                  </Heading>
+                  <Text class="mb-0 text-[14px] leading-5">
+                    {post.data.description} — quick notes, context, tech stack,
+                    and progress updates from ongoing work.
+                  </Text>
+                </div>
+                <div class="border border-slate-200" />
+              </a>
+            </article>
+          ))
+        }
+      </Section>
+    </Container>
+  </main>
+  <Footer />
+</AppLayout>

@@ -1,143 +1,112 @@
 ---
-import BaseHead from "../components/BaseHead.astro";
-import Footer from "../components/Footer.astro";
-import Header from "../components/Header.astro";
 import { SITE_DESCRIPTION, SITE_TITLE } from "../consts";
+import AppLayout from "../layouts/AppLayout.astro";
+import Home from "../components/Home.astro";
 import DotsBackground from "../components/DotsBackground.astro";
-import Container from "../components/ui/Container.astro";
-import Heading from "../components/ui/Heading.astro";
-import Section from "../components/ui/Section.astro";
-import Text from "../components/ui/Text.astro";
 ---
 
-<!doctype html>
-<html lang="en">
-  <head>
-    <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
-  </head>
-  <body class="flex flex-col min-h-screen">
-    <DotsBackground />
-    <Header />
-    <main class="flex-1 justify-center items-center flex">
-      <Container class="flex-1 py-12 flex flex-col gap-14">
-        <Section variant="content" class="flex flex-row gap-12 items-center">
+<AppLayout
+  title={SITE_TITLE}
+  description={SITE_DESCRIPTION}
+  bodyClass="flex flex-col min-h-screen"
+>
+  <main>
+    <section animation-id="container">
+      <div
+        animation-id="mini-screen"
+        class="relative min-h-screen flex flex-col"
+      >
+        <div
+          animation-id="device-mock"
+          class="opacity-0 z-10 pointer-events-none"
+        >
           <img
-            src="/public/img/avatar.svg"
-            alt="logo"
-            width="280"
-            class="drop-shadow-sm drop-shadow-zinc-900/30 hover:scale-105 hover:-rotate-2 transition ease-out hover:drop-shadow-xl hover:drop-shadow-zinc-900/20"
+            src="/public/img/iphone-mock.png"
+            alt=""
+            class="flex md:hidden absolute top-8 left-0 scale-110"
           />
-          <div>
-            <Text
-              as="p"
-              tone="muted"
-              class="text-sm uppercase tracking-[0.2em]"
-            >
-              Meet Your Next
-            </Text>
-            <h1 class="mt-3.5 mb-6 text-6xl leading-tight font-black">
-              <span class="rotating-word-stack" aria-live="polite">
-                <span class="rotating-word">Creative</span>
-                <span class="rotating-word">Product</span>
-                <span class="rotating-word">Frontend</span>
-              </span>
-              <br />
-              Developer
-            </h1>
-            <Text class="max-w-3xl">
-              When I sarted coding, I was drawn to the web for its unique blend
-              of creativity and logic. Over the years, I've honed my skills as a
-              creative developer, with a particular focus on crafting engaging
-              user experiences.
-            </Text>
+          <img
+            src="/public/img/ipad-mock.png"
+            alt=""
+            class="hidden md:flex lg:hidden absolute top-0 left-0 scale-108"
+          />
+          <img
+            src="/public/img/macbook-mock.png"
+            alt=""
+            class="hidden lg:flex absolute top-0 left-0 scale-130"
+          />
+        </div>
+        <div
+          animation-id="content"
+          class="relative isolate overflow-hidden rounded-none"
+        >
+          <div animation-id="header-spacer" class=""></div>
+          <div animation-id="background">
+            <DotsBackground />
           </div>
-        </Section>
-      </Container>
-    </main>
-    <Footer />
+          <Home />
+        </div>
+      </div>
+    </section>
+  </main>
+  <div class="bg-black h-400"></div>
+</AppLayout>
 
-    <script>
-      import { gsap } from "gsap";
+<script>
+  import { $ } from "../lib/utils";
+  import { gsap } from "gsap";
+  import { ScrollTrigger } from "gsap/ScrollTrigger";
+  gsap.registerPlugin(ScrollTrigger);
 
-      const stack = document.querySelector(".rotating-word-stack");
+  const container = $("[animation-id='container']");
+  const content = $("[animation-id='content']");
+  const miniScreen = $("[animation-id='mini-screen']");
+  const deviceMock = $("[animation-id='device-mock']");
+  const headerSpacer = $("[animation-id='header-spacer']");
 
-      if (stack instanceof HTMLElement) {
-        const words = Array.from(
-          stack.querySelectorAll<HTMLElement>(".rotating-word"),
-        );
+  const getAspectRatio = () => {
+    if (window.innerWidth >= 1024) return "16 / 10";
+    if (window.innerWidth >= 768) return "3 / 4";
+    return "6 / 13";
+  };
 
-        if (words.length > 0) {
-          const reduceMotion = window.matchMedia(
-            "(prefers-reduced-motion: reduce)",
-          ).matches;
+  const getBorderRadius = () => {
+    if (window.innerWidth >= 1024) return "24px";
+    if (window.innerWidth >= 768) return "20px";
+    return "48px";
+  };
 
-          const maxWidth = Math.max(...words.map((word) => word.offsetWidth));
-          stack.style.width = `${maxWidth}px`;
+  const getSpacerHeight = () => {
+    if (window.innerWidth >= 1024) return 30;
+    if (window.innerWidth >= 768) return 40;
+    return 50;
+  };
 
-          gsap.set(words, { yPercent: 100, autoAlpha: 1 });
-          gsap.set(words[0], { yPercent: 0 });
+  const tl = gsap.timeline({ paused: true });
+  tl.to(miniScreen, {
+    scale: 0.5,
+    aspectRatio: getAspectRatio(),
+    y: -100,
+    duration: 0.2,
+  });
+  tl.to(content, { borderRadius: getBorderRadius(), duration: 0.01 }, "<");
+  tl.to(deviceMock, { opacity: 1, duration: 0.2 }, "<");
+  tl.to(headerSpacer, { height: getSpacerHeight(), duration: 0.2 }, "<");
 
-          if (!reduceMotion && words.length > 1) {
-            let index = 0;
-            const stepDuration = 0.55;
-            const holdDuration = 1.1;
-
-            const rotatePush = () => {
-              const current = words[index];
-              const nextIndex = (index + 1) % words.length;
-              const next = words[nextIndex];
-
-              const tl = gsap.timeline({
-                onComplete: () => {
-                  gsap.set(current, { yPercent: 100 });
-                  index = nextIndex;
-                  gsap.delayedCall(holdDuration, rotatePush);
-                },
-              });
-
-              tl.to(
-                current,
-                {
-                  yPercent: -100,
-                  duration: stepDuration,
-                  ease: "power2.inOut",
-                },
-                0,
-              ).fromTo(
-                next,
-                { yPercent: 100 },
-                {
-                  yPercent: 0,
-                  duration: stepDuration,
-                  ease: "power2.inOut",
-                },
-                0,
-              );
-            };
-
-            gsap.delayedCall(holdDuration, rotatePush);
-          } else {
-            gsap.set(words.slice(1), { yPercent: 100 });
-          }
-        }
-      }
-    </script>
-  </body>
-</html>
+  ScrollTrigger.create({
+    markers: false,
+    trigger: container,
+    start: "top top",
+    end: "bottom top",
+    pin: true,
+    invalidateOnRefresh: true,
+    animation: tl,
+    scrub: 0.5,
+  });
+</script>
 
 <style>
-  .rotating-word-stack {
-    position: relative;
-    display: inline-block;
-    height: 1.1em;
-    overflow: hidden;
-    vertical-align: baseline;
-  }
-
-  .rotating-word {
-    position: absolute;
-    inset: 0 auto auto 0;
-    white-space: nowrap;
-    will-change: transform, opacity;
+  body {
+    background-color: black;
   }
 </style>

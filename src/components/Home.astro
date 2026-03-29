@@ -1,0 +1,40 @@
+---
+import Footer from "./Footer.astro";
+import Header from "./Header.astro";
+import HeroTitle from "./HeroTitle.astro";
+import Container from "./ui/Container.astro";
+import Section from "./ui/Section.astro";
+import Text from "../components/ui/Text.astro";
+---
+
+<div class="min-h-screen flex flex-col px-4">
+  <Header />
+  <div class="flex flex-1 items-center justify-center px-4 sm:px-6">
+    <Container class="flex flex-1 flex-col gap-10 py-8 sm:py-10 md:py-12">
+      <Section
+        variant="content"
+        class="flex flex-col items-center gap-8 text-center md:flex-row md:items-center md:gap-10 md:text-left lg:gap-12"
+      >
+        <img
+          src="/public/img/avatar.svg"
+          alt="logo"
+          width="280"
+          class="w-44 sm:w-56 md:w-64 lg:w-70 h-auto drop-shadow-sm drop-shadow-zinc-900/30 transition ease-out hover:scale-105 hover:-rotate-2 hover:drop-shadow-xl hover:drop-shadow-zinc-900/20"
+        />
+        <div class="max-w-3xl">
+          <Text as="p" tone="muted" class="text-sm uppercase tracking-[0.2em]">
+            Meet Your Next
+          </Text>
+          <HeroTitle />
+          <Text class="max-w-3xl mx-auto md:mx-0">
+            When I sarted coding, I was drawn to the web for its unique blend of
+            creativity and logic. Over the years, I've honed my skills as a
+            creative developer, with a particular focus on crafting engaging
+            user experiences.
+          </Text>
+        </div>
+      </Section>
+    </Container>
+  </div>
+  <Footer />
+</div>

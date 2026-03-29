@@ -1,9 +1,9 @@
 ---
-import BaseHead from "../components/BaseHead.astro";
 import DotsBackground from "../components/DotsBackground.astro";
 import Footer from "../components/Footer.astro";
 import Header from "../components/Header.astro";
 import { SITE_TITLE } from "../consts";
+import AppLayout from "../layouts/AppLayout.astro";
 import Card from "../components/ui/Card.astro";
 import Button from "../components/ui/Button.astro";
 import Container from "../components/ui/Container.astro";
@@ -16,105 +16,91 @@ import TextInput from "../components/ui/TextInput.astro";
 import Text from "../components/ui/Text.astro";
 ---
 
-<!doctype html>
-<html lang="en">
-  <head>
-    <BaseHead
-      title={`Contact | ${SITE_TITLE}`}
-      description="Placeholder contact page for testing intro copy, contact methods, and form layout."
-    />
-  </head>
-  <body class="flex min-h-screen flex-col">
-    <DotsBackground />
-    <Header />
-    <main class="flex-1">
-      <Container class="flex flex-col gap-12 py-12">
-        <Section variant="content">
-          <Text as="p" tone="muted" class="text-sm uppercase tracking-[0.2em]">
-            Contact
-          </Text>
-          <Heading as="h1" variant="hero"
-            >Let’s talk about products, design systems, and web experiences</Heading
-          >
-          <Text class="max-w-3xl">
-            This is placeholder contact content. Use it to test call-to-action
-            copy, availability notes, inquiry forms, and secondary contact
-            options before replacing it with real information.
-          </Text>
-        </Section>
-
-        <Section
-          variant="grid"
-          class="items-start gap-8 lg:grid-cols-[1.1fr_0.9fr]"
+<AppLayout
+  title={`Contact | ${SITE_TITLE}`}
+  description="Placeholder contact page for testing intro copy, contact methods, and form layout."
+  bodyClass="flex min-h-screen flex-col px-4"
+>
+  <DotsBackground />
+  <Header />
+  <main class="flex-1">
+    <Container class="flex flex-col gap-12 py-12">
+      <Section variant="content">
+        <Text as="p" tone="muted" class="text-sm uppercase tracking-[0.2em]">
+          Contact
+        </Text>
+        <Heading as="h1" variant="hero"
+          >Let’s talk about products, design systems, and web experiences</Heading
         >
-          <Card class="space-y-4 shadow-sm backdrop-blur">
-            <Heading as="h2" variant="section">Send a message</Heading>
+        <Text class="max-w-3xl">
+          This is placeholder contact content. Use it to test call-to-action
+          copy, availability notes, inquiry forms, and secondary contact options
+          before replacing it with real information.
+        </Text>
+      </Section>
+
+      <Section
+        variant="grid"
+        class="items-start gap-8 lg:grid-cols-[1.1fr_0.9fr]"
+      >
+        <Card class="space-y-4 shadow-sm backdrop-blur">
+          <Heading as="h2" variant="section">Send a message</Heading>
+          <Text>
+            Placeholder form for layout testing. Hook it up to your preferred
+            form backend or email workflow later.
+          </Text>
+          <div class="space-y-3">
+            <FormLabel for="contact-name">Name</FormLabel>
+            <TextInput id="contact-name" type="text" placeholder="Your name" />
+          </div>
+          <div class="space-y-3">
+            <FormLabel for="contact-email">Email</FormLabel>
+            <TextInput
+              id="contact-email"
+              type="email"
+              placeholder="you@example.com"
+            />
+          </div>
+          <div class="space-y-3">
+            <FormLabel for="contact-message">Project details</FormLabel>
+            <TextArea
+              id="contact-message"
+              rows="6"
+              placeholder="Tell me a bit about your idea, timeline, or team..."
+            />
+          </div>
+          <Button type="button">Send inquiry</Button>
+        </Card>
+
+        <div class="space-y-6">
+          <Card class="space-y-3 shadow-sm backdrop-blur">
+            <Heading as="h3">General inquiries</Heading>
             <Text>
-              Placeholder form for layout testing. Hook it up to your preferred
-              form backend or email workflow later.
+              Placeholder email and response-time copy for freelance,
+              consulting, or product collaborations.
             </Text>
-            <div class="space-y-3">
-              <FormLabel for="contact-name">Name</FormLabel>
-              <TextInput
-                id="contact-name"
-                type="text"
-                placeholder="Your name"
-              />
-            </div>
-            <div class="space-y-3">
-              <FormLabel for="contact-email">Email</FormLabel>
-              <TextInput
-                id="contact-email"
-                type="email"
-                placeholder="you@example.com"
-              />
-            </div>
-            <div class="space-y-3">
-              <FormLabel for="contact-message">Project details</FormLabel>
-              <TextArea
-                id="contact-message"
-                rows="6"
-                placeholder="Tell me a bit about your idea, timeline, or team..."
-              />
-            </div>
-            <Button type="button">Send inquiry</Button>
+            <Link href="mailto:hello@example.com">hello@example.com</Link>
           </Card>
 
-          <div class="space-y-6">
-            <Card class="space-y-3 shadow-sm backdrop-blur">
-              <Heading as="h3">General inquiries</Heading>
-              <Text>
-                Placeholder email and response-time copy for freelance,
-                consulting, or product collaborations.
-              </Text>
-              <Link href="mailto:hello@example.com">hello@example.com</Link>
-            </Card>
+          <Card class="space-y-3 shadow-sm backdrop-blur">
+            <Heading as="h3">Elsewhere</Heading>
+            <Text as="ul" tone="soft" class="list-disc space-y-1 pl-5 text-sm">
+              <li><Link href="#">GitHub profile</Link></li>
+              <li><Link href="#">LinkedIn profile</Link></li>
+              <li><Link href="#">X / Twitter</Link></li>
+            </Text>
+          </Card>
 
-            <Card class="space-y-3 shadow-sm backdrop-blur">
-              <Heading as="h3">Elsewhere</Heading>
-              <Text
-                as="ul"
-                tone="soft"
-                class="list-disc space-y-1 pl-5 text-sm"
-              >
-                <li><Link href="#">GitHub profile</Link></li>
-                <li><Link href="#">LinkedIn profile</Link></li>
-                <li><Link href="#">X / Twitter</Link></li>
-              </Text>
-            </Card>
-
-            <Card class="space-y-3 shadow-sm backdrop-blur">
-              <Heading as="h3">Availability</Heading>
-              <Text>
-                Placeholder text for your current availability, timezone,
-                preferred project scope, and the best way to start a
-                conversation.
-              </Text>
-            </Card>
-          </div>
-        </Section>
-      </Container>
-    </main>
-    <Footer />
-  </body>
-</html>
+          <Card class="space-y-3 shadow-sm backdrop-blur">
+            <Heading as="h3">Availability</Heading>
+            <Text>
+              Placeholder text for your current availability, timezone,
+              preferred project scope, and the best way to start a conversation.
+            </Text>
+          </Card>
+        </div>
+      </Section>
+    </Container>
+  </main>
+  <Footer />
+</AppLayout>

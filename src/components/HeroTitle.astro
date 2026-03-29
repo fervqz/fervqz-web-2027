@@ -1,0 +1,97 @@
+---
+// HeroTitle.astro - Animated hero title with rotating words
+---
+
+<h1 class="mt-3.5 mb-6 text-6xl leading-tight font-black">
+  <span class="rotating-word-stack" aria-live="polite">
+    <span class="rotating-word">Creative</span>
+    <span class="rotating-word">Product</span>
+    <span class="rotating-word">Frontend</span>
+  </span>
+  <br />
+  Developer
+</h1>
+
+<style>
+  .rotating-word-stack {
+    position: relative;
+    display: inline-block;
+    height: 1.1em;
+    overflow: hidden;
+    vertical-align: baseline;
+  }
+
+  .rotating-word {
+    position: absolute;
+    inset: 0 auto auto 0;
+    white-space: nowrap;
+    will-change: transform, opacity;
+  }
+</style>
+
+<script>
+  import { gsap } from "gsap";
+
+  const stack = document.querySelector(".rotating-word-stack");
+
+  if (stack instanceof HTMLElement) {
+    const words = Array.from(
+      stack.querySelectorAll<HTMLElement>(".rotating-word"),
+    );
+
+    if (words.length > 0) {
+      const reduceMotion = window.matchMedia(
+        "(prefers-reduced-motion: reduce)",
+      ).matches;
+
+      const maxWidth = Math.max(...words.map((word) => word.offsetWidth));
+      stack.style.width = `${maxWidth}px`;
+
+      gsap.set(words, { yPercent: 100, autoAlpha: 1 });
+      gsap.set(words[0], { yPercent: 0 });
+
+      if (!reduceMotion && words.length > 1) {
+        let index = 0;
+        const stepDuration = 0.55;
+        const holdDuration = 1.1;
+
+        const rotatePush = () => {
+          const current = words[index];
+          const nextIndex = (index + 1) % words.length;
+          const next = words[nextIndex];
+
+          const tl = gsap.timeline({
+            onComplete: () => {
+              gsap.set(current, { yPercent: 100 });
+              index = nextIndex;
+              gsap.delayedCall(holdDuration, rotatePush);
+            },
+          });
+
+          tl.to(
+            current,
+            {
+              yPercent: -100,
+              duration: stepDuration,
+              ease: "power2.inOut",
+            },
+            0,
+          ).fromTo(
+            next,
+            { yPercent: 100 },
+            {
+              yPercent: 0,
+              duration: stepDuration,
+              ease: "power2.inOut",
+            },
+            0,
+          );
+        };
+
+        gsap.delayedCall(holdDuration, rotatePush);
+      } else {
+        gsap.set(words.slice(1), { yPercent: 100 });
+      }
+    }
+  }
+</script>
