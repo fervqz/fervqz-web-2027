@@ -1,41 +1,107 @@
----
-/**
- * Dots background
- * Tweak these values to match your mockups.
- */
-const DOT_SIZE = 1.4; // px
-const DOT_DISTANCE = 24; // px
-const DOT_COLOR = "var(--dots-color)";
-const BG_COLOR = "var(--bg-color)";
----
-
 <div
   aria-hidden="true"
-  class="pointer-events-none absolute inset-0 -z-10 overflow-hidden"
+  class="dots-bg pointer-events-none absolute inset-0 -z-10"
 >
-  <svg
-    class="min-h-full w-full"
-    xmlns="http://www.w3.org/2000/svg"
-    preserveAspectRatio="none"
-  >
-    <defs>
-      <pattern
-        id="dots-pattern"
-        x="0"
-        y="0"
-        width={DOT_DISTANCE}
-        height={DOT_DISTANCE}
-        patternUnits="userSpaceOnUse"
-      >
-        <circle
-          cx={DOT_DISTANCE / 2}
-          cy={DOT_DISTANCE / 2}
-          r={DOT_SIZE / 2}
-          fill={DOT_COLOR}></circle>
-      </pattern>
-    </defs>
-
-    <rect width="100%" height="100%" fill={BG_COLOR}></rect>
-    <rect width="100%" height="100%" fill="url(#dots-pattern)"></rect>
-  </svg>
+  <div class="dots-layer dots-layer-base"></div>
+  <div class="dots-layer dots-layer-glow"></div>
 </div>
+
+<script is:inline>
+  const background = document.querySelector(".dots-bg");
+
+  if (background instanceof HTMLElement) {
+    const finePointer = window.matchMedia("(pointer: fine)").matches;
+
+    if (finePointer) {
+      let rafId = 0;
+      let lastX = 0;
+      let lastY = 0;
+
+      const paint = () => {
+        rafId = 0;
+        const rect = background.getBoundingClientRect();
+        background.style.setProperty("--mouse-x", `${lastX - rect.left}px`);
+        background.style.setProperty("--mouse-y", `${lastY - rect.top}px`);
+      };
+
+      const onPointerMove = (event) => {
+        lastX = event.clientX;
+        lastY = event.clientY;
+        background.dataset.active = "true";
+
+        if (!rafId) {
+          rafId = window.requestAnimationFrame(paint);
+        }
+      };
+
+      const onPointerLeave = () => {
+        background.dataset.active = "false";
+      };
+
+      window.addEventListener("pointermove", onPointerMove, { passive: true });
+      window.addEventListener("pointerleave", onPointerLeave);
+    }
+  }
+</script>
+
+<style>
+  .dots-bg {
+    --dot-step: 24px;
+    --dot-base-size: 1.4px;
+    --dot-glow-size: 1.9px;
+    --mouse-x: 50%;
+    --mouse-y: 50%;
+    --glow-radius: var(--dots-glow-radius);
+    --glow-falloff: var(--dots-glow-falloff);
+    background: var(--bg-color);
+    overflow: hidden;
+  }
+
+  .dots-layer {
+    position: absolute;
+    inset: 0;
+    background-position: calc(var(--dot-step) / 2) calc(var(--dot-step) / 2);
+    background-size: var(--dot-step) var(--dot-step);
+  }
+
+  .dots-layer-base {
+    background-image: radial-gradient(
+      circle,
+      var(--dots-color) calc(var(--dot-base-size) / 2),
+      transparent calc(var(--dot-base-size) / 2)
+    );
+  }
+
+  .dots-layer-glow {
+    background-image: radial-gradient(
+      circle,
+      color-mix(in oklab, var(--dots-color) 30%, var(--dots-glow-color) 70%)
+        calc(var(--dot-glow-size) / 2),
+      transparent calc(var(--dot-glow-size) / 2)
+    );
+    opacity: 0;
+    transition: opacity 180ms ease;
+    -webkit-mask-image: radial-gradient(
+      circle at var(--mouse-x) var(--mouse-y),
+      rgb(0 0 0 / 1) 0,
+      rgb(0 0 0 / 0.95) var(--glow-radius),
+      rgb(0 0 0 / 0) var(--glow-falloff)
+    );
+    mask-image: radial-gradient(
+      circle at var(--mouse-x) var(--mouse-y),
+      rgb(0 0 0 / 1) 0,
+      rgb(0 0 0 / 0.95) var(--glow-radius),
+      rgb(0 0 0 / 0) var(--glow-falloff)
+    );
+  }
+
+  .dots-bg[data-active="true"] .dots-layer-glow {
+    opacity: 1;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .dots-layer-glow {
+      transition: none;
+    }
+  }
+</style>

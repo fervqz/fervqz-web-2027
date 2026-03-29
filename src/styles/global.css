@@ -31,6 +31,9 @@
   --blockquote-border: #cbd5e1;
   --blockquote-text: #475569;
   --dots-color: #d1d5db;
+  --dots-glow-color: #a7a7a7;
+  --dots-glow-radius: 10px;
+  --dots-glow-falloff: 100px;
   --code-bg: #1f1f1f;
   --code-border: #3c3c3c;
   --code-text: #d4d4d4;
@@ -61,6 +64,9 @@ html[data-theme="dark"] {
   --blockquote-border: #475569;
   --blockquote-text: #cbd5e1;
   --dots-color: #334155;
+  --dots-glow-color: #e2e8f0;
+  --dots-glow-radius: 10px;
+  --dots-glow-falloff: 100px;
   --code-bg: #1e1e1e;
   --code-border: #3c3c3c;
   --code-text: #d4d4d4;
