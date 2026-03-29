@@ -16,6 +16,18 @@ const {
   ...props
 } = Astro.props;
 
+const baseClasses =
+  'font-["Zalando Sans Variable","Zalando Sans",sans-serif] font-bold text-(--text-color)';
+
+const sizeClasses: Record<HeadingTag, string> = {
+  h1: "mb-4 text-[2.125rem] leading-[1.2059] tracking-[0.4px]",
+  h2: "mb-3 text-[1.75rem] leading-[1.2143] tracking-[0.38px]",
+  h3: "mb-2 text-[1.375rem] leading-[1.2727] tracking-[-0.26px]",
+  h4: "mb-1 text-[1.25rem] leading-[1.25] tracking-[-0.45px]",
+  h5: "mb-1 text-[1.0625rem] leading-[1.2941] tracking-[-0.43px]",
+  h6: "mb-1 text-[1rem] leading-[1.3125] tracking-[-0.31px]",
+};
+
 const variantClasses: Record<HeadingVariant, string> = {
   default: "",
   hero: "max-w-3xl text-balance",
@@ -26,6 +38,14 @@ const variantClasses: Record<HeadingVariant, string> = {
 const Tag = as;
 ---
 
-<Tag class:list={[variantClasses[variant], className]} {...props}>
+<Tag
+  class:list={[
+    baseClasses,
+    sizeClasses[as],
+    variantClasses[variant],
+    className,
+  ]}
+  {...props}
+>
   <slot />
 </Tag>

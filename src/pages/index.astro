@@ -5,12 +5,8 @@ import Header from "../components/Header.astro";
 import { SITE_DESCRIPTION, SITE_TITLE } from "../consts";
 import DotsBackground from "../components/DotsBackground.astro";
 import Container from "../components/ui/Container.astro";
-import Link from "../components/ui/Link.astro";
-import BlockQuote from "../components/ui/BlockQuote.astro";
-import CodeBlock from "../components/ui/CodeBlock.astro";
 import Heading from "../components/ui/Heading.astro";
 import Section from "../components/ui/Section.astro";
-import Card from "../components/ui/Card.astro";
 ---
 
 <!doctype html>
@@ -21,294 +17,122 @@ import Card from "../components/ui/Card.astro";
   <body class="flex flex-col min-h-screen">
     <DotsBackground />
     <Header />
-    <main class="flex-1">
+    <main class="flex-1 justify-center items-center flex">
       <Container class="flex-1 py-12 flex flex-col gap-14">
-        <Section variant="content">
-          <p class="text-sm uppercase tracking-[0.2em] text-slate-500">
-            Content Test / Placeholder
-          </p>
-          <Heading as="h1" variant="hero"
-            >Typography & blog layout preview page</Heading
-          >
-          <p class="max-w-3xl text-slate-700">
-            This page is a visual testbed for headings, body copy, lists,
-            callouts, and blog cards. Replace this content as your real copy
-            becomes available.
-          </p>
-        </Section>
-
-        <Section class="space-y-3">
-          <Heading as="h2" variant="section">Heading scale sample</Heading>
-          <Heading as="h3" variant="subsection">Heading level 3</Heading>
-          <Heading as="h4" variant="subsection">Heading level 4</Heading>
-          <Heading as="h5" variant="subsection">Heading level 5</Heading>
-          <Heading as="h6" variant="subsection">Heading level 6</Heading>
-          <p>
-            Body paragraph sample with a <Link href="#">text link</Link>, <strong
-              >bold text</strong
-            >, and inline <code class="rounded bg-slate-200 px-1 py-0.5"
-              >code</code
-            >.
-          </p>
-          <BlockQuote>
-            “Design systems are not about making pages look the same. They are
-            about making decisions consistent.”
-          </BlockQuote>
-        </Section>
-
-        <Section variant="grid" class="md:grid-cols-2">
-          <Card class="shadow-sm backdrop-blur">
-            <p class="mb-2 text-xs uppercase tracking-wider text-slate-500">
-              Featured Post
+        <Section variant="content" class="flex flex-row gap-12 items-center">
+          <img
+            src="/public/img/avatar.svg"
+            alt="logo"
+            width="280"
+            class="drop-shadow-sm drop-shadow-zinc-900/30 hover:scale-105 hover:-rotate-2 transition-transform ease-out hover:drop-shadow-xl hover:drop-shadow-zinc-900/20"
+          />
+          <div>
+            <p class="text-sm uppercase tracking-[0.2em] text-slate-500">
+              Meet Your Next
             </p>
-            <Heading as="h3" class="mb-2"
-              >Building a scalable content architecture</Heading
-            >
-            <p class="mb-4 text-slate-700">
-              A placeholder summary for a featured article, showing title
-              hierarchy, metadata spacing, and card readability.
+            <h1 class="mt-3.5 mb-6 text-6xl leading-tight font-black">
+              <span class="rotating-word-stack" aria-live="polite">
+                <span class="rotating-word">Creative</span>
+                <span class="rotating-word">Product</span>
+                <span class="rotating-word">Frontend</span>
+              </span>
+              <br />
+              Developer
+            </h1>
+            <p class="max-w-3xl text-slate-700">
+              When I sarted coding, I was drawn to the web for its unique blend
+              of creativity and logic. Over the years, I've honed my skills as a
+              creative developer, with a particular focus on crafting engaging
+              user experiences.
             </p>
-            <p class="text-sm text-slate-500">Mar 28, 2026 · 7 min read</p>
-          </Card>
-
-          <Card class="shadow-sm backdrop-blur">
-            <p class="mb-2 text-xs uppercase tracking-wider text-slate-500">
-              Latest Note
-            </p>
-            <Heading as="h3" class="mb-2"
-              >How I structure reusable UI components</Heading
-            >
-            <p class="mb-4 text-slate-700">
-              Another placeholder card to test density, alignment, and
-              typography in list views.
-            </p>
-            <p class="text-sm text-slate-500">Mar 20, 2026 · 4 min read</p>
-          </Card>
-        </Section>
-
-        <section class="space-y-4">
-          <h2>Blog section layout test</h2>
-          <ul class="grid gap-4 md:grid-cols-3">
-            <li class="border border-slate-200 bg-white/80 p-4">
-              <h4 class="mb-1">Post title placeholder #1</h4>
-              <p class="text-sm text-slate-600">
-                Short excerpt to test card rhythm and line length.
-              </p>
-            </li>
-            <li class="border border-slate-200 bg-white/80 p-4">
-              <h4 class="mb-1">Post title placeholder #2</h4>
-              <p class="text-sm text-slate-600">
-                Short excerpt to test card rhythm and line length.
-              </p>
-            </li>
-            <li class="border border-slate-200 bg-white/80 p-4">
-              <h4 class="mb-1">Post title placeholder #3</h4>
-              <p class="text-sm text-slate-600">
-                Short excerpt to test card rhythm and line length.
-              </p>
-            </li>
-          </ul>
-        </section>
-
-        <section class="space-y-3 pb-6">
-          <h2>List styles test</h2>
-          <ol class="list-decimal space-y-1 pl-5">
-            <li>Primary navigation is visible and readable.</li>
-            <li>Typography hierarchy is clear across sections.</li>
-            <li>Cards and spacing feel consistent across breakpoints.</li>
-          </ol>
-        </section>
-
-        <section class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          <article class="border border-slate-200 bg-white/80 p-4">
-            <p class="text-xs uppercase tracking-wider text-slate-500">
-              Articles
-            </p>
-            <p class="mt-2 text-3xl font-bold">128</p>
-            <p class="text-sm text-slate-600">
-              Published across web and newsletter.
-            </p>
-          </article>
-          <article class="border border-slate-200 bg-white/80 p-4">
-            <p class="text-xs uppercase tracking-wider text-slate-500">
-              Subscribers
-            </p>
-            <p class="mt-2 text-3xl font-bold">4.2k</p>
-            <p class="text-sm text-slate-600">
-              Steady growth month over month.
-            </p>
-          </article>
-          <article class="border border-slate-200 bg-white/80 p-4">
-            <p class="text-xs uppercase tracking-wider text-slate-500">
-              Open Rate
-            </p>
-            <p class="mt-2 text-3xl font-bold">58%</p>
-            <p class="text-sm text-slate-600">
-              Healthy benchmark for long-form content.
-            </p>
-          </article>
-          <article class="border border-slate-200 bg-white/80 p-4">
-            <p class="text-xs uppercase tracking-wider text-slate-500">
-              Avg. Read Time
-            </p>
-            <p class="mt-2 text-3xl font-bold">6m</p>
-            <p class="text-sm text-slate-600">
-              Balanced for clarity and depth.
-            </p>
-          </article>
-        </section>
-
-        <section class="space-y-4">
-          <h2>Feature highlight cards</h2>
-          <div class="grid gap-4 lg:grid-cols-3">
-            <article class="border border-slate-200 bg-white/80 p-5">
-              <h4 class="mb-2">Design Tokens</h4>
-              <p class="mb-3 text-slate-700">
-                Reusable values for type, spacing, color, and elevation.
-              </p>
-              <ul class="list-disc space-y-1 pl-5 text-sm text-slate-600">
-                <li>Spacing scale</li>
-                <li>Color roles</li>
-                <li>Radius & shadows</li>
-              </ul>
-            </article>
-            <article class="border border-slate-200 bg-white/80 p-5">
-              <h4 class="mb-2">Content System</h4>
-              <p class="mb-3 text-slate-700">
-                Preview article formats, snippets, and metadata patterns.
-              </p>
-              <ul class="list-disc space-y-1 pl-5 text-sm text-slate-600">
-                <li>Featured stories</li>
-                <li>Editorial notes</li>
-                <li>Reading time labels</li>
-              </ul>
-            </article>
-            <article class="border border-slate-200 bg-white/80 p-5">
-              <h4 class="mb-2">Responsive QA</h4>
-              <p class="mb-3 text-slate-700">
-                Quickly validate typography and card density at all breakpoints.
-              </p>
-              <ul class="list-disc space-y-1 pl-5 text-sm text-slate-600">
-                <li>Mobile-first grid</li>
-                <li>Accessible contrast</li>
-                <li>Consistent rhythm</li>
-              </ul>
-            </article>
           </div>
-        </section>
-
-        <section class="space-y-4">
-          <h2>Editorial table sample</h2>
-          <div class="overflow-x-auto border border-slate-200 bg-white/80">
-            <table class="min-w-full border-collapse text-left text-sm">
-              <thead class="bg-slate-100/80">
-                <tr>
-                  <th class="border-b border-slate-200 px-4 py-3">Title</th>
-                  <th class="border-b border-slate-200 px-4 py-3">Status</th>
-                  <th class="border-b border-slate-200 px-4 py-3">Author</th>
-                  <th class="border-b border-slate-200 px-4 py-3">Updated</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td class="border-b border-slate-200 px-4 py-3"
-                    >Intro to design constraints</td
-                  >
-                  <td class="border-b border-slate-200 px-4 py-3">Draft</td>
-                  <td class="border-b border-slate-200 px-4 py-3">Fer</td>
-                  <td class="border-b border-slate-200 px-4 py-3">Today</td>
-                </tr>
-                <tr>
-                  <td class="border-b border-slate-200 px-4 py-3"
-                    >Building with Astro content collections</td
-                  >
-                  <td class="border-b border-slate-200 px-4 py-3">Review</td>
-                  <td class="border-b border-slate-200 px-4 py-3">Ana</td>
-                  <td class="border-b border-slate-200 px-4 py-3">Yesterday</td>
-                </tr>
-                <tr>
-                  <td class="px-4 py-3">Type scale implementation notes</td>
-                  <td class="px-4 py-3">Published</td>
-                  <td class="px-4 py-3">Luis</td>
-                  <td class="px-4 py-3">2 days ago</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </section>
-
-        <section class="grid gap-6 lg:grid-cols-2">
-          <article class="space-y-4 border border-slate-200 bg-white/80 p-5">
-            <h2>Form controls sample</h2>
-            <div class="space-y-3">
-              <label class="block text-sm text-slate-700" for="email-test"
-                >Email</label
-              >
-              <input
-                id="email-test"
-                type="email"
-                placeholder="name@example.com"
-                class="w-full border border-slate-300 bg-white px-3 py-2 text-slate-900 placeholder:text-slate-400"
-              />
-            </div>
-            <div class="space-y-3">
-              <label class="block text-sm text-slate-700" for="message-test"
-                >Message</label
-              >
-              <textarea
-                id="message-test"
-                rows="4"
-                class="w-full border border-slate-300 bg-white px-3 py-2 text-slate-900 placeholder:text-slate-400"
-                placeholder="Write your feedback..."></textarea>
-            </div>
-            <button
-              class="border border-slate-900 px-4 py-2 text-sm font-semibold hover:bg-slate-900 hover:text-white"
-            >
-              Send test message
-            </button>
-          </article>
-
-          <article class="space-y-4 border border-slate-200 bg-white/80 p-5">
-            <h2>Code block sample</h2>
-            <CodeBlock lang="ts"
-              >{
-                `const typography = {
-  h1: { size: 34, lineHeight: 41, tracking: 0.4 },
-  h2: { size: 28, lineHeight: 34, tracking: 0.38 },
-  body: { size: 17, lineHeight: 22, tracking: -0.43 }
-};`
-              }</CodeBlock
-            >
-            <p class="text-slate-700">
-              Use this block to verify contrast, overflow behavior, and
-              monospace rendering.
-            </p>
-          </article>
-        </section>
-
-        <section class="space-y-4 pb-8">
-          <h2>FAQ style test</h2>
-          <details class="border border-slate-200 bg-white/80 p-4">
-            <summary class="cursor-pointer font-semibold"
-              >Why keep this page as a content sandbox?</summary
-            >
-            <p class="mt-3 text-slate-700">
-              It speeds up visual QA and helps compare spacing/typography
-              decisions before shipping real content.
-            </p>
-          </details>
-          <details class="border border-slate-200 bg-white/80 p-4">
-            <summary class="cursor-pointer font-semibold"
-              >Should these sections be production components?</summary
-            >
-            <p class="mt-3 text-slate-700">
-              Not necessarily. They are placeholders, but any useful block can
-              be extracted into reusable components.
-            </p>
-          </details>
-        </section>
+        </Section>
       </Container>
     </main>
     <Footer />
+
+    <script>
+      import { gsap } from "gsap";
+
+      const stack = document.querySelector(".rotating-word-stack");
+
+      if (stack instanceof HTMLElement) {
+        const words = Array.from(
+          stack.querySelectorAll<HTMLElement>(".rotating-word"),
+        );
+
+        if (words.length > 0) {
+          const reduceMotion = window.matchMedia(
+            "(prefers-reduced-motion: reduce)",
+          ).matches;
+
+          const maxWidth = Math.max(...words.map((word) => word.offsetWidth));
+          stack.style.width = `${maxWidth}px`;
+
+          gsap.set(words, { yPercent: 100, autoAlpha: 1 });
+          gsap.set(words[0], { yPercent: 0 });
+
+          if (!reduceMotion && words.length > 1) {
+            let index = 0;
+            const stepDuration = 0.55;
+            const holdDuration = 1.1;
+
+            const rotatePush = () => {
+              const current = words[index];
+              const nextIndex = (index + 1) % words.length;
+              const next = words[nextIndex];
+
+              const tl = gsap.timeline({
+                onComplete: () => {
+                  gsap.set(current, { yPercent: 100 });
+                  index = nextIndex;
+                  gsap.delayedCall(holdDuration, rotatePush);
+                },
+              });
+
+              tl.to(
+                current,
+                {
+                  yPercent: -100,
+                  duration: stepDuration,
+                  ease: "power2.inOut",
+                },
+                0,
+              ).fromTo(
+                next,
+                { yPercent: 100 },
+                {
+                  yPercent: 0,
+                  duration: stepDuration,
+                  ease: "power2.inOut",
+                },
+                0,
+              );
+            };
+
+            gsap.delayedCall(holdDuration, rotatePush);
+          } else {
+            gsap.set(words.slice(1), { yPercent: 100 });
+          }
+        }
+      }
+    </script>
   </body>
 </html>
+
+<style>
+  .rotating-word-stack {
+    position: relative;
+    display: inline-block;
+    height: 1.1em;
+    overflow: hidden;
+    vertical-align: baseline;
+  }
+
+  .rotating-word {
+    position: absolute;
+    inset: 0 auto auto 0;
+    white-space: nowrap;
+    will-change: transform, opacity;
+  }
+</style>

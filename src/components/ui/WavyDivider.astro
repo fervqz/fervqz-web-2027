@@ -1,0 +1,48 @@
+---
+import type { HTMLAttributes } from "astro/types";
+
+type Props = HTMLAttributes<"div">;
+
+const { class: className, ...props } = Astro.props;
+
+// Generate a symmetric wave path.
+// period: 12px  amplitude: ±2.5px around center (y=4) inside an 8px tall canvas
+const periodWidth = 12;
+const centerY = 4;
+const amplitude = 2.5;
+const waveCount = 300; // covers up to 3600px wide containers
+let d = `M0,${centerY}`;
+for (let i = 0; i < waveCount; i++) {
+  const x = i * periodWidth;
+  d += ` Q${x + periodWidth / 4},${centerY - amplitude} ${x + periodWidth / 2},${centerY}`;
+  d += ` Q${x + (periodWidth * 3) / 4},${centerY + amplitude} ${x + periodWidth},${centerY}`;
+}
+---
+
+<div
+  class:list={["w-full overflow-hidden", className]}
+  aria-hidden="true"
+  role="separator"
+  {...props}
+>
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width={periodWidth * waveCount}
+    height="8"
+    class="block"
+  >
+    <path
+      class="wave-stroke"
+      d={d}
+      fill="none"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"></path>
+  </svg>
+</div>
+
+<style>
+  .wave-stroke {
+    stroke: var(--nav-link-active-color);
+  }
+</style>

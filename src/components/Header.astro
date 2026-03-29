@@ -6,7 +6,16 @@ import HeaderLink from "./HeaderLink.astro";
 <header class="m-0 p-4">
   <Container>
     <nav class="flex items-center justify-between gap-4">
-      <img src="/public/img/avatar.png" alt="avatar" width="50" />
+      <div class="flex flex-row gap-2 items-center">
+        <img
+          src="/public/img/logo.svg"
+          alt="logo"
+          width="50"
+          class="cursor-pointer drop-shadow-sm hover:scale-105 hover:-rotate-12 transition-transform ease-out hover:drop-shadow-md"
+        />
+        <span class="text-2xl font-black font-[JetBrains Mono]">Fervqz</span>
+      </div>
+
       <div class="internal-links flex items-center gap-1">
         <HeaderLink href="/">About</HeaderLink>
         <HeaderLink href="/projects">Projects</HeaderLink>

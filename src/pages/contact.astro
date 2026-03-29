@@ -1,0 +1,107 @@
+---
+import BaseHead from "../components/BaseHead.astro";
+import DotsBackground from "../components/DotsBackground.astro";
+import Footer from "../components/Footer.astro";
+import Header from "../components/Header.astro";
+import { SITE_TITLE } from "../consts";
+import Card from "../components/ui/Card.astro";
+import Container from "../components/ui/Container.astro";
+import Heading from "../components/ui/Heading.astro";
+import Link from "../components/ui/Link.astro";
+import Section from "../components/ui/Section.astro";
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <BaseHead
+      title={`Contact | ${SITE_TITLE}`}
+      description="Placeholder contact page for testing intro copy, contact methods, and form layout."
+    />
+  </head>
+  <body class="flex min-h-screen flex-col">
+    <DotsBackground />
+    <Header />
+    <main class="flex-1">
+      <Container class="flex flex-col gap-12 py-12">
+        <Section variant="content">
+          <p class="text-sm uppercase tracking-[0.2em] text-slate-500">
+            Contact
+          </p>
+          <Heading as="h1" variant="hero"
+            >Let’s talk about products, design systems, and web experiences</Heading
+          >
+          <p class="max-w-3xl text-slate-700">
+            This is placeholder contact content. Use it to test call-to-action
+            copy, availability notes, inquiry forms, and secondary contact
+            options before replacing it with real information.
+          </p>
+        </Section>
+
+        <Section
+          variant="grid"
+          class="items-start gap-8 lg:grid-cols-[1.1fr_0.9fr]"
+        >
+          <Card class="space-y-4 shadow-sm backdrop-blur">
+            <Heading as="h2" variant="section">Send a message</Heading>
+            <p class="text-slate-700">
+              Placeholder form for layout testing. Hook it up to your preferred
+              form backend or email workflow later.
+            </p>
+            <div class="space-y-3">
+              <label for="contact-name">Name</label>
+              <input id="contact-name" type="text" placeholder="Your name" />
+            </div>
+            <div class="space-y-3">
+              <label for="contact-email">Email</label>
+              <input
+                id="contact-email"
+                type="email"
+                placeholder="you@example.com"
+              />
+            </div>
+            <div class="space-y-3">
+              <label for="contact-message">Project details</label>
+              <textarea
+                id="contact-message"
+                rows="6"
+                placeholder="Tell me a bit about your idea, timeline, or team..."
+              ></textarea>
+            </div>
+            <button type="button">Send inquiry</button>
+          </Card>
+
+          <div class="space-y-6">
+            <Card class="space-y-3 shadow-sm backdrop-blur">
+              <Heading as="h3">General inquiries</Heading>
+              <p class="text-slate-700">
+                Placeholder email and response-time copy for freelance,
+                consulting, or product collaborations.
+              </p>
+              <Link href="mailto:hello@example.com">hello@example.com</Link>
+            </Card>
+
+            <Card class="space-y-3 shadow-sm backdrop-blur">
+              <Heading as="h3">Elsewhere</Heading>
+              <ul class="list-disc space-y-1 pl-5 text-sm text-slate-600">
+                <li><Link href="#">GitHub profile</Link></li>
+                <li><Link href="#">LinkedIn profile</Link></li>
+                <li><Link href="#">X / Twitter</Link></li>
+              </ul>
+            </Card>
+
+            <Card class="space-y-3 shadow-sm backdrop-blur">
+              <Heading as="h3">Availability</Heading>
+              <p class="text-slate-700">
+                Placeholder text for your current availability, timezone,
+                preferred project scope, and the best way to start a
+                conversation.
+              </p>
+            </Card>
+          </div>
+        </Section>
+      </Container>
+    </main>
+    <Footer />
+  </body>
+</html>

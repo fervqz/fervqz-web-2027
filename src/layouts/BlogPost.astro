@@ -10,6 +10,8 @@ import Container from "../components/ui/Container.astro";
 import Heading from "../components/ui/Heading.astro";
 import Link from "../components/ui/Link.astro";
 import Section from "../components/ui/Section.astro";
+import Typography from "../components/ui/Typography.astro";
+import WavyDivider from "../components/ui/WavyDivider.astro";
 
 type Props = CollectionEntry<"blog">["data"] & {
   slug: string;
@@ -74,8 +76,12 @@ const { title, description, pubDate, updatedDate, heroImage, slug } =
             </div>
           </header>
 
+          <WavyDivider />
+
           <Section variant="content">
-            <slot />
+            <Typography>
+              <slot />
+            </Typography>
           </Section>
         </article>
       </Container>

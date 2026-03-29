@@ -1,0 +1,160 @@
+---
+import BaseHead from "../components/BaseHead.astro";
+import DotsBackground from "../components/DotsBackground.astro";
+import Footer from "../components/Footer.astro";
+import Header from "../components/Header.astro";
+import { SITE_DESCRIPTION, SITE_TITLE } from "../consts";
+import Card from "../components/ui/Card.astro";
+import Container from "../components/ui/Container.astro";
+import Heading from "../components/ui/Heading.astro";
+import Link from "../components/ui/Link.astro";
+import Section from "../components/ui/Section.astro";
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <BaseHead
+      title={`Projects | ${SITE_TITLE}`}
+      description="Placeholder projects page for showcasing selected work, experiments, and client builds."
+    />
+  </head>
+  <body class="flex min-h-screen flex-col">
+    <DotsBackground />
+    <Header />
+    <main class="flex-1">
+      <Container class="flex flex-col gap-12 py-12">
+        <Section variant="content">
+          <p class="text-sm uppercase tracking-[0.2em] text-slate-500">
+            Projects
+          </p>
+          <Heading as="h1" variant="hero"
+            >Selected work, product experiments, and things in progress</Heading
+          >
+          <p class="max-w-3xl text-slate-700">
+            This is placeholder content for the projects page. Use it to test
+            layouts for case studies, project summaries, timelines, links, and
+            call-to-action blocks.
+          </p>
+        </Section>
+
+        <Section variant="grid" class="md:grid-cols-2 xl:grid-cols-3">
+          <Card class="space-y-4 shadow-sm backdrop-blur">
+            <div>
+              <p class="mb-2 text-xs uppercase tracking-wider text-slate-500">
+                Featured build
+              </p>
+              <Heading as="h3">Personal portfolio v3</Heading>
+            </div>
+            <p class="text-slate-700">
+              A placeholder case study for a design-forward Astro portfolio with
+              content collections, dark mode, animated transitions, and a
+              lightweight component system.
+            </p>
+            <ul class="list-disc space-y-1 pl-5 text-sm text-slate-600">
+              <li>Astro + Tailwind v4</li>
+              <li>GSAP interactions</li>
+              <li>Reusable UI primitives</li>
+            </ul>
+            <Link href="#">View case study</Link>
+          </Card>
+
+          <Card class="space-y-4 shadow-sm backdrop-blur">
+            <div>
+              <p class="mb-2 text-xs uppercase tracking-wider text-slate-500">
+                Client work
+              </p>
+              <Heading as="h3">Internal tooling dashboard</Heading>
+            </div>
+            <p class="text-slate-700">
+              Placeholder summary for a productized internal dashboard focused
+              on performance, operational visibility, and clean information
+              architecture.
+            </p>
+            <ul class="list-disc space-y-1 pl-5 text-sm text-slate-600">
+              <li>Role-based views</li>
+              <li>Analytics widgets</li>
+              <li>Optimized data loading</li>
+            </ul>
+            <Link href="#">Read project notes</Link>
+          </Card>
+
+          <Card class="space-y-4 shadow-sm backdrop-blur">
+            <div>
+              <p class="mb-2 text-xs uppercase tracking-wider text-slate-500">
+                Experiment
+              </p>
+              <Heading as="h3">Motion design playground</Heading>
+            </div>
+            <p class="text-slate-700">
+              A sandbox for prototyping transitions, shared element effects, and
+              scroll-triggered interactions before integrating them into
+              production pages.
+            </p>
+            <ul class="list-disc space-y-1 pl-5 text-sm text-slate-600">
+              <li>View transitions</li>
+              <li>Micro-interactions</li>
+              <li>Accessible motion patterns</li>
+            </ul>
+            <Link href="#">Open prototype log</Link>
+          </Card>
+        </Section>
+
+        <Section class="space-y-4 pb-8">
+          <Heading as="h2" variant="section"
+            >Project roadmap placeholder</Heading
+          >
+          <div class="overflow-x-auto border border-slate-200 bg-white/80">
+            <table class="min-w-full border-collapse text-left text-sm">
+              <thead class="bg-slate-100/80">
+                <tr>
+                  <th class="border-b border-slate-200 px-4 py-3">Project</th>
+                  <th class="border-b border-slate-200 px-4 py-3">Stage</th>
+                  <th class="border-b border-slate-200 px-4 py-3">Stack</th>
+                  <th class="border-b border-slate-200 px-4 py-3">Notes</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="border-b border-slate-200 px-4 py-3"
+                    >Portfolio redesign</td
+                  >
+                  <td class="border-b border-slate-200 px-4 py-3"
+                    >In progress</td
+                  >
+                  <td class="border-b border-slate-200 px-4 py-3"
+                    >Astro / Tailwind</td
+                  >
+                  <td class="border-b border-slate-200 px-4 py-3"
+                    >Testing responsive narrative layouts.</td
+                  >
+                </tr>
+                <tr>
+                  <td class="border-b border-slate-200 px-4 py-3"
+                    >Mobile utility app</td
+                  >
+                  <td class="border-b border-slate-200 px-4 py-3">Concept</td>
+                  <td class="border-b border-slate-200 px-4 py-3"
+                    >Expo / Supabase</td
+                  >
+                  <td class="border-b border-slate-200 px-4 py-3"
+                    >Placeholder content for case-study cards.</td
+                  >
+                </tr>
+                <tr>
+                  <td class="px-4 py-3">Automation dashboard</td>
+                  <td class="px-4 py-3">Maintained</td>
+                  <td class="px-4 py-3">React / Node</td>
+                  <td class="px-4 py-3"
+                    >Useful for testing maintenance-style copy.</td
+                  >
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </Section>
+      </Container>
+    </main>
+    <Footer />
+  </body>
+</html>
