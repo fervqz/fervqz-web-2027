@@ -66,6 +66,16 @@ html[data-theme="dark"] {
   --code-text: #d4d4d4;
 }
 
+html {
+  scrollbar-gutter: stable;
+}
+
+@supports not (scrollbar-gutter: stable) {
+  html {
+    overflow-y: scroll;
+  }
+}
+
 body {
   background: var(--bg-color);
   color: var(--text-color);
