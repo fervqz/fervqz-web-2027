@@ -1,4 +1,5 @@
 ---
+import { Icon } from "astro-icon/components";
 import Container from "./ui/Container.astro";
 import HeaderLink from "./HeaderLink.astro";
 ---
@@ -16,23 +17,27 @@ import HeaderLink from "./HeaderLink.astro";
         <span class="text-2xl font-black font-[JetBrains Mono]">Fervqz</span>
       </div>
 
-      <div class="flex items-center gap-2">
+      <div class="flex items-center gap-1">
+        <button
+          data-theme-toggle
+          class="hidden h-9 w-9 items-center justify-center p-0 text-lg leading-none text-(--nav-link-color) hover:cursor-pointer hover:text-(--nav-link-hover-color) md:inline-flex hover:scale-110 hover:-rotate-10 transition"
+          type="button"
+          aria-label="Toggle dark mode"
+          title="Toggle dark mode"
+        >
+          <span data-theme-toggle-icon="moon" aria-hidden="true">
+            <Icon name="lucide:moon" class="h-4 w-4" />
+          </span>
+          <span data-theme-toggle-icon="sun" aria-hidden="true" hidden>
+            <Icon name="lucide:sun" class="h-4 w-4" />
+          </span>
+        </button>
         <div class="internal-links hidden items-center gap-1 md:flex">
           <HeaderLink href="/">About</HeaderLink>
           <HeaderLink href="/projects">Projects</HeaderLink>
           <HeaderLink href="/blog">Blog</HeaderLink>
           <HeaderLink href="/contact">Contact</HeaderLink>
         </div>
-
-        <button
-          data-theme-toggle
-          class="ml-2 hidden h-9 w-9 items-center justify-center rounded-full border border-(--button-border) bg-(--surface-color) p-0 text-lg leading-none text-(--nav-link-color) hover:cursor-pointer hover:text-(--nav-link-hover-color) md:inline-flex"
-          type="button"
-          aria-label="Toggle dark mode"
-          title="Toggle dark mode"
-        >
-          <span data-theme-toggle-icon aria-hidden="true">🌙</span>
-        </button>
 
         <button
           id="mobile-menu-toggle"
@@ -66,15 +71,20 @@ import HeaderLink from "./HeaderLink.astro";
           >Contact</HeaderLink
         >
       </div>
-      <div class="mt-2 border-t border-(--button-border) pt-3">
+      <div class="mt-2 pt-3">
         <button
           data-theme-toggle
-          class="inline-flex h-9 items-center gap-2 rounded-md border border-(--button-border) bg-(--surface-color) px-3 text-sm text-(--nav-link-color)"
+          class="inline-flex h-9 items-center gap-2 border border-(--button-border) bg-(--surface-color) px-3 text-sm text-(--nav-link-color)"
           type="button"
           aria-label="Toggle dark mode"
           title="Toggle dark mode"
         >
-          <span data-theme-toggle-icon aria-hidden="true">🌙</span>
+          <span data-theme-toggle-icon="moon" aria-hidden="true">
+            <Icon name="lucide:moon" class="h-4 w-4" />
+          </span>
+          <span data-theme-toggle-icon="sun" aria-hidden="true" hidden>
+            <Icon name="lucide:sun" class="h-4 w-4" />
+          </span>
           <span>Toggle theme</span>
         </button>
       </div>
@@ -99,8 +109,10 @@ import HeaderLink from "./HeaderLink.astro";
 
     const getTheme = () => root.getAttribute("data-theme") || "light";
     const setButtonState = (button, theme) => {
-      const icon = button.querySelector("[data-theme-toggle-icon]");
-      if (icon) icon.textContent = theme === "dark" ? "☀️" : "🌙";
+      const moonIcon = button.querySelector('[data-theme-toggle-icon="moon"]');
+      const sunIcon = button.querySelector('[data-theme-toggle-icon="sun"]');
+      if (moonIcon) moonIcon.hidden = theme === "dark";
+      if (sunIcon) sunIcon.hidden = theme !== "dark";
       button.setAttribute(
         "aria-label",
         theme === "dark" ? "Switch to light mode" : "Switch to dark mode",
