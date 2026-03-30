@@ -27,11 +27,11 @@ const posts = (await getCollection("blog")).sort(
     <Container>
       <Section
         id="blog-list"
-        class="mx-auto flex w-full max-w-190 flex-col gap-6"
+        class="mx-auto flex w-full max-w-190 flex-col gap-4"
       >
         {
           posts.map((post) => (
-            <article class="blog-list-item group">
+            <article class="blog-list-item group hover:bg-slate-200/60 transition-colors p-2">
               <a
                 href={`/blog/${post.id}/`}
                 class="grid grid-cols-1 items-start gap-4 no-underline sm:grid-cols-[170px_1fr]"
@@ -58,7 +58,6 @@ const posts = (await getCollection("blog")).sort(
                     and progress updates from ongoing work.
                   </Text>
                 </div>
-                <div class="border border-slate-200" />
               </a>
             </article>
           ))
