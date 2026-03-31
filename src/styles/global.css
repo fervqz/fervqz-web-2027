@@ -90,6 +90,8 @@ body {
   background: var(--bg-color);
   color: var(--text-color);
   font-family: "JetBrains Mono Variable", "JetBrains Mono", monospace;
+  letter-spacing: 0.03em;
+  line-height: 1.78;
   min-height: 100vh;
   position: relative;
   transition:

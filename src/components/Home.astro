@@ -1,10 +1,12 @@
 ---
+import { Image } from "astro:assets";
 import Footer from "./Footer.astro";
 import Header from "./Header.astro";
 import HeroTitle from "./HeroTitle.astro";
 import Container from "./ui/Container.astro";
 import Section from "./ui/Section.astro";
 import Text from "../components/ui/Text.astro";
+import avatar from "../assets/img/avatar.svg";
 ---
 
 <div class="min-h-screen flex flex-col px-4">
@@ -15,8 +17,8 @@ import Text from "../components/ui/Text.astro";
         variant="content"
         class="flex flex-col items-center gap-8 text-center md:flex-row md:items-center md:gap-10 md:text-left lg:gap-12"
       >
-        <img
-          src="/public/img/avatar.svg"
+        <Image
+          src={avatar}
           alt="logo"
           width="280"
           class="w-44 sm:w-56 md:w-64 lg:w-70 h-auto drop-shadow-sm drop-shadow-zinc-900/30 transition ease-out hover:scale-105 hover:-rotate-2 hover:drop-shadow-xl hover:drop-shadow-zinc-900/20"

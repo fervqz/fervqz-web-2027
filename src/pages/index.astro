@@ -1,9 +1,13 @@
 ---
+import { Picture } from "astro:assets";
 import { SITE_DESCRIPTION, SITE_TITLE } from "../consts";
 import AppLayout from "../layouts/AppLayout.astro";
 import Home from "../components/Home.astro";
 import DotsBackground from "../components/DotsBackground.astro";
 import GridBackground from "../components/GridBackground.astro";
+import iphoneMock from "../assets/img/iphone-mock.png";
+import ipadMock from "../assets/img/ipad-mock.png";
+import macbookMock from "../assets/img/macbook-mock.png";
 ---
 
 <AppLayout
@@ -30,18 +34,21 @@ import GridBackground from "../components/GridBackground.astro";
           animation-id="device-mock"
           class="opacity-0 z-10 pointer-events-none"
         >
-          <img
-            src="/public/img/iphone-mock.png"
+          <Picture
+            src={iphoneMock}
+            formats={["avif", "webp"]}
             alt=""
             class="flex md:hidden absolute top-8 left-0 scale-110"
           />
-          <img
-            src="/public/img/ipad-mock.png"
+          <Picture
+            src={ipadMock}
+            formats={["avif", "webp"]}
             alt=""
             class="hidden md:flex lg:hidden absolute top-0 left-0 scale-108"
           />
-          <img
-            src="/public/img/macbook-mock.png"
+          <Picture
+            src={macbookMock}
+            formats={["avif", "webp"]}
             alt=""
             class="hidden lg:flex absolute top-0 left-0 scale-130"
           />

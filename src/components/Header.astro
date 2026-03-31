@@ -1,15 +1,17 @@
 ---
+import { Image } from "astro:assets";
 import { Icon } from "astro-icon/components";
 import Container from "./ui/Container.astro";
 import HeaderLink from "./HeaderLink.astro";
+import logo from "../assets/img/logo.svg";
 ---
 
 <header class="m-0 py-4">
   <Container class="relative">
     <nav class="flex items-center justify-between gap-4">
       <div class="flex items-center gap-2">
-        <img
-          src="/public/img/logo.svg"
+        <Image
+          src={logo}
           alt="logo"
           width="50"
           class="cursor-pointer drop-shadow-sm hover:scale-105 hover:-rotate-12 transition-transform ease-out hover:drop-shadow-md"
