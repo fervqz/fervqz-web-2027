@@ -3,6 +3,7 @@ import { SITE_DESCRIPTION, SITE_TITLE } from "../consts";
 import AppLayout from "../layouts/AppLayout.astro";
 import Home from "../components/Home.astro";
 import DotsBackground from "../components/DotsBackground.astro";
+import GridBackground from "../components/GridBackground.astro";
 ---
 
 <AppLayout
@@ -11,8 +12,16 @@ import DotsBackground from "../components/DotsBackground.astro";
   bodyClass="flex flex-col min-h-screen"
 >
   <main>
-    <DotsBackground />
+    <GridBackground />
     <section animation-id="container">
+      <div animation-id="back-heading">
+        <h1
+          animation-id="heading"
+          class="absolute inset-0 text-[8rem] font-black tracking-tighter text-center"
+        >
+          MORE THAN JUST
+        </h1>
+      </div>
       <div
         animation-id="mini-screen"
         class="relative min-h-screen flex flex-col"
@@ -64,6 +73,7 @@ import DotsBackground from "../components/DotsBackground.astro";
   const miniScreen = $("[animation-id='mini-screen']");
   const deviceMock = $("[animation-id='device-mock']");
   const headerSpacer = $("[animation-id='header-spacer']");
+  const backHeading = $("[animation-id='back-heading']");
 
   const getAspectRatio = () => {
     if (window.innerWidth >= 1024) return "16 / 10";
@@ -84,18 +94,27 @@ import DotsBackground from "../components/DotsBackground.astro";
   };
 
   const tl = gsap.timeline({ paused: true });
-  tl.to(miniScreen, {
-    scale: 0.5,
-    aspectRatio: getAspectRatio(),
-    y: -100,
-    duration: 0.2,
-  });
+
+  tl.to(backHeading, { scaleX: 1.5, duration: 0.3 });
+
+  tl.to(
+    miniScreen,
+    {
+      scale: 0.05,
+      aspectRatio: getAspectRatio(),
+      y: -100,
+      duration: 0.2,
+      rotate: -90,
+    },
+    "<",
+  );
   tl.to(content, { borderRadius: getBorderRadius(), duration: 0.01 }, "<");
   tl.to(deviceMock, { opacity: 1, duration: 0.2 }, "<");
   tl.to(headerSpacer, { height: getSpacerHeight(), duration: 0.2 }, "<");
+  tl.to(backHeading, { scaleY: 3, duration: 0.3 }, "<");
 
   ScrollTrigger.create({
-    markers: false,
+    markers: true,
     trigger: container,
     start: "top top",
     end: "bottom top",

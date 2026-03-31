@@ -1,0 +1,121 @@
+<div
+  aria-hidden="true"
+  class="grid-bg pointer-events-none absolute inset-0 -z-10"
+>
+  <div class="grid-layer grid-layer-base"></div>
+  <div class="grid-layer grid-layer-glow"></div>
+</div>
+
+<script is:inline>
+  const background = document.querySelector(".grid-bg");
+
+  if (background instanceof HTMLElement) {
+    const finePointer = window.matchMedia("(pointer: fine)").matches;
+
+    if (finePointer) {
+      let rafId = 0;
+      let lastX = 0;
+      let lastY = 0;
+
+      const paint = () => {
+        rafId = 0;
+        const rect = background.getBoundingClientRect();
+        background.style.setProperty("--mouse-x", `${lastX - rect.left}px`);
+        background.style.setProperty("--mouse-y", `${lastY - rect.top}px`);
+      };
+
+      const onPointerMove = (event) => {
+        lastX = event.clientX;
+        lastY = event.clientY;
+        background.dataset.active = "true";
+
+        if (!rafId) {
+          rafId = window.requestAnimationFrame(paint);
+        }
+      };
+
+      const onPointerLeave = () => {
+        background.dataset.active = "false";
+      };
+
+      window.addEventListener("pointermove", onPointerMove, { passive: true });
+      window.addEventListener("pointerleave", onPointerLeave);
+    }
+  }
+</script>
+
+<style>
+  .grid-bg {
+    --grid-step: 40px;
+    --grid-line-width: 1px;
+    --mouse-x: 50%;
+    --mouse-y: 50%;
+    --glow-radius: var(--grid-glow-radius, 80px);
+    --glow-falloff: var(--grid-glow-falloff, 200px);
+    background: var(--bg-color);
+    overflow: hidden;
+  }
+
+  .grid-layer {
+    position: absolute;
+    inset: 0;
+    background-size: var(--grid-step) var(--grid-step);
+  }
+
+  .grid-layer-base {
+    background-image:
+      linear-gradient(
+        to right,
+        var(--grid-color, var(--dots-color)) var(--grid-line-width),
+        transparent var(--grid-line-width)
+      ),
+      linear-gradient(
+        to bottom,
+        var(--grid-color, var(--dots-color)) var(--grid-line-width),
+        transparent var(--grid-line-width)
+      );
+    opacity: 0.5;
+  }
+
+  .grid-layer-glow {
+    background-image:
+      linear-gradient(
+        to right,
+        color-mix(
+            in oklab,
+            var(--grid-color, var(--dots-color)) 30%,
+            var(--grid-glow-color, var(--dots-glow-color)) 70%
+          )
+          var(--grid-line-width),
+        transparent var(--grid-line-width)
+      ),
+      linear-gradient(
+        to bottom,
+        color-mix(
+            in oklab,
+            var(--grid-color, var(--dots-color)) 30%,
+            var(--grid-glow-color, var(--dots-glow-color)) 70%
+          )
+          var(--grid-line-width),
+        transparent var(--grid-line-width)
+      );
+    opacity: 0;
+    transition: opacity 180ms ease;
+    -webkit-mask-image: radial-gradient(
+      circle at var(--mouse-x) var(--mouse-y),
+      rgb(0 0 0 / 1) 0,
+      rgb(0 0 0 / 0.95) var(--glow-radius),
+      rgb(0 0 0 / 0) var(--glow-falloff)
+    );
+    mask-image: radial-gradient(
+      circle at var(--mouse-x) var(--mouse-y),
+      rgb(0 0 0 / 1) 0,
+      rgb(0 0 0 / 0.95) var(--glow-radius),
+      rgb(0 0 0 / 0) var(--glow-falloff)
+    );
+  }
+
+  .grid-bg[data-active="true"] .grid-layer-glow {
+    opacity: 1;
+  }
+</style>
