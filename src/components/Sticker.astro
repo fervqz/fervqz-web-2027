@@ -1,0 +1,93 @@
+---
+import { Image } from "astro:assets";
+import type { ImageMetadata } from "astro";
+
+interface Props {
+  src: ImageMetadata;
+  alt: string;
+  width: number;
+  draggable?: boolean;
+  class?: string;
+}
+
+const {
+  src,
+  alt,
+  width,
+  draggable = true,
+  class: className = "",
+} = Astro.props;
+
+const defaultImageClasses = "h-auto drop-shadow-sm drop-shadow-zinc-900/30";
+---
+
+<div
+  data-sticker={draggable ? "true" : undefined}
+  class="relative z-20 inline-flex cursor-grab touch-none select-none active:cursor-grabbing"
+  style="transform: translate3d(0px, 0px, 0px);"
+>
+  <div data-sticker-inner class="transition ease-out">
+    <Image
+      src={src}
+      alt={alt}
+      width={width}
+      draggable="false"
+      class={`${defaultImageClasses} ${className}`.trim()}
+    />
+  </div>
+</div>
+
+<script>
+  const DRAG_CLASSES = [
+    "scale-105",
+    "-rotate-2",
+    "drop-shadow-xl",
+    "drop-shadow-zinc-900/20",
+  ];
+
+  document
+    .querySelectorAll<HTMLElement>('[data-sticker="true"]')
+    .forEach((wrapper) => {
+      const inner = wrapper.querySelector<HTMLElement>("[data-sticker-inner]");
+
+      let offsetX = 0;
+      let offsetY = 0;
+      let startX = 0;
+      let startY = 0;
+      let activePointerId: number | null = null;
+
+      const updatePosition = () => {
+        wrapper.style.transform = `translate3d(${offsetX}px, ${offsetY}px, 0)`;
+      };
+
+      const onPointerMove = (event: PointerEvent) => {
+        if (event.pointerId !== activePointerId) return;
+        offsetX += event.clientX - startX;
+        offsetY += event.clientY - startY;
+        startX = event.clientX;
+        startY = event.clientY;
+        updatePosition();
+      };
+
+      const stopDragging = (event: PointerEvent) => {
+        if (event.pointerId !== activePointerId) return;
+        activePointerId = null;
+        inner?.classList.remove(...DRAG_CLASSES);
+        wrapper.releasePointerCapture(event.pointerId);
+        window.removeEventListener("pointermove", onPointerMove);
+        window.removeEventListener("pointerup", stopDragging);
+        window.removeEventListener("pointercancel", stopDragging);
+      };
+
+      wrapper.addEventListener("pointerdown", (event) => {
+        activePointerId = event.pointerId;
+        startX = event.clientX;
+        startY = event.clientY;
+        inner?.classList.add(...DRAG_CLASSES);
+        wrapper.setPointerCapture(event.pointerId);
+        window.addEventListener("pointermove", onPointerMove);
+        window.addEventListener("pointerup", stopDragging);
+        window.addEventListener("pointercancel", stopDragging);
+      });
+    });
+</script>

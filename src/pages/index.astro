@@ -7,7 +7,7 @@ import Section from "../components/ui/Section.astro";
 import Text from "../components/ui/Text.astro";
 import Header from "../components/Header.astro";
 import HeroTitle from "../components/HeroTitle.astro";
-import { Image } from "astro:assets";
+import Sticker from "../components/Sticker.astro";
 import avatar from "../assets/img/avatar.svg";
 import Footer from "../components/Footer.astro";
 ---
@@ -25,12 +25,7 @@ import Footer from "../components/Footer.astro";
         variant="content"
         class="flex flex-col items-center gap-8 text-center md:flex-row md:items-center md:gap-10 md:text-left lg:gap-12"
       >
-        <Image
-          src={avatar}
-          alt="logo"
-          width="280"
-          class="w-44 sm:w-56 md:w-64 lg:w-70 h-auto drop-shadow-sm drop-shadow-zinc-900/30 transition ease-out hover:scale-105 hover:-rotate-2 hover:drop-shadow-xl hover:drop-shadow-zinc-900/20"
-        />
+        <Sticker src={avatar} alt="avatar" width={280} />
         <div class="max-w-3xl">
           <Text as="p" tone="muted" class="text-sm uppercase tracking-[0.2em]">
             Meet Your Next
