@@ -17,7 +17,7 @@ const {
 } = Astro.props;
 
 const baseClasses =
-  'font-["Zalando Sans Variable","Zalando Sans",sans-serif] font-bold text-(--text-color)';
+  'font-["Zalando_Sans_Variable","Zalando_Sans",sans-serif] font-bold text-(--text-color)';
 
 const sizeClasses: Record<HeadingTag, string> = {
   h1: "mb-4 text-[2.125rem] leading-[1.2059] tracking-[0.4px]",
@@ -30,7 +30,7 @@ const sizeClasses: Record<HeadingTag, string> = {
 
 const variantClasses: Record<HeadingVariant, string> = {
   default: "",
-  hero: "max-w-3xl text-balance",
+  hero: "max-w-3xl",
   section: "mb-0",
   subsection: "mb-1",
 };
