@@ -1,0 +1,180 @@
+---
+import { Picture } from "astro:assets";
+import { SITE_DESCRIPTION, SITE_TITLE } from "../consts";
+import AppLayout from "../layouts/AppLayout.astro";
+import DotsBackground from "../components/DotsBackground.astro";
+import GridBackground from "../components/GridBackground.astro";
+import iphoneMock from "../assets/img/iphone-mock.png";
+import ipadMock from "../assets/img/ipad-mock.png";
+import macbookMock from "../assets/img/macbook-mock.png";
+import { Image } from "astro:assets";
+import Header from "../components/Header.astro";
+import HeroTitle from "../components/HeroTitle.astro";
+import Container from "../components/ui/Container.astro";
+import Section from "../components/ui/Section.astro";
+import Text from "../components/ui/Text.astro";
+import avatar from "../assets/img/avatar.svg";
+---
+
+<AppLayout
+  title={SITE_TITLE}
+  description={SITE_DESCRIPTION}
+  bodyClass="flex flex-col min-h-screen"
+>
+  <main>
+    <GridBackground />
+    <section animation-id="container">
+      <div animation-id="back-heading">
+        <h1
+          animation-id="heading"
+          class="absolute inset-0 text-[8rem] font-black tracking-tighter text-center"
+        >
+          MORE THAN JUST
+        </h1>
+      </div>
+      <div
+        animation-id="mini-screen"
+        class="relative min-h-screen flex flex-col"
+      >
+        <div
+          animation-id="device-mock"
+          class="opacity-0 z-10 pointer-events-none"
+        >
+          <Picture
+            src={iphoneMock}
+            formats={["avif", "webp"]}
+            alt=""
+            class="flex md:hidden absolute top-8 left-0 scale-110"
+          />
+          <Picture
+            src={ipadMock}
+            formats={["avif", "webp"]}
+            alt=""
+            class="hidden md:flex lg:hidden absolute top-0 left-0 scale-108"
+          />
+          <Picture
+            src={macbookMock}
+            formats={["avif", "webp"]}
+            alt=""
+            class="hidden lg:flex absolute top-0 left-0 scale-130"
+          />
+        </div>
+        <div
+          animation-id="content"
+          class="relative isolate overflow-hidden rounded-none"
+        >
+          <div animation-id="header-spacer" class=""></div>
+          <div animation-id="background">
+            <DotsBackground />
+          </div>
+          <div class="min-h-screen flex flex-col px-4">
+            <Header />
+            <div class="flex flex-1 items-center justify-center px-4 sm:px-6">
+              <Container
+                class="flex flex-1 flex-col gap-10 py-8 sm:py-10 md:py-12"
+              >
+                <Section
+                  variant="content"
+                  class="flex flex-col items-center gap-8 text-center md:flex-row md:items-center md:gap-10 md:text-left lg:gap-12"
+                >
+                  <Image
+                    src={avatar}
+                    alt="logo"
+                    width="280"
+                    class="w-44 sm:w-56 md:w-64 lg:w-70 h-auto drop-shadow-sm drop-shadow-zinc-900/30 transition ease-out hover:scale-105 hover:-rotate-2 hover:drop-shadow-xl hover:drop-shadow-zinc-900/20"
+                  />
+                  <div class="max-w-3xl">
+                    <Text
+                      as="p"
+                      tone="muted"
+                      class="text-sm uppercase tracking-[0.2em]"
+                    >
+                      Meet Your Next
+                    </Text>
+                    <HeroTitle />
+                    <Text class="max-w-3xl mx-auto md:mx-0">
+                      When I sarted coding, I was drawn to the web for its
+                      unique blend of creativity and logic. Over the years, I've
+                      honed my skills as a creative developer, with a particular
+                      focus on crafting engaging user experiences.
+                    </Text>
+                  </div>
+                </Section>
+              </Container>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+  <div class="h-400"></div>
+</AppLayout>
+
+<script>
+  import { $ } from "../lib/utils";
+  import { gsap } from "gsap";
+  import { ScrollTrigger } from "gsap/ScrollTrigger";
+  gsap.registerPlugin(ScrollTrigger);
+
+  const container = $("[animation-id='container']");
+  const content = $("[animation-id='content']");
+  const miniScreen = $("[animation-id='mini-screen']");
+  const deviceMock = $("[animation-id='device-mock']");
+  const headerSpacer = $("[animation-id='header-spacer']");
+  const backHeading = $("[animation-id='back-heading']");
+
+  const getAspectRatio = () => {
+    if (window.innerWidth >= 1024) return "16 / 10";
+    if (window.innerWidth >= 768) return "3 / 4";
+    return "6 / 13";
+  };
+
+  const getBorderRadius = () => {
+    if (window.innerWidth >= 1024) return "24px";
+    if (window.innerWidth >= 768) return "20px";
+    return "48px";
+  };
+
+  const getSpacerHeight = () => {
+    if (window.innerWidth >= 1024) return 30;
+    if (window.innerWidth >= 768) return 40;
+    return 50;
+  };
+
+  const tl = gsap.timeline({ paused: true });
+
+  tl.to(backHeading, { scaleX: 1.5, duration: 0.3 });
+
+  tl.to(
+    miniScreen,
+    {
+      scale: 0.05,
+      aspectRatio: getAspectRatio(),
+      y: -100,
+      duration: 0.2,
+      rotate: -90,
+    },
+    "<",
+  );
+  tl.to(content, { borderRadius: getBorderRadius(), duration: 0.01 }, "<");
+  tl.to(deviceMock, { opacity: 1, duration: 0.2 }, "<");
+  tl.to(headerSpacer, { height: getSpacerHeight(), duration: 0.2 }, "<");
+  tl.to(backHeading, { scaleY: 3, duration: 0.3 }, "<");
+
+  ScrollTrigger.create({
+    markers: true,
+    trigger: container,
+    start: "top top",
+    end: "bottom top",
+    pin: true,
+    invalidateOnRefresh: true,
+    animation: tl,
+    scrub: 0.5,
+  });
+</script>
+
+<style>
+  body {
+    background-color: rgb(245, 245, 245);
+  }
+</style>
