@@ -1,13 +1,29 @@
 ---
-import { Icon } from "astro-icon/components";
 import Container from "./ui/Container.astro";
+import IconButton from "./ui/IconButton.astro";
 ---
 
 <footer>
   <Container class="flex flex-row justify-between items-center py-10">
-    <div>
-      <Icon name="lucide:github" class="size-4 inline-block mr-1" />
-      <Icon name="lucide:linkedin" class="size-4 inline-block mr-1" />
+    <div class="flex items-center">
+      <IconButton
+        as="a"
+        href="https://github.com/fervqz"
+        target="_blank"
+        rel="noopener noreferrer"
+        icon="lucide:github"
+        aria-label="GitHub"
+        title="GitHub"
+      />
+      <IconButton
+        as="a"
+        href="https://www.linkedin.com/in/fervqz"
+        target="_blank"
+        rel="noopener noreferrer"
+        icon="lucide:linkedin"
+        aria-label="LinkedIn"
+        title="LinkedIn"
+      />
     </div>
     <div>
       <p class="text-gray-600">

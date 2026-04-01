@@ -1,14 +1,15 @@
 ---
-import { Icon } from "astro-icon/components";
+import IconButton from "../ui/IconButton.astro";
 ---
 
-<button
+<IconButton
   id="reset-stickers"
+  icon="lucide:rotate-ccw"
+  as="button"
+  type="button"
+  aria-label="Reset stickers"
   title="Reset stickers"
-  class="inline-flex items-center justify-center rounded-full p-2 text-zinc-500 transition hover:text-zinc-900 dark:hover:text-zinc-100 hover:bg-zinc-100 dark:hover:bg-zinc-800"
->
-  <Icon name="lucide:rotate-ccw" class="size-4" />
-</button>
+/>
 
 <script>
   import { STICKER_RESET_EVENT } from "./events";
@@ -18,7 +19,7 @@ import { Icon } from "astro-icon/components";
   if (button && button.dataset.stickerResetInitialized !== "true") {
     button.dataset.stickerResetInitialized = "true";
     button.addEventListener("click", () => {
-      window.dispatchEvent(new CustomEvent(STICKER_RESET_EVENT));
+      globalThis.dispatchEvent(new CustomEvent(STICKER_RESET_EVENT));
     });
   }
 </script>

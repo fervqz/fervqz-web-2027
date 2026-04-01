@@ -1,5 +1,5 @@
 ---
-import { Icon } from "astro-icon/components";
+import IconButton from "./ui/IconButton.astro";
 
 interface Props {
   class?: string;
@@ -9,24 +9,16 @@ interface Props {
 const { class: className = "", showLabel = false } = Astro.props;
 ---
 
-<button
+<IconButton
   data-theme-toggle
-  class:list={[
-    "items-center justify-center leading-none text-(--nav-link-color) hover:cursor-pointer hover:text-(--nav-link-hover-color) transition",
-    showLabel
-      ? "inline-flex h-9 gap-2 border border-(--button-border) bg-(--surface-color) px-3 text-sm"
-      : "inline-flex p-0 text-lg hover:scale-110 hover:-rotate-10",
-    className,
-  ]}
+  as="button"
   type="button"
+  icon="lucide:moon"
+  secondaryIcon="lucide:sun"
+  primaryIconKey="moon"
+  secondaryIconKey="sun"
   aria-label="Toggle dark mode"
   title="Toggle dark mode"
 >
-  <span data-theme-toggle-icon="moon" aria-hidden="true">
-    <Icon name="lucide:moon" class="size-4" />
-  </span>
-  <span data-theme-toggle-icon="sun" aria-hidden="true" hidden>
-    <Icon name="lucide:sun" class="size-4" />
-  </span>
   {showLabel && <span>Toggle theme</span>}
-</button>
+</IconButton>

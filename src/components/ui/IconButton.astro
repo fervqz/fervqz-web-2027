@@ -1,0 +1,75 @@
+---
+import { Icon } from "astro-icon/components";
+
+type As = "button" | "a";
+
+interface Props {
+  as?: As;
+  icon: string;
+  secondaryIcon?: string;
+  iconClass?: string;
+  class?: string;
+  type?: "button" | "submit" | "reset";
+  primaryIconKey?: string;
+  secondaryIconKey?: string;
+}
+
+const {
+  as = "button",
+  icon,
+  secondaryIcon,
+  iconClass = "size-4",
+  class: className = "",
+  type = "button",
+  primaryIconKey,
+  secondaryIconKey,
+  ...props
+} = Astro.props;
+
+const baseClass =
+  "inline-flex items-center justify-center rounded-full p-4 text-zinc-500 transition hover:text-zinc-900 dark:hover:text-zinc-100 hover:bg-zinc-100 dark:hover:bg-zinc-800 hover:cursor-pointer";
+---
+
+{
+  as === "a" ? (
+    <a class:list={[baseClass, className]} {...props}>
+      <span
+        data-theme-toggle-icon={primaryIconKey}
+        aria-hidden="true"
+        hidden={false}
+      >
+        <Icon name={icon} class={iconClass} />
+      </span>
+      {secondaryIcon && (
+        <span
+          data-theme-toggle-icon={secondaryIconKey}
+          aria-hidden="true"
+          hidden
+        >
+          <Icon name={secondaryIcon} class={iconClass} />
+        </span>
+      )}
+      <slot />
+    </a>
+  ) : (
+    <button type={type} class:list={[baseClass, className]} {...props}>
+      <span
+        data-theme-toggle-icon={primaryIconKey}
+        aria-hidden="true"
+        hidden={false}
+      >
+        <Icon name={icon} class={iconClass} />
+      </span>
+      {secondaryIcon && (
+        <span
+          data-theme-toggle-icon={secondaryIconKey}
+          aria-hidden="true"
+          hidden
+        >
+          <Icon name={secondaryIcon} class={iconClass} />
+        </span>
+      )}
+      <slot />
+    </button>
+  )
+}
