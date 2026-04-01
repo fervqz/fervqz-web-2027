@@ -1,11 +1,11 @@
 ---
 import { Image } from "astro:assets";
 import type { CollectionEntry } from "astro:content";
-import BaseHead from "../components/BaseHead.astro";
 import DotsBackground from "../components/DotsBackground.astro";
 import Footer from "../components/Footer.astro";
 import FormattedDate from "../components/FormattedDate.astro";
 import Header from "../components/Header.astro";
+import AppLayout from "./AppLayout.astro";
 import Container from "../components/ui/Container.astro";
 import Heading from "../components/ui/Heading.astro";
 import Link from "../components/ui/Link.astro";
@@ -23,70 +23,61 @@ const { title, description, pubDate, updatedDate, heroImage, slug } =
   Astro.props;
 ---
 
-<html lang="en">
-  <head>
-    <BaseHead title={title} description={description} />
-  </head>
+<AppLayout title={title} description={description} bodyClass="min-h-screen">
+  <DotsBackground />
+  <Header />
+  <main class="pb-20 pt-12">
+    <Container>
+      <article class="mx-auto flex w-full max-w-190 flex-col gap-8">
+        <div class="relative h-8">
+          <Link href="/blog" class="no-underline">
+            <Icon name="lucide:arrow-left" class="size-8 absolute -left-1.5" />
+          </Link>
+        </div>
 
-  <body class="min-h-screen">
-    <DotsBackground />
-    <Header />
-    <main class="pb-20 pt-12">
-      <Container>
-        <article class="mx-auto flex w-full max-w-190 flex-col gap-8">
-          <div class="relative h-8">
-            <Link href="/blog" class="no-underline">
-              <Icon
-                name="lucide:arrow-left"
-                class="size-8 absolute -left-1.5"
+        {
+          heroImage && (
+            <div class="mx-auto w-full">
+              <Image
+                width={1040}
+                height={700}
+                src={heroImage}
+                alt={title}
+                class="h-auto w-full object-cover"
+                style={`view-transition-name: blog-image-${slug};`}
               />
-            </Link>
-          </div>
+            </div>
+          )
+        }
 
-          {
-            heroImage && (
-              <div class="mx-auto w-full">
-                <Image
-                  width={1040}
-                  height={700}
-                  src={heroImage}
-                  alt={title}
-                  class="h-auto w-full object-cover"
-                  style={`view-transition-name: blog-image-${slug};`}
-                />
-              </div>
-            )
-          }
+        <header class="space-y-2">
+          <Heading as="h1" variant="hero" class="mb-0 max-w-3xl"
+            >{title}</Heading
+          >
+          <Text class="mb-0 max-w-3xl text-[14px] leading-5">
+            {description}
+          </Text>
+          <Text as="div" tone="muted" class="text-[12px] leading-5">
+            <FormattedDate date={pubDate} />
+            {
+              updatedDate && (
+                <div class="italic">
+                  Last updated on <FormattedDate date={updatedDate} />
+                </div>
+              )
+            }
+          </Text>
+        </header>
 
-          <header class="space-y-2">
-            <Heading as="h1" variant="hero" class="mb-0 max-w-3xl"
-              >{title}</Heading
-            >
-            <Text class="mb-0 max-w-3xl text-[14px] leading-5">
-              {description}
-            </Text>
-            <Text as="div" tone="muted" class="text-[12px] leading-5">
-              <FormattedDate date={pubDate} />
-              {
-                updatedDate && (
-                  <div class="italic">
-                    Last updated on <FormattedDate date={updatedDate} />
-                  </div>
-                )
-              }
-            </Text>
-          </header>
+        <WavyDivider />
 
-          <WavyDivider />
-
-          <Section variant="content">
-            <Typography>
-              <slot />
-            </Typography>
-          </Section>
-        </article>
-      </Container>
-    </main>
-    <Footer />
-  </body>
-</html>
+        <Section variant="content">
+          <Typography>
+            <slot />
+          </Typography>
+        </Section>
+      </article>
+    </Container>
+  </main>
+  <Footer />
+</AppLayout>
