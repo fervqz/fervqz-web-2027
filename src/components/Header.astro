@@ -1,11 +1,11 @@
 ---
-import { Icon } from "astro-icon/components";
 import Container from "./ui/Container.astro";
 import HeaderLink from "./HeaderLink.astro";
 import Sticker from "./sticker/Sticker.astro";
 import logo from "../assets/img/logo.svg";
 import ResetStickers from "./sticker/ResetStickers.astro";
 import ThemeToggle from "./ThemeToggle.astro";
+import { HEADER_NAV_LINKS } from "./header/navigation";
 ---
 
 <header class="m-0 py-2 flex flex-row">
@@ -20,10 +20,11 @@ import ThemeToggle from "./ThemeToggle.astro";
 
       <div class="flex items-center gap-1">
         <div class="internal-links hidden items-center gap-1 md:flex">
-          <HeaderLink href="/">About</HeaderLink>
-          <HeaderLink href="/projects">Projects</HeaderLink>
-          <HeaderLink href="/blog">Blog</HeaderLink>
-          <HeaderLink href="/contact">Contact</HeaderLink>
+          {
+            HEADER_NAV_LINKS.map((link) => (
+              <HeaderLink href={link.href}>{link.label}</HeaderLink>
+            ))
+          }
         </div>
 
         <button
@@ -45,122 +46,29 @@ import ThemeToggle from "./ThemeToggle.astro";
       data-open="false"
     >
       <div class="flex flex-col">
-        <HeaderLink href="/" class="py-2!" data-mobile-menu-close
-          >About</HeaderLink
-        >
-        <HeaderLink href="/projects" class="py-2!" data-mobile-menu-close
-          >Projects</HeaderLink
-        >
-        <HeaderLink href="/blog" class="py-2!" data-mobile-menu-close
-          >Blog</HeaderLink
-        >
-        <HeaderLink href="/contact" class="py-2!" data-mobile-menu-close
-          >Contact</HeaderLink
-        >
+        {
+          HEADER_NAV_LINKS.map((link) => (
+            <HeaderLink href={link.href} class="py-2!" data-mobile-menu-close>
+              {link.label}
+            </HeaderLink>
+          ))
+        }
       </div>
       <div class="mt-2 pt-3">
-        <button
-          data-theme-toggle
-          class="inline-flex h-9 items-center gap-2 border border-(--button-border) bg-(--surface-color) px-3 text-sm text-(--nav-link-color)"
-          type="button"
-          aria-label="Toggle dark mode"
-          title="Toggle dark mode"
-        >
-          <span data-theme-toggle-icon="moon" aria-hidden="true">
-            <Icon name="lucide:moon" class="h-4 w-4" />
-          </span>
-          <span data-theme-toggle-icon="sun" aria-hidden="true" hidden>
-            <Icon name="lucide:sun" class="h-4 w-4" />
-          </span>
-          <span>Toggle theme</span>
-        </button>
+        <ThemeToggle showLabel class="md:hidden" />
       </div>
     </div>
   </Container>
   <div class="absolute py-4 right-4 flex flex-row items-center gap-4">
     <ResetStickers />
-    <ThemeToggle />
+    <ThemeToggle class="hidden md:inline-flex" />
   </div>
 </header>
 
-<script is:inline>
-  (() => {
-    const root = document.documentElement;
-    const themeButtons = Array.from(
-      document.querySelectorAll("[data-theme-toggle]"),
-    );
-    const menuButton = document.getElementById("mobile-menu-toggle");
-    const menu = document.getElementById("mobile-menu");
-    const menuIcon = document.getElementById("mobile-menu-icon");
-    const closeMenuLinks = Array.from(
-      document.querySelectorAll("[data-mobile-menu-close]"),
-    );
+<script>
+  import { initHeaderInteractions } from "./header/header.client";
 
-    if (themeButtons.length === 0) return;
-
-    const getTheme = () => root.getAttribute("data-theme") || "light";
-    const setButtonState = (button, theme) => {
-      const moonIcon = button.querySelector('[data-theme-toggle-icon="moon"]');
-      const sunIcon = button.querySelector('[data-theme-toggle-icon="sun"]');
-      if (moonIcon) moonIcon.hidden = theme === "dark";
-      if (sunIcon) sunIcon.hidden = theme !== "dark";
-      button.setAttribute(
-        "aria-label",
-        theme === "dark" ? "Switch to light mode" : "Switch to dark mode",
-      );
-      button.setAttribute(
-        "title",
-        theme === "dark" ? "Switch to light mode" : "Switch to dark mode",
-      );
-    };
-
-    const closeMobileMenu = () => {
-      if (!menu || !menuButton || !menuIcon) return;
-      menu.setAttribute("data-open", "false");
-      menuButton.setAttribute("aria-expanded", "false");
-      menuIcon.textContent = "☰";
-    };
-
-    const openMobileMenu = () => {
-      if (!menu || !menuButton || !menuIcon) return;
-      menu.setAttribute("data-open", "true");
-      menuButton.setAttribute("aria-expanded", "true");
-      menuIcon.textContent = "✕";
-    };
-
-    themeButtons.forEach((button) => setButtonState(button, getTheme()));
-
-    themeButtons.forEach((button) => {
-      button.addEventListener("click", () => {
-        const nextTheme = getTheme() === "dark" ? "light" : "dark";
-        root.setAttribute("data-theme", nextTheme);
-        root.style.colorScheme = nextTheme;
-        localStorage.setItem("theme", nextTheme);
-        themeButtons.forEach((btn) => setButtonState(btn, nextTheme));
-      });
-    });
-
-    if (menu && menuButton && menuIcon) {
-      menuButton.addEventListener("click", () => {
-        const isClosed = menu.getAttribute("data-open") !== "true";
-        if (isClosed) {
-          openMobileMenu();
-        } else {
-          closeMobileMenu();
-        }
-      });
-
-      closeMenuLinks.forEach((link) => {
-        link.addEventListener("click", () => closeMobileMenu());
-      });
-
-      window.addEventListener("resize", () => {
-        if (window.innerWidth >= 768) {
-          closeMobileMenu();
-        }
-      });
-    }
-  })();
+  initHeaderInteractions();
 </script>
 
 <style>

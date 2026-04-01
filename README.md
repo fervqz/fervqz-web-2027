@@ -1,62 +1,48 @@
-# Astro Starter Kit: Blog
+# Fervqz Web v2
 
-```sh
-npm create astro@latest -- --template blog
-```
+Personal portfolio and blog built with Astro, MDX, Tailwind CSS v4, and Astro Content Collections.
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+## Tech Stack
 
-Features:
+- Astro
+- Tailwind CSS v4
+- MDX
+- Astro Content Collections
+- Astro Icon
+- GSAP
 
-- ✅ Minimal styling (make it your own!)
-- ✅ 100/100 Lighthouse performance
-- ✅ SEO-friendly with canonical URLs and Open Graph data
-- ✅ Sitemap support
-- ✅ RSS Feed support
-- ✅ Markdown & MDX support
+## Scripts
 
-## 🚀 Project Structure
+| Command            | Action                                    |
+| :----------------- | :---------------------------------------- |
+| `npm install`      | Install dependencies                      |
+| `npm run dev`      | Start development server                  |
+| `npm run dev:host` | Start development server on local network |
+| `npm run build`    | Build production output                   |
+| `npm run preview`  | Preview production build locally          |
+| `npm run astro`    | Run Astro CLI commands                    |
 
-Inside of your Astro project, you'll see the following folders and files:
+## Content
+
+- Blog posts live in `src/content/blog/` (`.md` and `.mdx`).
+- Frontmatter schema is defined in `src/content.config.ts`.
+
+## Project Structure
 
 ```text
-├── public/
-├── src/
-│   ├── components/
-│   ├── content/
-│   ├── layouts/
-│   └── pages/
-├── astro.config.mjs
-├── README.md
-├── package.json
-└── tsconfig.json
+src/
+	components/
+		header/
+		sticker/
+		ui/
+	content/
+		blog/
+	layouts/
+	pages/
+	styles/
 ```
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+## Notes
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
-
-The `src/content/` directory contains "collections" of related Markdown and MDX documents. Use `getCollection()` to retrieve posts from `src/content/blog/`, and type-check your frontmatter using an optional schema. See [Astro's Content Collections docs](https://docs.astro.build/en/guides/content-collections/) to learn more.
-
-Any static assets, like images, can be placed in the `public/` directory.
-
-## 🧞 Commands
-
-All commands are run from the root of the project, from a terminal:
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Check out [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
-
-## Credit
-
-This theme is based off of the lovely [Bear Blog](https://github.com/HermanMartinus/bearblog/).
+- Site metadata constants are in `src/consts.ts`.
+- Canonical site URL is configured in `astro.config.mjs`.

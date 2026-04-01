@@ -1,10 +1,23 @@
 ---
 import { Icon } from "astro-icon/components";
+
+interface Props {
+  class?: string;
+  showLabel?: boolean;
+}
+
+const { class: className = "", showLabel = false } = Astro.props;
 ---
 
 <button
   data-theme-toggle
-  class="hidden items-center justify-center p-0 text-lg leading-none text-(--nav-link-color) hover:cursor-pointer hover:text-(--nav-link-hover-color) md:inline-flex hover:scale-110 hover:-rotate-10 transition"
+  class:list={[
+    "items-center justify-center leading-none text-(--nav-link-color) hover:cursor-pointer hover:text-(--nav-link-hover-color) transition",
+    showLabel
+      ? "inline-flex h-9 gap-2 border border-(--button-border) bg-(--surface-color) px-3 text-sm"
+      : "inline-flex p-0 text-lg hover:scale-110 hover:-rotate-10",
+    className,
+  ]}
   type="button"
   aria-label="Toggle dark mode"
   title="Toggle dark mode"
@@ -15,4 +28,5 @@ import { Icon } from "astro-icon/components";
   <span data-theme-toggle-icon="sun" aria-hidden="true" hidden>
     <Icon name="lucide:sun" class="size-4" />
   </span>
+  {showLabel && <span>Toggle theme</span>}
 </button>
