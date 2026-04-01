@@ -2,6 +2,16 @@
 import { Icon } from "astro-icon/components";
 ---
 
-<button>
+<button
+  id="reset-stickers"
+  title="Reset stickers"
+  class="inline-flex items-center justify-center rounded-full p-2 text-zinc-500 transition hover:text-zinc-900 dark:hover:text-zinc-100 hover:bg-zinc-100 dark:hover:bg-zinc-800"
+>
   <Icon name="lucide:rotate-ccw" class="size-4" />
 </button>
+
+<script>
+  document.getElementById("reset-stickers")?.addEventListener("click", () => {
+    window.dispatchEvent(new CustomEvent("sticker:reset"));
+  });
+</script>

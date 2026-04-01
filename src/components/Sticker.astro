@@ -23,10 +23,10 @@ const defaultImageClasses = "h-auto drop-shadow-sm drop-shadow-zinc-900/30";
 
 <div
   data-sticker={draggable ? "true" : undefined}
-  class="relative z-20 inline-flex cursor-grab touch-none select-none active:cursor-grabbing"
+  class="relative z-20 inline-flex cursor-grab touch-none select-none active:cursor-grabbing transition-transform ease-out duration-150"
   style="transform: translate3d(0px, 0px, 0px);"
 >
-  <div data-sticker-inner class="transition ease-out">
+  <div data-sticker-inner class="transition duration-150 ease-out">
     <Image
       src={src}
       alt={alt}
@@ -73,6 +73,7 @@ const defaultImageClasses = "h-auto drop-shadow-sm drop-shadow-zinc-900/30";
         if (event.pointerId !== activePointerId) return;
         activePointerId = null;
         inner?.classList.remove(...DRAG_CLASSES);
+        wrapper.classList.add("transition-transform");
         wrapper.releasePointerCapture(event.pointerId);
         window.removeEventListener("pointermove", onPointerMove);
         window.removeEventListener("pointerup", stopDragging);
@@ -84,10 +85,19 @@ const defaultImageClasses = "h-auto drop-shadow-sm drop-shadow-zinc-900/30";
         startX = event.clientX;
         startY = event.clientY;
         inner?.classList.add(...DRAG_CLASSES);
+        wrapper.classList.remove("transition-transform");
         wrapper.setPointerCapture(event.pointerId);
         window.addEventListener("pointermove", onPointerMove);
         window.addEventListener("pointerup", stopDragging);
         window.addEventListener("pointercancel", stopDragging);
+      });
+
+      window.addEventListener("sticker:reset", () => {
+        offsetX = 0;
+        offsetY = 0;
+        inner?.classList.remove(...DRAG_CLASSES);
+        wrapper.classList.add("transition-transform");
+        updatePosition();
       });
     });
 </script>

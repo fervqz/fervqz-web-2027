@@ -10,6 +10,21 @@ import HeroTitle from "../components/HeroTitle.astro";
 import Sticker from "../components/Sticker.astro";
 import avatar from "../assets/img/avatar.svg";
 import Footer from "../components/Footer.astro";
+import Heading from "../components/ui/Heading.astro";
+import type { ImageMetadata } from "astro";
+
+const stickerAssets = import.meta.glob("../assets/img/sticker-test-*.svg", {
+  eager: true,
+  import: "default",
+}) as Record<string, ImageMetadata>;
+
+const stickers = Object.entries(stickerAssets)
+  .sort(([pathA], [pathB]) => {
+    const a = Number(pathA.match(/sticker-test-(\d+)\.svg$/)?.[1] ?? 0);
+    const b = Number(pathB.match(/sticker-test-(\d+)\.svg$/)?.[1] ?? 0);
+    return a - b;
+  })
+  .map(([, image]) => image);
 ---
 
 <AppLayout
@@ -17,7 +32,6 @@ import Footer from "../components/Footer.astro";
   description={SITE_DESCRIPTION}
   bodyClass="flex flex-col min-h-screen"
 >
-  <DotsBackground />
   <Header />
   <main>
     <Container class="flex flex-1 flex-col gap-10 py-8 sm:py-10 md:py-12">
@@ -25,7 +39,6 @@ import Footer from "../components/Footer.astro";
         variant="content"
         class="flex flex-col items-center gap-8 text-center md:flex-row md:items-center md:gap-10 md:text-left lg:gap-12"
       >
-        <Sticker src={avatar} alt="avatar" width={280} />
         <div class="max-w-3xl">
           <Text as="p" tone="muted" class="text-sm uppercase tracking-[0.2em]">
             Meet Your Next
@@ -39,7 +52,39 @@ import Footer from "../components/Footer.astro";
           </Text>
         </div>
       </Section>
+
+      <Section variant="content" class="flex flex-col gap-8">
+        <Heading as="h1">Creative Development</Heading>
+        <Text class="">
+          I specialize in creative development, using code as a medium to bring
+          imaginative ideas to life. Whether it's interactive web experiences,
+          generative art, or experimental projects, I thrive on pushing the
+          boundaries of what's possible with code.
+        </Text>
+        <div class="flex flex-row gap-12">
+          <Sticker src={avatar} alt="avatar" width={200} />
+          <Sticker src={avatar} alt="avatar" width={200} />
+          <Sticker src={avatar} alt="avatar" width={200} />
+        </div>
+      </Section>
+
+      <Section>
+        <Heading as="h1">Let's Create Together</Heading>
+        <Text>
+          I'm always excited to collaborate on new projects and explore creative
+          ideas. If you're interested in working together or just want to say
+          hi, feel free to reach out!
+        </Text>
+
+        <div class="grid grid-cols-5 gap-4 place-items-center">
+          {
+            stickers.map((sticker, i) => (
+              <Sticker src={sticker} alt={`sticker ${i + 1}`} width={100} />
+            ))
+          }
+        </div>
+      </Section>
     </Container>
+    <Footer />
   </main>
-  <Footer />
-</AppLayout>
+</AppLayout>;

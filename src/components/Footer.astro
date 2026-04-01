@@ -1,12 +1,25 @@
-<footer class="flex justify-center items-center py-10">
-  <p class="text-gray-600">
-    Made with ❤️ by <a
-      href="https://fervqz.com"
-      class="hover:underline hover:text-blue-800 transition-colors"
-      target="_blank"
-      rel="noopener noreferrer"
-    >
-      @fervqz
-    </a>
-  </p>
+---
+import { Icon } from "astro-icon/components";
+import Container from "./ui/Container.astro";
+---
+
+<footer>
+  <Container class="flex flex-row justify-between items-center py-10">
+    <div>
+      <Icon name="lucide:github" class="size-4 inline-block mr-1" />
+      <Icon name="lucide:linkedin" class="size-4 inline-block mr-1" />
+    </div>
+    <div>
+      <p class="text-gray-600">
+        Made with ❤️ by <a
+          href="https://fervqz.com"
+          class="hover:underline hover:text-blue-800 transition-colors"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          @fervqz
+        </a>
+      </p>
+    </div>
+  </Container>
 </footer>

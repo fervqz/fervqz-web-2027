@@ -13,6 +13,7 @@ import Section from "../components/ui/Section.astro";
 import Text from "../components/ui/Text.astro";
 import Typography from "../components/ui/Typography.astro";
 import WavyDivider from "../components/ui/WavyDivider.astro";
+import { Icon } from "astro-icon/components";
 
 type Props = CollectionEntry<"blog">["data"] & {
   slug: string;
@@ -33,13 +34,12 @@ const { title, description, pubDate, updatedDate, heroImage, slug } =
     <main class="pb-20 pt-12">
       <Container>
         <article class="mx-auto flex w-full max-w-190 flex-col gap-8">
-          <div>
-            <Link
-              href="/blog"
-              class="inline-flex items-center gap-2 text-sm no-underline"
-            >
-              <span aria-hidden="true">←</span>
-              <span>Back to blog</span>
+          <div class="relative h-8">
+            <Link href="/blog" class="no-underline">
+              <Icon
+                name="lucide:arrow-left"
+                class="size-8 absolute -left-1.5"
+              />
             </Link>
           </div>
 
