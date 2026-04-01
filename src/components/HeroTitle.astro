@@ -5,7 +5,7 @@
 <h1
   class="mt-3.5 mb-6 text-6xl leading-tight font-black font-[Zalando_Sans_Variable] tracking-[-0.02em]"
 >
-  <span class="rotating-word-stack" aria-live="polite">
+  <span class="rotating-word-stack w-full" aria-live="polite">
     <span class="rotating-word">Creative</span>
     <span class="rotating-word">Product</span>
     <span class="rotating-word">Frontend</span>
@@ -47,7 +47,7 @@
       ).matches;
 
       const maxWidth = Math.max(...words.map((word) => word.offsetWidth));
-      stack.style.width = `${maxWidth}px`;
+      // stack.style.width = `${maxWidth}px`;
 
       gsap.set(words, { yPercent: 100, autoAlpha: 1 });
       gsap.set(words[0], { yPercent: 0 });

@@ -25,6 +25,19 @@ const stickers = Object.entries(stickerAssets)
     return a - b;
   })
   .map(([, image]) => image);
+
+const mockAssets = import.meta.glob("../assets/img/mock-*.png", {
+  eager: true,
+  import: "default",
+}) as Record<string, ImageMetadata>;
+
+const mocks = Object.entries(mockAssets)
+  .sort(([pathA], [pathB]) => {
+    const a = Number(pathA.match(/sticker-(\d+)\.png$/)?.[1] ?? 0);
+    const b = Number(pathB.match(/sticker-(\d+)\.png$/)?.[1] ?? 0);
+    return a - b;
+  })
+  .map(([, image]) => image);
 ---
 
 <AppLayout
@@ -32,6 +45,7 @@ const stickers = Object.entries(stickerAssets)
   description={SITE_DESCRIPTION}
   bodyClass="flex flex-col min-h-screen"
 >
+  <DotsBackground />
   <Header />
   <main>
     <Container class="flex flex-1 flex-col gap-10 py-8 sm:py-10 md:py-12">
@@ -39,6 +53,7 @@ const stickers = Object.entries(stickerAssets)
         variant="content"
         class="flex flex-col items-center gap-8 text-center md:flex-row md:items-center md:gap-10 md:text-left lg:gap-12"
       >
+        <Sticker src={avatar} alt="avatar" width={300} />
         <div class="max-w-3xl">
           <Text as="p" tone="muted" class="text-sm uppercase tracking-[0.2em]">
             Meet Your Next
@@ -80,6 +95,14 @@ const stickers = Object.entries(stickerAssets)
           {
             stickers.map((sticker, i) => (
               <Sticker src={sticker} alt={`sticker ${i + 1}`} width={100} />
+            ))
+          }
+        </div>
+
+        <div class="flex flex-col gap-4 items-center py-12">
+          {
+            mocks.map((sticker, i) => (
+              <Sticker src={sticker} alt={`sticker ${i + 1}`} width={900} />
             ))
           }
         </div>
