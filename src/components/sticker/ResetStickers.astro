@@ -9,17 +9,41 @@ import IconButton from "../ui/IconButton.astro";
   type="button"
   aria-label="Reset stickers"
   title="Reset stickers"
+  hidden
+  aria-hidden="true"
 />
 
 <script>
-  import { STICKER_RESET_EVENT } from "./events";
+  import {
+    STICKER_EDIT_MODE_CHANGE_EVENT,
+    STICKER_RESET_EVENT,
+  } from "./events";
 
+  type StickerWindow = typeof globalThis & {
+    __stickerEditModeEnabled?: boolean;
+  };
+
+  const stickerWindow = globalThis as StickerWindow;
   const button = document.getElementById("reset-stickers");
+
+  const syncVisibility = (enabled: boolean) => {
+    if (!(button instanceof HTMLButtonElement)) return;
+
+    button.hidden = !enabled;
+    button.setAttribute("aria-hidden", String(!enabled));
+  };
+
+  syncVisibility(stickerWindow.__stickerEditModeEnabled === true);
 
   if (button && button.dataset.stickerResetInitialized !== "true") {
     button.dataset.stickerResetInitialized = "true";
     button.addEventListener("click", () => {
       globalThis.dispatchEvent(new CustomEvent(STICKER_RESET_EVENT));
+    });
+
+    globalThis.addEventListener(STICKER_EDIT_MODE_CHANGE_EVENT, (event) => {
+      const customEvent = event as CustomEvent<{ enabled: boolean }>;
+      syncVisibility(customEvent.detail.enabled);
     });
   }
 </script>

@@ -1,0 +1,79 @@
+---
+import IconButton from "../ui/IconButton.astro";
+---
+
+<IconButton
+  id="edit-stickers"
+  icon="lucide:pencil"
+  as="button"
+  type="button"
+  aria-label="Enable sticker editing"
+  aria-pressed="false"
+  title="Enable sticker editing"
+  tooltip="Edit stickers 👀"
+/>
+
+<script>
+  import { STICKER_EDIT_MODE_CHANGE_EVENT } from "./events";
+
+  type StickerWindow = typeof globalThis & {
+    __stickerEditModeEnabled?: boolean;
+  };
+
+  const stickerWindow = globalThis as StickerWindow;
+  const button = document.getElementById("edit-stickers");
+
+  if (typeof stickerWindow.__stickerEditModeEnabled !== "boolean") {
+    stickerWindow.__stickerEditModeEnabled = false;
+  }
+
+  const syncButtonState = (enabled: boolean) => {
+    if (!(button instanceof HTMLButtonElement)) return;
+
+    button.dataset.active = enabled ? "true" : "false";
+    button.setAttribute("aria-pressed", String(enabled));
+
+    const nextLabel = enabled
+      ? "Disable sticker editing"
+      : "Enable sticker editing";
+
+    button.setAttribute("aria-label", nextLabel);
+    button.setAttribute("title", nextLabel);
+  };
+
+  syncButtonState(stickerWindow.__stickerEditModeEnabled);
+
+  if (button instanceof HTMLButtonElement) {
+    if (button.dataset.stickerEditInitialized !== "true") {
+      button.dataset.stickerEditInitialized = "true";
+      button.addEventListener("click", () => {
+        const nextEnabled = !stickerWindow.__stickerEditModeEnabled;
+        stickerWindow.__stickerEditModeEnabled = nextEnabled;
+        syncButtonState(nextEnabled);
+
+        globalThis.dispatchEvent(
+          new CustomEvent(STICKER_EDIT_MODE_CHANGE_EVENT, {
+            detail: { enabled: nextEnabled },
+          }),
+        );
+      });
+    }
+
+    globalThis.addEventListener(STICKER_EDIT_MODE_CHANGE_EVENT, (event) => {
+      const customEvent = event as CustomEvent<{ enabled: boolean }>;
+      syncButtonState(customEvent.detail.enabled);
+    });
+  }
+</script>
+
+<style is:global>
+  #edit-stickers[data-active="true"] {
+    background: var(--button-hover-bg);
+    color: var(--button-hover-text);
+  }
+
+  html[data-theme="dark"] #edit-stickers[data-active="true"] {
+    background: var(--button-hover-bg);
+    color: var(--button-hover-text);
+  }
+</style>

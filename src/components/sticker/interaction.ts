@@ -1,5 +1,6 @@
 import {
     STICKER_CLEAR_SELECTION_EVENT,
+    STICKER_EDIT_MODE_CHANGE_EVENT,
     STICKER_RESET_EVENT,
     STICKER_SELECT_EVENT,
 } from "./events";
@@ -20,6 +21,7 @@ const normalizeDegrees = (value: number) => {
 };
 
 type StickerWindow = Window & {
+    __stickerEditModeEnabled?: boolean;
     __stickerOutsidePointerListenerAdded?: boolean;
     __stickerZIndexCounter?: number;
 };
@@ -29,6 +31,10 @@ export function initStickerInteractions(root: ParentNode = document) {
 
     if (typeof stickerWindow.__stickerZIndexCounter !== "number") {
         stickerWindow.__stickerZIndexCounter = 10000;
+    }
+
+    if (typeof stickerWindow.__stickerEditModeEnabled !== "boolean") {
+        stickerWindow.__stickerEditModeEnabled = false;
     }
 
     if (!stickerWindow.__stickerOutsidePointerListenerAdded) {
@@ -76,12 +82,23 @@ export function initStickerInteractions(root: ParentNode = document) {
         let isSelected = false;
         let isInteracting = false;
 
+        const isEditModeEnabled = () => stickerWindow.__stickerEditModeEnabled === true;
+
+        const syncEditModeState = () => {
+            wrapper.dataset.stickerEditMode = isEditModeEnabled() ? "true" : "false";
+            wrapper.dataset.stickerInteracting = isInteracting ? "true" : "false";
+        };
+
         const updateOutlineVisibility = () => {
-            outline.style.opacity = isHovered || isSelected || isInteracting ? "1" : "0";
+            outline.style.opacity =
+                isEditModeEnabled() && (isHovered || isSelected || isInteracting)
+                    ? "1"
+                    : "0";
         };
 
         const setActiveVisual = (active: boolean) => {
             isInteracting = active;
+            syncEditModeState();
             updateOutlineVisibility();
             if (active) {
                 inner.classList.add(...ACTIVE_SHADOW_CLASSES);
@@ -92,6 +109,29 @@ export function initStickerInteractions(root: ParentNode = document) {
 
         const setWrapperCursor = (cursor: string) => {
             wrapper.style.cursor = cursor;
+        };
+
+        const resetInteractionState = () => {
+            isInteracting = false;
+            activeMode = null;
+
+            if (activePointerId !== null && wrapper.hasPointerCapture(activePointerId)) {
+                wrapper.releasePointerCapture(activePointerId);
+            }
+
+            activePointerId = null;
+            wrapper.classList.add("transition-transform");
+            inner.classList.add("transition-transform");
+            outline.classList.add("transition-transform");
+            inner.classList.remove(...ACTIVE_SHADOW_CLASSES);
+
+            globalThis.removeEventListener("pointermove", onPointerMove);
+            globalThis.removeEventListener("pointerup", stopDragging);
+            globalThis.removeEventListener("pointercancel", stopDragging);
+
+            syncEditModeState();
+            setWrapperCursor(isEditModeEnabled() ? "grab" : "default");
+            updateOutlineVisibility();
         };
 
         const bringToFront = () => {
@@ -146,6 +186,10 @@ export function initStickerInteractions(root: ParentNode = document) {
         };
 
         const setHoverCursor = (event: PointerEvent) => {
+            if (!isEditModeEnabled()) {
+                setWrapperCursor("default");
+                return;
+            }
             if (activePointerId !== null) return;
             const { nearest, minDistance } = getNearestCorner(event);
             if (minDistance <= RESIZE_HIT_RADIUS) {
@@ -205,25 +249,12 @@ export function initStickerInteractions(root: ParentNode = document) {
 
         const stopDragging = (event: PointerEvent) => {
             if (event.pointerId !== activePointerId) return;
-
-            activePointerId = null;
-            activeMode = null;
             setActiveVisual(false);
-            setWrapperCursor("grab");
-            wrapper.classList.add("transition-transform");
-            inner.classList.add("transition-transform");
-            outline.classList.add("transition-transform");
-
-            if (wrapper.hasPointerCapture(event.pointerId)) {
-                wrapper.releasePointerCapture(event.pointerId);
-            }
-
-            globalThis.removeEventListener("pointermove", onPointerMove);
-            globalThis.removeEventListener("pointerup", stopDragging);
-            globalThis.removeEventListener("pointercancel", stopDragging);
+            resetInteractionState();
         };
 
         wrapper.addEventListener("pointerdown", (event) => {
+            if (!isEditModeEnabled()) return;
             if (activePointerId !== null) return;
 
             bringToFront();
@@ -298,20 +329,33 @@ export function initStickerInteractions(root: ParentNode = document) {
             offsetY = 0;
             scale = 1;
             rotation = 0;
-            activeMode = null;
-            activePointerId = null;
             isSelected = false;
             isHovered = false;
             setActiveVisual(false);
-            setWrapperCursor("grab");
-            wrapper.classList.add("transition-transform");
-            inner.classList.add("transition-transform");
-            outline.classList.add("transition-transform");
+            resetInteractionState();
             updateInnerTransform();
             updatePosition();
         });
 
-        setWrapperCursor("grab");
+        globalThis.addEventListener(STICKER_EDIT_MODE_CHANGE_EVENT, (event) => {
+            const customEvent = event as CustomEvent<{ enabled: boolean }>;
+            stickerWindow.__stickerEditModeEnabled = customEvent.detail.enabled;
+
+            if (!customEvent.detail.enabled) {
+                isSelected = false;
+                isHovered = false;
+                setActiveVisual(false);
+                resetInteractionState();
+                return;
+            }
+
+            syncEditModeState();
+            setWrapperCursor("grab");
+            updateOutlineVisibility();
+        });
+
+        syncEditModeState();
+        setWrapperCursor(isEditModeEnabled() ? "grab" : "default");
         updateOutlineVisibility();
         updateInnerTransform();
     });

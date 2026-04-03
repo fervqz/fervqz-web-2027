@@ -6,6 +6,7 @@ import logo from "../assets/img/logo.svg";
 import ResetStickers from "./sticker/ResetStickers.astro";
 import ThemeToggle from "./ThemeToggle.astro";
 import { HEADER_NAV_LINKS } from "./header/navigation";
+import EditStickers from "./sticker/EditStickers.astro";
 ---
 
 <header class="m-0 py-2 flex flex-row">
@@ -61,6 +62,7 @@ import { HEADER_NAV_LINKS } from "./header/navigation";
   </Container>
   <div class="absolute py-4 right-4 flex flex-row items-center">
     <ResetStickers />
+    <EditStickers />
     <ThemeToggle class="hidden md:inline-flex" />
   </div>
 </header>

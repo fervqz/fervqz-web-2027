@@ -23,6 +23,8 @@ const defaultImageClasses = "h-auto drop-shadow-sm drop-shadow-zinc-900/30";
 
 <div
   data-sticker={draggable ? "true" : undefined}
+  data-sticker-edit-mode={draggable ? "false" : undefined}
+  data-sticker-interacting={draggable ? "false" : undefined}
   class="relative z-20 inline-flex overflow-visible touch-none select-none transition-transform ease-out duration-150"
   style="transform: translate3d(0px, 0px, 0px);"
 >
@@ -31,14 +33,16 @@ const defaultImageClasses = "h-auto drop-shadow-sm drop-shadow-zinc-900/30";
     class="pointer-events-none absolute -inset-1 rounded-sm border-2 border-sky-500 opacity-0 transition-opacity duration-150"
   >
   </div>
-  <div data-sticker-inner class="transition duration-150 ease-out">
-    <Image
-      src={src}
-      alt={alt}
-      width={width}
-      draggable="false"
-      class={`${defaultImageClasses} ${className}`.trim()}
-    />
+  <div data-sticker-motion class="origin-center">
+    <div data-sticker-inner class="transition duration-150 ease-out">
+      <Image
+        src={src}
+        alt={alt}
+        width={width}
+        draggable="false"
+        class={`${defaultImageClasses} ${className}`.trim()}
+      />
+    </div>
   </div>
 </div>
 
@@ -47,3 +51,29 @@ const defaultImageClasses = "h-auto drop-shadow-sm drop-shadow-zinc-900/30";
 
   initStickerInteractions();
 </script>
+
+<style>
+  @keyframes sticker-wobble {
+    0% {
+      transform: rotate(-1.5deg);
+    }
+
+    50% {
+      transform: rotate(1.5deg);
+    }
+
+    100% {
+      transform: rotate(-1.5deg);
+    }
+  }
+
+  [data-sticker-edit-mode="true"][data-sticker-interacting="false"]
+    [data-sticker-motion] {
+    animation: sticker-wobble 250ms ease-in-out infinite;
+  }
+
+  [data-sticker-edit-mode="false"] [data-sticker-motion],
+  [data-sticker-interacting="true"] [data-sticker-motion] {
+    animation: none;
+  }
+</style>

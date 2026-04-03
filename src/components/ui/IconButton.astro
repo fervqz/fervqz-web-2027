@@ -7,6 +7,7 @@ interface Props {
   as?: As;
   icon: string;
   secondaryIcon?: string;
+  tooltip?: string;
   iconClass?: string;
   class?: string;
   type?: "button" | "submit" | "reset";
@@ -18,6 +19,7 @@ const {
   as = "button",
   icon,
   secondaryIcon,
+  tooltip,
   iconClass = "size-4",
   class: className = "",
   type = "button",
@@ -26,13 +28,20 @@ const {
   ...props
 } = Astro.props;
 
+const tooltipText = tooltip?.trim() || "";
+
 const baseClass =
   "inline-flex items-center justify-center rounded-full p-4 text-zinc-500 transition hover:text-zinc-900 dark:hover:text-zinc-100 hover:bg-zinc-100 dark:hover:bg-zinc-800 hover:cursor-pointer";
 ---
 
 {
   as === "a" ? (
-    <a class:list={[baseClass, className]} {...props}>
+    <a
+      class:list={[baseClass, className]}
+      data-icon-button
+      data-icon-button-has-tooltip={tooltipText ? "true" : "false"}
+      {...props}
+    >
       <span
         data-theme-toggle-icon={primaryIconKey}
         aria-hidden="true"
@@ -50,9 +59,21 @@ const baseClass =
         </span>
       )}
       <slot />
+
+      {tooltipText && (
+        <span data-icon-button-tooltip-content role="tooltip" hidden>
+          {tooltipText}
+        </span>
+      )}
     </a>
   ) : (
-    <button type={type} class:list={[baseClass, className]} {...props}>
+    <button
+      type={type}
+      class:list={[baseClass, className]}
+      data-icon-button
+      data-icon-button-has-tooltip={tooltipText ? "true" : "false"}
+      {...props}
+    >
       <span
         data-theme-toggle-icon={primaryIconKey}
         aria-hidden="true"
@@ -70,6 +91,118 @@ const baseClass =
         </span>
       )}
       <slot />
+
+      {tooltipText && (
+        <span data-icon-button-tooltip-content role="tooltip" hidden>
+          {tooltipText}
+        </span>
+      )}
     </button>
   )
 }
+
+<script>
+  const TOOLTIP_GAP = 8;
+  const VIEWPORT_PADDING = 8;
+
+  const getBounds = (value: number, min: number, max: number) => {
+    if (value < min) return min;
+    if (value > max) return max;
+    return value;
+  };
+
+  const positionTooltip = (button: HTMLElement, tooltip: HTMLElement) => {
+    const buttonRect = button.getBoundingClientRect();
+    const viewportWidth = globalThis.innerWidth;
+    const viewportHeight = globalThis.innerHeight;
+
+    tooltip.hidden = false;
+    tooltip.style.visibility = "hidden";
+    tooltip.style.left = "0px";
+    tooltip.style.top = "0px";
+
+    const tooltipRect = tooltip.getBoundingClientRect();
+    const canPlaceAbove =
+      buttonRect.top - tooltipRect.height - TOOLTIP_GAP >= VIEWPORT_PADDING;
+    const side = canPlaceAbove ? "top" : "bottom";
+
+    let left = buttonRect.left + buttonRect.width / 2 - tooltipRect.width / 2;
+    left = getBounds(
+      left,
+      VIEWPORT_PADDING,
+      viewportWidth - tooltipRect.width - VIEWPORT_PADDING,
+    );
+
+    let top = canPlaceAbove
+      ? buttonRect.top - tooltipRect.height - TOOLTIP_GAP
+      : buttonRect.bottom + TOOLTIP_GAP;
+    top = getBounds(
+      top,
+      VIEWPORT_PADDING,
+      viewportHeight - tooltipRect.height - VIEWPORT_PADDING,
+    );
+
+    tooltip.style.left = `${left}px`;
+    tooltip.style.top = `${top}px`;
+    tooltip.style.visibility = "visible";
+    tooltip.dataset.side = side;
+  };
+
+  document
+    .querySelectorAll<HTMLElement>("[data-icon-button]")
+    .forEach((button) => {
+      if (button.dataset.iconButtonTooltipInitialized === "true") return;
+      if (button.dataset.iconButtonHasTooltip !== "true") return;
+
+      const tooltip = button.querySelector<HTMLElement>(
+        "[data-icon-button-tooltip-content]",
+      );
+
+      if (!tooltip) return;
+
+      button.dataset.iconButtonTooltipInitialized = "true";
+
+      const hideTooltip = () => {
+        tooltip.hidden = true;
+        tooltip.style.visibility = "hidden";
+      };
+
+      const showTooltip = () => {
+        positionTooltip(button, tooltip);
+      };
+
+      button.addEventListener("mouseenter", showTooltip);
+      button.addEventListener("focus", showTooltip);
+      button.addEventListener("mouseleave", hideTooltip);
+      button.addEventListener("blur", hideTooltip);
+
+      globalThis.addEventListener("scroll", () => {
+        if (!tooltip.hidden) {
+          positionTooltip(button, tooltip);
+        }
+      });
+
+      globalThis.addEventListener("resize", () => {
+        if (!tooltip.hidden) {
+          positionTooltip(button, tooltip);
+        }
+      });
+    });
+</script>
+
+<style>
+  [data-icon-button-tooltip-content] {
+    position: fixed;
+    z-index: 100000;
+    pointer-events: none;
+    border: 1px solid var(--surface-border);
+    background: var(--surface-color);
+    color: var(--text-color);
+    padding: 0.35rem 0.55rem;
+    font-size: 0.75rem;
+    line-height: 1;
+    white-space: nowrap;
+    backdrop-filter: blur(6px);
+    box-shadow: 0 4px 20px rgb(15 23 42 / 0.18);
+  }
+</style>
