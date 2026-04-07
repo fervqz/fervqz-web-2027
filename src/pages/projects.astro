@@ -2,14 +2,19 @@
 import DotsBackground from "../components/DotsBackground.astro";
 import Footer from "../components/Footer.astro";
 import Header from "../components/Header.astro";
-import { SITE_DESCRIPTION, SITE_TITLE } from "../consts";
+import { Image } from "astro:assets";
+import { SITE_TITLE } from "../consts";
+import { projectSections } from "../lib/projects";
 import AppLayout from "../layouts/AppLayout.astro";
 import Card from "../components/ui/Card.astro";
 import Container from "../components/ui/Container.astro";
 import Heading from "../components/ui/Heading.astro";
-import Link from "../components/ui/Link.astro";
 import Section from "../components/ui/Section.astro";
 import Text from "../components/ui/Text.astro";
+import { Icon } from "astro-icon/components";
+
+const actionButtonClass =
+  "inline-flex w-full items-center justify-center border border-(--button-border) bg-(--button-bg) px-3 py-2 text-xs font-semibold text-(--button-text) no-underline transition-colors group-hover:bg-(--button-hover-bg) group-hover:text-(--button-hover-text)";
 ---
 
 <AppLayout
@@ -19,146 +24,223 @@ import Text from "../components/ui/Text.astro";
 >
   <DotsBackground />
   <Header />
-  <main class="flex-1">
-    <Container class="flex flex-col gap-12 py-12">
+  <main class="flex-1 flex flex-col gap-12">
+    <Container class="flex flex-col gap-18 py-12">
       <Section variant="content">
         <Text as="p" tone="muted" class="text-sm uppercase tracking-[0.2em]">
-          Projects
+          My Projects
         </Text>
-        <Heading as="h1" variant="hero"
-          >Selected work, product experiments, and things in progress</Heading
-        >
+        <Heading as="h1" variant="hero"> A Restless Mind </Heading>
         <Text class="max-w-3xl">
-          This is placeholder content for the projects page. Use it to test
-          layouts for case studies, project summaries, timelines, links, and
-          call-to-action blocks.
+          I'm constantly exploring new ideas, experimenting with different
+          technologies, and building projects that range from small utilities to
+          full-fledged applications. This page is a curated collection of my
         </Text>
-      </Section>
-
-      <Section variant="grid" class="md:grid-cols-2 xl:grid-cols-3">
-        <Card class="space-y-4 shadow-sm backdrop-blur">
-          <div>
-            <Text
-              as="p"
-              tone="muted"
-              class="mb-2 text-xs uppercase tracking-wider"
-            >
-              Featured build
-            </Text>
-            <Heading as="h3">Personal portfolio v3</Heading>
-          </div>
-          <Text>
-            A placeholder case study for a design-forward Astro portfolio with
-            content collections, dark mode, animated transitions, and a
-            lightweight component system.
-          </Text>
-          <Text as="ul" tone="soft" class="list-disc space-y-1 pl-5 text-sm">
-            <li>Astro + Tailwind v4</li>
-            <li>GSAP interactions</li>
-            <li>Reusable UI primitives</li>
-          </Text>
-          <Link href="#">View case study</Link>
-        </Card>
-
-        <Card class="space-y-4 shadow-sm backdrop-blur">
-          <div>
-            <Text
-              as="p"
-              tone="muted"
-              class="mb-2 text-xs uppercase tracking-wider"
-            >
-              Client work
-            </Text>
-            <Heading as="h3">Internal tooling dashboard</Heading>
-          </div>
-          <Text>
-            Placeholder summary for a productized internal dashboard focused on
-            performance, operational visibility, and clean information
-            architecture.
-          </Text>
-          <Text as="ul" tone="soft" class="list-disc space-y-1 pl-5 text-sm">
-            <li>Role-based views</li>
-            <li>Analytics widgets</li>
-            <li>Optimized data loading</li>
-          </Text>
-          <Link href="#">Read project notes</Link>
-        </Card>
-
-        <Card class="space-y-4 shadow-sm backdrop-blur">
-          <div>
-            <Text
-              as="p"
-              tone="muted"
-              class="mb-2 text-xs uppercase tracking-wider"
-            >
-              Experiment
-            </Text>
-            <Heading as="h3">Motion design playground</Heading>
-          </div>
-          <Text>
-            A sandbox for prototyping transitions, shared element effects, and
-            scroll-triggered interactions before integrating them into
-            production pages.
-          </Text>
-          <Text as="ul" tone="soft" class="list-disc space-y-1 pl-5 text-sm">
-            <li>View transitions</li>
-            <li>Micro-interactions</li>
-            <li>Accessible motion patterns</li>
-          </Text>
-          <Link href="#">Open prototype log</Link>
-        </Card>
-      </Section>
-
-      <Section class="space-y-4 pb-8">
-        <Heading as="h2" variant="section">Project roadmap placeholder</Heading>
-        <div class="overflow-x-auto border border-slate-200 bg-white/80">
-          <table class="min-w-full border-collapse text-left text-sm">
-            <thead class="bg-slate-100/80">
-              <tr>
-                <th class="border-b border-slate-200 px-4 py-3">Project</th>
-                <th class="border-b border-slate-200 px-4 py-3">Stage</th>
-                <th class="border-b border-slate-200 px-4 py-3">Stack</th>
-                <th class="border-b border-slate-200 px-4 py-3">Notes</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td class="border-b border-slate-200 px-4 py-3"
-                  >Portfolio redesign</td
-                >
-                <td class="border-b border-slate-200 px-4 py-3">In progress</td>
-                <td class="border-b border-slate-200 px-4 py-3"
-                  >Astro / Tailwind</td
-                >
-                <td class="border-b border-slate-200 px-4 py-3"
-                  >Testing responsive narrative layouts.</td
-                >
-              </tr>
-              <tr>
-                <td class="border-b border-slate-200 px-4 py-3"
-                  >Mobile utility app</td
-                >
-                <td class="border-b border-slate-200 px-4 py-3">Concept</td>
-                <td class="border-b border-slate-200 px-4 py-3"
-                  >Expo / Supabase</td
-                >
-                <td class="border-b border-slate-200 px-4 py-3"
-                  >Placeholder content for case-study cards.</td
-                >
-              </tr>
-              <tr>
-                <td class="px-4 py-3">Automation dashboard</td>
-                <td class="px-4 py-3">Maintained</td>
-                <td class="px-4 py-3">React / Node</td>
-                <td class="px-4 py-3"
-                  >Useful for testing maintenance-style copy.</td
-                >
-              </tr>
-            </tbody>
-          </table>
-        </div>
       </Section>
     </Container>
+
+    {
+      projectSections.map((section, sectionIndex) => (
+        <div class="space-y-5">
+          <Container class="flex flex-col gap-4 py-6">
+            <div class="flex items-start justify-between gap-4">
+              <Heading as="h2" variant="section">
+                {section.title}
+              </Heading>
+              <div class="flex items-center gap-2">
+                <button
+                  type="button"
+                  class="project-scroll-prev inline-flex h-9 w-9 items-center justify-center border border-(--button-border) bg-(--button-bg) text-sm font-semibold text-(--button-text) transition-colors hover:bg-(--button-hover-bg) hover:text-(--button-hover-text) disabled:cursor-not-allowed disabled:opacity-40"
+                  data-carousel-prev={sectionIndex}
+                  aria-label={`Previous project in ${section.title}`}
+                  disabled
+                >
+                  ←
+                </button>
+                <button
+                  type="button"
+                  class="project-scroll-next inline-flex h-9 w-9 items-center justify-center border border-(--button-border) bg-(--button-bg) text-sm font-semibold text-(--button-text) transition-colors hover:bg-(--button-hover-bg) hover:text-(--button-hover-text) disabled:cursor-not-allowed disabled:opacity-40"
+                  data-carousel-next={sectionIndex}
+                  aria-label={`Next project in ${section.title}`}
+                >
+                  →
+                </button>
+              </div>
+            </div>
+            <Text class="max-w-3xl" tone="soft">
+              {section.subtitle}
+            </Text>
+          </Container>
+
+          <div
+            class="project-carousel w-screen overflow-x-auto scroll-smooth snap-x snap-mandatory"
+            style="scroll-padding-left: max(1rem, calc((100vw - 56rem) / 2));"
+            data-carousel-track={sectionIndex}
+          >
+            <div
+              class="flex gap-4 pb-4 pr-4"
+              style="padding-left: max(1rem, calc((100vw - 56rem) / 2));"
+            >
+              {section.projects.map((project) => (
+                <Card
+                  class="group relative cursor-pointer project-carousel-item flex w-96 shrink-0 snap-start flex-col space-y-4 overflow-hidden border-slate-200/80 bg-white/90"
+                  data-carousel-item={sectionIndex}
+                >
+                  <div class="relative -mx-5 -mt-5 mb-2 overflow-hidden border-b border-slate-200/70 bg-slate-100/70">
+                    <Image
+                      src={project.image}
+                      alt={project.imageAlt}
+                      width={1200}
+                      class="h-86 w-full object-cover object-center transition-transform duration-300 group-hover:scale-120"
+                    />
+                    <div class="pointer-events-none absolute inset-x-0 bottom-0 h-14 bg-linear-to-t from-slate-950/25 to-transparent" />
+                  </div>
+
+                  <div class="px-1">
+                    <Text
+                      as="p"
+                      tone="muted"
+                      class="mb-2 text-xs uppercase tracking-wider"
+                    >
+                      {project.stage}
+                    </Text>
+                    <Heading as="h3">
+                      <a
+                        href={`/projects/${project.slug}`}
+                        class="underline-offset-4 hover:underline after:absolute after:inset-0 after:content-[''] after:z-0"
+                      >
+                        {project.name}
+                      </a>
+                    </Heading>
+                  </div>
+
+                  <Text class="px-1">{project.summary}</Text>
+
+                  <Text
+                    as="ul"
+                    tone="soft"
+                    class="list-disc space-y-1 pl-6 text-sm"
+                  >
+                    {project.stack.map((item) => (
+                      <li>{item}</li>
+                    ))}
+                  </Text>
+
+                  <div class="relative z-10 mt-auto px-1 pt-2">
+                    <div class={actionButtonClass}>
+                      Explore{" "}
+                      <Icon name="lucide:arrow-right" class="ml-1" size={16} />
+                    </div>
+                  </div>
+                </Card>
+              ))}
+            </div>
+          </div>
+        </div>
+      ))
+    }
+
+    <Container class="flex flex-col gap-12 py-12" />
   </main>
   <Footer />
 </AppLayout>
+
+<script>
+  const getClosestIndex = (track: HTMLElement, items: HTMLElement[]) => {
+    const trackLeft = track.getBoundingClientRect().left;
+    let closestIndex = 0;
+    let closestDistance = Number.POSITIVE_INFINITY;
+
+    items.forEach((item: HTMLElement, index: number) => {
+      const distance = Math.abs(item.getBoundingClientRect().left - trackLeft);
+      if (distance < closestDistance) {
+        closestDistance = distance;
+        closestIndex = index;
+      }
+    });
+
+    return closestIndex;
+  };
+
+  const setupCarousel = (carouselId: string) => {
+    const track = document.querySelector(
+      `[data-carousel-track="${carouselId}"]`,
+    );
+    const prevButton = document.querySelector(
+      `[data-carousel-prev="${carouselId}"]`,
+    );
+    const nextButton = document.querySelector(
+      `[data-carousel-next="${carouselId}"]`,
+    );
+
+    if (!(track instanceof HTMLElement)) return;
+    if (!(prevButton instanceof HTMLButtonElement)) return;
+    if (!(nextButton instanceof HTMLButtonElement)) return;
+
+    const items: HTMLElement[] = Array.from(
+      track.querySelectorAll(`[data-carousel-item="${carouselId}"]`),
+    );
+
+    if (items.length === 0) {
+      prevButton.disabled = true;
+      nextButton.disabled = true;
+      return;
+    }
+
+    let currentIndex = 0;
+    let ticking = false;
+
+    const updateButtons = () => {
+      prevButton.disabled = currentIndex <= 0;
+      nextButton.disabled = currentIndex >= items.length - 1;
+    };
+
+    const updateCurrentIndex = () => {
+      currentIndex = getClosestIndex(track, items);
+      updateButtons();
+    };
+
+    const scrollToIndex = (index: number) => {
+      const boundedIndex = Math.max(0, Math.min(index, items.length - 1));
+      items[boundedIndex]?.scrollIntoView({
+        behavior: "smooth",
+        block: "nearest",
+        inline: "start",
+      });
+      currentIndex = boundedIndex;
+      updateButtons();
+    };
+
+    prevButton.addEventListener("click", () => scrollToIndex(currentIndex - 1));
+    nextButton.addEventListener("click", () => scrollToIndex(currentIndex + 1));
+
+    track.addEventListener("scroll", () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => {
+        updateCurrentIndex();
+        ticking = false;
+      });
+    });
+
+    window.addEventListener("resize", updateCurrentIndex);
+
+    updateCurrentIndex();
+  };
+
+  document.querySelectorAll("[data-carousel-track]").forEach((track) => {
+    const carouselId = track.getAttribute("data-carousel-track");
+    if (carouselId) setupCarousel(carouselId);
+  });
+</script>
+
+<style>
+  .project-carousel {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .project-carousel::-webkit-scrollbar {
+    display: none;
+  }
+</style>

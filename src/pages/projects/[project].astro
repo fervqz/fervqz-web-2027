@@ -1,0 +1,210 @@
+---
+import { Image } from "astro:assets";
+import DotsBackground from "../../components/DotsBackground.astro";
+import Footer from "../../components/Footer.astro";
+import Header from "../../components/Header.astro";
+import Card from "../../components/ui/Card.astro";
+import Container from "../../components/ui/Container.astro";
+import Heading from "../../components/ui/Heading.astro";
+import Section from "../../components/ui/Section.astro";
+import Text from "../../components/ui/Text.astro";
+import { SITE_TITLE } from "../../consts";
+import {
+  projectSections,
+  type Project,
+  type ProjectSection,
+} from "../../lib/projects";
+import AppLayout from "../../layouts/AppLayout.astro";
+
+export async function getStaticPaths() {
+  return projectSections.flatMap((section) =>
+    section.projects.map((project) => ({
+      params: { project: project.slug },
+      props: {
+        project,
+        section,
+      },
+    })),
+  );
+}
+
+type Props = {
+  project: Project;
+  section: ProjectSection;
+};
+
+const { project, section } = Astro.props as Props;
+
+const relatedProjects = section.projects
+  .filter((item) => item.slug !== project.slug)
+  .slice(0, 3);
+
+const actionButtonClass =
+  "inline-flex items-center justify-center border border-slate-300/30 bg-white/10 px-4 py-2 text-sm font-semibold text-white no-underline backdrop-blur-md transition-all hover:border-white/50 hover:bg-white hover:text-slate-950";
+---
+
+<AppLayout
+  title={`${project.name} | Projects | ${SITE_TITLE}`}
+  description={project.summary}
+  bodyClass="flex min-h-screen flex-col px-4"
+>
+  <DotsBackground />
+  <Header />
+
+  <main class="relative flex-1 overflow-hidden">
+    <div class="pointer-events-none absolute inset-0 -z-10">
+      <div
+        class="absolute -top-40 left-1/2 h-112 w-md -translate-x-1/2 rounded-full bg-sky-400/25 blur-3xl"
+      >
+      </div>
+      <div
+        class="absolute bottom-0 right-0 h-88 w-88 rounded-full bg-violet-400/20 blur-3xl"
+      >
+      </div>
+      <div
+        class="absolute bottom-16 left-0 h-72 w-72 rounded-full bg-emerald-400/15 blur-3xl"
+      >
+      </div>
+    </div>
+
+    <Container class="relative z-10 flex flex-col gap-10 py-10">
+      <a
+        href="/projects"
+        class="w-fit text-sm font-medium text-slate-600 underline underline-offset-4 transition-colors hover:text-slate-900"
+      >
+        ← Back to all projects
+      </a>
+
+      <Section
+        class="relative overflow-hidden border border-slate-200/70 bg-slate-950 text-slate-100 shadow-2xl"
+      >
+        <div
+          class="absolute inset-0 bg-linear-to-br from-sky-500/20 via-violet-500/10 to-transparent"
+        >
+        </div>
+        <div class="relative grid gap-8 p-6 md:grid-cols-[1.1fr_0.9fr] md:p-8">
+          <div class="space-y-5">
+            <Text
+              as="p"
+              class="text-xs uppercase tracking-[0.25em] text-slate-300"
+            >
+              {section.title} · {project.stage}
+            </Text>
+            <Heading as="h1" variant="hero" class="text-balance text-white">
+              {project.name}
+            </Heading>
+            <Text class="max-w-2xl text-slate-200">{project.summary}</Text>
+
+            <div class="flex flex-wrap gap-2">
+              {
+                project.stack.map((item) => (
+                  <span class="border border-white/20 bg-white/10 px-3 py-1 text-xs font-medium text-slate-100">
+                    {item}
+                  </span>
+                ))
+              }
+            </div>
+
+            <div class="flex flex-wrap gap-2 pt-2">
+              {
+                project.actions.map((action) => (
+                  <a
+                    href={action.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class={actionButtonClass}
+                    aria-label={`${action.label}: ${project.name}`}
+                  >
+                    {action.label}
+                  </a>
+                ))
+              }
+            </div>
+          </div>
+
+          <div class="relative">
+            <div class="absolute inset-0 rounded-2xl bg-white/10 blur-xl"></div>
+            <Image
+              src={project.image}
+              alt={project.imageAlt}
+              width={1400}
+              class="relative h-full min-h-72 w-full rounded-2xl border border-white/15 object-cover object-center"
+            />
+          </div>
+        </div>
+      </Section>
+
+      <Section variant="grid" class="gap-4 md:grid-cols-3">
+        <Card class="border-slate-200/70 bg-white/85 backdrop-blur">
+          <Text as="p" tone="muted" class="text-xs uppercase tracking-wider"
+            >Stage</Text
+          >
+          <Heading as="h3">{project.stage}</Heading>
+        </Card>
+        <Card class="border-slate-200/70 bg-white/85 backdrop-blur">
+          <Text as="p" tone="muted" class="text-xs uppercase tracking-wider"
+            >Category</Text
+          >
+          <Heading as="h3">{section.title}</Heading>
+        </Card>
+        <Card class="border-slate-200/70 bg-white/85 backdrop-blur">
+          <Text as="p" tone="muted" class="text-xs uppercase tracking-wider"
+            >Tech footprint</Text
+          >
+          <Heading as="h3">{project.stack.length} core tools</Heading>
+        </Card>
+      </Section>
+
+      <Section
+        variant="grid"
+        class="items-start gap-6 lg:grid-cols-[1.2fr_0.8fr]"
+      >
+        <Card class="space-y-4 border-slate-200/70 bg-white/90 backdrop-blur">
+          <Heading as="h2" variant="section">Project narrative</Heading>
+          {project.details.map((paragraph) => <Text>{paragraph}</Text>)}
+        </Card>
+
+        <Card class="space-y-4 border-slate-200/70 bg-white/90 backdrop-blur">
+          <Heading as="h2" variant="section">Highlights</Heading>
+          <Text as="ul" tone="soft" class="list-disc space-y-2 pl-5 text-sm">
+            {project.highlights.map((highlight) => <li>{highlight}</li>)}
+          </Text>
+        </Card>
+      </Section>
+
+      {
+        relatedProjects.length > 0 && (
+          <Section class="space-y-4 pb-8">
+            <Heading as="h2" variant="section">
+              More Projects
+            </Heading>
+            <div class="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+              {relatedProjects.map((item) => (
+                <Card class="space-y-3 border-slate-200/70 bg-white/85 backdrop-blur">
+                  <Image
+                    src={item.image}
+                    alt={item.imageAlt}
+                    width={1000}
+                    class="h-32 w-full border border-slate-200/70 object-cover"
+                  />
+                  <Heading as="h3">{item.name}</Heading>
+                  <Text tone="soft" class="text-sm">
+                    {item.summary}
+                  </Text>
+                  <a
+                    href={`/projects/${item.slug}`}
+                    class="text-sm font-semibold text-(--link-color) underline underline-offset-2 hover:text-(--link-hover-color)"
+                  >
+                    Open project page
+                  </a>
+                </Card>
+              ))}
+            </div>
+          </Section>
+        )
+      }
+    </Container>
+  </main>
+
+  <Footer />
+</AppLayout>

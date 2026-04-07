@@ -1,6 +1,7 @@
 ---
 import Container from "./ui/Container.astro";
 import IconButton from "./ui/IconButton.astro";
+import { Icon } from "astro-icon/components";
 ---
 
 <footer>
@@ -36,6 +37,14 @@ import IconButton from "./ui/IconButton.astro";
           @fervqz
         </a>
       </p>
+    </div>
+    <div>
+      <span class="border p-2 text-sm opacity-40"
+        >🇬🇧 English <Icon
+          name="lucide:chevron-down"
+          class="inline-block ml-1"
+        /></span
+      >
     </div>
   </Container>
 </footer>
