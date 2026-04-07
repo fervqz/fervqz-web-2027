@@ -1,0 +1,71 @@
+---
+import type { ExperienceEntry } from "../../lib/experience";
+import Card from "../ui/Card.astro";
+import Container from "../ui/Container.astro";
+import Heading from "../ui/Heading.astro";
+import Text from "../ui/Text.astro";
+
+interface Props {
+  experience: ExperienceEntry[];
+}
+
+const { experience } = Astro.props;
+---
+
+<!-- Variant 3: Compact card grid -->
+<Container class="py-16">
+  <div class="mb-10">
+    <Text as="p" tone="muted" class="mb-2 text-sm uppercase tracking-[0.2em]">
+      Experience
+    </Text>
+    <Heading as="h2" variant="section">At a Glance</Heading>
+  </div>
+  <div class="grid gap-5 sm:grid-cols-2">
+    {
+      experience.map((entry, i) => (
+        <Card class="group relative flex flex-col gap-4 overflow-hidden">
+          <span
+            class="pointer-events-none absolute right-4 top-3 select-none text-6xl font-black leading-none text-slate-100"
+            aria-hidden="true"
+          >
+            {String(i + 1).padStart(2, "0")}
+          </span>
+          <div>
+            <div class="mb-1 flex items-center gap-2">
+              <span class="rounded-full border border-slate-200 bg-slate-100 px-2.5 py-0.5 text-xs font-semibold capitalize text-slate-500">
+                {entry.type}
+              </span>
+              <Text tone="soft" class="text-xs">
+                {entry.period}
+              </Text>
+            </div>
+            <Heading as="h3" class="mb-0.5!">
+              {entry.role}
+            </Heading>
+            <Text tone="soft" class="text-sm font-medium">
+              {entry.company} · {entry.location}
+            </Text>
+          </div>
+          <ul class="flex flex-col gap-1.5">
+            {entry.highlights.map((h) => (
+              <li class="flex items-start gap-2 text-sm text-(--text-default-color)">
+                <span
+                  class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-slate-400"
+                  aria-hidden="true"
+                />
+                {h}
+              </li>
+            ))}
+          </ul>
+          <div class="mt-auto flex flex-wrap gap-2 pt-2">
+            {entry.stack.map((s) => (
+              <span class="rounded-full border border-slate-200 bg-slate-100 px-3 py-0.5 text-xs font-medium text-slate-600">
+                {s}
+              </span>
+            ))}
+          </div>
+        </Card>
+      ))
+    }
+  </div>
+</Container>

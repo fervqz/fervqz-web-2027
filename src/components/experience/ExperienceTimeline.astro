@@ -1,0 +1,180 @@
+---
+import type { ExperienceEntry } from "../../lib/experience";
+import Card from "../ui/Card.astro";
+import Container from "../ui/Container.astro";
+import Heading from "../ui/Heading.astro";
+import Text from "../ui/Text.astro";
+
+interface Props {
+  experience: ExperienceEntry[];
+}
+
+const { experience: rawExperience } = Astro.props;
+const experience = rawExperience.filter((entry) => entry.show);
+---
+
+<!-- Variant 2: Alternating center timeline -->
+<Container class="py-16">
+  <div class="mb-10">
+    <!-- <Text as="p" tone="muted" class="mb-2 text-sm uppercase tracking-[0.2em]">
+      Experience
+    </Text> -->
+    <Heading as="h1" variant="section">Experience Journey 🚀</Heading>
+  </div>
+  <div class="relative">
+    <div
+      class="absolute left-1/2 top-0 bottom-0 hidden w-px -translate-x-1/2 bg-slate-200 md:block"
+    >
+    </div>
+    <ol class="flex flex-col gap-12">
+      {
+        experience.map((entry, i) => (
+          <li
+            class={`experience-timeline-item relative flex flex-col gap-6 md:flex-row md:items-start ${i % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"}`}
+            style={`--timeline-delay: ${i * 120}ms;`}
+            data-timeline-item
+          >
+            <div class="md:w-[calc(50%-2rem)]">
+              <Card class="experience-timeline-card space-y-3">
+                <div>
+                  {/* <Text
+                    tone="muted"
+                    class="mb-1 text-xs uppercase tracking-wider"
+                  >
+                    {entry.period}
+                  </Text> */}
+                  <Heading as="h3" class="mb-0!">
+                    {entry.role}
+                  </Heading>
+                  <Text tone="soft" class="text-sm">
+                    {entry.company}
+                    {/* {entry.company} · {entry.location} */}
+                  </Text>
+                </div>
+                {/* <Text class="text-sm">{entry.description}</Text> */}
+                {/* <div class="flex flex-wrap gap-2 pt-1">
+                  {entry.stack.map((s) => (
+                    <span class="rounded-full border border-slate-200 bg-slate-100 px-3 py-0.5 text-xs font-medium text-slate-600">
+                      {s}
+                    </span>
+                  ))}
+                </div> */}
+              </Card>
+            </div>
+            <div class="hidden md:flex md:w-16 md:shrink-0 md:items-start md:justify-center md:pt-5">
+              <span class="experience-timeline-dot flex h-7 w-7 items-center justify-center rounded-full border border-slate-200 bg-(--bg-color)">
+                <span class="h-2.5 w-2.5 rounded-full bg-slate-400" />
+              </span>
+            </div>
+            <div
+              class={`experience-timeline-label hidden md:flex md:w-[calc(50%-2rem)] md:items-start md:pt-6 ${i % 2 === 0 ? "md:justify-start" : "md:justify-end"}`}
+            >
+              <span class="text-xs font-semibold uppercase tracking-widest text-(--soft-text-color)">
+                {/* {entry.type} */}
+                {entry.period}
+              </span>
+            </div>
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+</Container>
+
+<script>
+  const timelineItems = Array.from(
+    document.querySelectorAll("[data-timeline-item]"),
+  );
+
+  const revealTimelineItem = (item: Element) => {
+    item.setAttribute("data-in-view", "true");
+  };
+
+  if (
+    typeof window !== "undefined" &&
+    "IntersectionObserver" in window &&
+    !window.matchMedia("(prefers-reduced-motion: reduce)").matches
+  ) {
+    const observer = new IntersectionObserver(
+      (entries, currentObserver) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          revealTimelineItem(entry.target);
+          currentObserver.unobserve(entry.target);
+        });
+      },
+      {
+        threshold: 0.2,
+        rootMargin: "0px 0px -10% 0px",
+      },
+    );
+
+    timelineItems.forEach((item) => observer.observe(item));
+  } else {
+    timelineItems.forEach(revealTimelineItem);
+  }
+</script>
+
+<style>
+  .experience-timeline-item {
+    opacity: 0;
+  }
+
+  .experience-timeline-card,
+  .experience-timeline-dot,
+  .experience-timeline-label {
+    transition:
+      opacity 560ms cubic-bezier(0.22, 1, 0.36, 1),
+      transform 560ms cubic-bezier(0.22, 1, 0.36, 1);
+    transition-delay: var(--timeline-delay, 0ms);
+    will-change: opacity, transform;
+  }
+
+  .experience-timeline-card {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+
+  .experience-timeline-dot {
+    opacity: 0;
+    transform: scale(0.72);
+  }
+
+  .experience-timeline-label {
+    opacity: 0;
+  }
+
+  @media (min-width: 48rem) {
+    .experience-timeline-item:nth-child(odd) .experience-timeline-card,
+    .experience-timeline-item:nth-child(odd) .experience-timeline-label {
+      transform: translateX(-28px);
+    }
+
+    .experience-timeline-item:nth-child(even) .experience-timeline-card,
+    .experience-timeline-item:nth-child(even) .experience-timeline-label {
+      transform: translateX(28px);
+    }
+  }
+
+  .experience-timeline-item[data-in-view="true"] {
+    opacity: 1;
+  }
+
+  .experience-timeline-item[data-in-view="true"] .experience-timeline-card,
+  .experience-timeline-item[data-in-view="true"] .experience-timeline-dot,
+  .experience-timeline-item[data-in-view="true"] .experience-timeline-label {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .experience-timeline-item,
+    .experience-timeline-card,
+    .experience-timeline-dot,
+    .experience-timeline-label {
+      opacity: 1;
+      transform: none;
+      transition: none;
+    }
+  }
+</style>

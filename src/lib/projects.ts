@@ -13,13 +13,18 @@ export type ProjectAction = {
     href: string;
 };
 
-export type ProjectStage = "Concept" | "Prototype" | "Live";
+export type ProjectPhaseStatus = "completed" | "current" | "none";
+
+export type ProjectPhase = {
+    name: string;
+    status: ProjectPhaseStatus;
+};
 
 export type Project = {
     slug: string;
     name: string;
     summary: string;
-    stage: ProjectStage;
+    stages: ProjectPhase[];
     stack: string[];
     highlights: string[];
     details: string[];
@@ -50,7 +55,13 @@ export const projectSections: ProjectSection[] = [
                 name: "Sonoguides",
                 summary: "Hear the stories behind places, Sonoguides allows you to listen to audioguides everywhere you go, with personalized recommendations and offline access.",
                 stack: ["React Native", "Expo", "Supabase"],
-                stage: "Prototype",
+                stages: [
+                    { name: "Concept", status: "completed" },
+                    { name: "MVP", status: "completed" },
+                    { name: "Close beta", status: "current" },
+                    { name: "Open beta", status: "none" },
+                    { name: "Launch 🚀", status: "none" },
+                ],
                 image: sonoguides,
                 imageAlt: "Habit tracker mobile preview",
                 highlights: [
@@ -75,7 +86,13 @@ export const projectSections: ProjectSection[] = [
                 name: "F1lmlog",
                 summary: "Save your camera settings, lens choices, and lighting conditions with F1lmlog, the ultimate companion app for film photographers to log their shots and build a personalized database of their work.",
                 stack: ["React Native", "Expo", "SQLite"],
-                stage: "Concept",
+                stages: [
+                    { name: "Concept", status: "completed" },
+                    { name: "MVP", status: "current" },
+                    { name: "Close beta", status: "none" },
+                    { name: "Open beta", status: "none" },
+                    { name: "Launch 🚀", status: "none" },
+                ],
                 image: f1lmlog,
                 imageAlt: "Meal planner companion preview",
                 highlights: [
@@ -101,7 +118,12 @@ export const projectSections: ProjectSection[] = [
                 name: "FitBro",
                 summary: "Not another macro app, but a goal achiever buddy. Reach your fitness goals with the help of AI. FitBro helps you keep on track with your fitness journey by providing personalized feedback on diet and workouts.",
                 stack: ["React Native", "Expo", "Supabase"],
-                stage: "Prototype",
+                stages: [
+                    { name: "Concept", status: "completed" },
+                    { name: "Development ✨", status: "current" },
+                    { name: "Open beta", status: "none" },
+                    { name: "Launch 🚀", status: "none" },
+                ],
                 image: fitbro,
                 imageAlt: "Focus timer mobile preview",
                 highlights: [
@@ -127,7 +149,11 @@ export const projectSections: ProjectSection[] = [
                 name: "@fervqz/just-a-stream",
                 summary: "A light weight js library for creating, transforming and merging streams.",
                 stack: ["JavaScript", "TypeScript"],
-                stage: "Prototype",
+                stages: [
+                    { name: "API Design", status: "completed" },
+                    { name: "Testing", status: "completed" },
+                    { name: "Launch 🚀", status: "completed" },
+                ],
                 image: jas,
                 imageAlt: "Focus timer mobile preview",
                 highlights: [
@@ -154,7 +180,10 @@ export const projectSections: ProjectSection[] = [
                 summary:
                     "The best way of learning is by copying. This is a collection of UI clones from popular apps, rebuilt with clean code and modern best practices for educational purposes.",
                 stack: ["Astro", "Tailwind CSS", "React"],
-                stage: "Prototype",
+                stages: [
+                    { name: "Concept", status: "completed" },
+                    { name: "Launch 🚀", status: "completed" },
+                ],
                 image: clonify,
                 imageAlt: "Focus timer mobile preview",
                 highlights: [
@@ -190,7 +219,11 @@ export const projectSections: ProjectSection[] = [
                 summary:
                     "A dripper for a Hario's V60 coffee maker.",
                 stack: ["3D Printing", "Fusion 360"],
-                stage: "Live",
+                stages: [
+                    { name: "Design", status: "completed" },
+                    { name: "Prototyping", status: "completed" },
+                    { name: "Available", status: "completed" },
+                ],
                 image: dripper,
                 imageAlt: "Operations dashboard preview",
                 highlights: [
@@ -210,7 +243,12 @@ export const projectSections: ProjectSection[] = [
                 summary:
                     "A placeholder multi-tenant portal with invoice history, status updates, and role-based document access.",
                 stack: ["Arduino", "Custom circuitry", "Pneumatic Actuators", "Custom Steel Frame"],
-                stage: "Prototype",
+                stages: [
+                    { name: "Planning", status: "completed" },
+                    { name: "Construction", status: "completed" },
+                    { name: "Exhibition", status: "completed" },
+                    { name: "Archived 📁", status: "completed" },
+                ],
                 image: drivingSimulator,
                 imageAlt: "Client portal starter preview",
                 highlights: [

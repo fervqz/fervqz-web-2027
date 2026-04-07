@@ -27,10 +27,12 @@ const actionButtonClass =
   <main class="flex-1 flex flex-col gap-12">
     <Container class="flex flex-col gap-18 py-12">
       <Section variant="content">
-        <Text as="p" tone="muted" class="text-sm uppercase tracking-[0.2em]">
-          My Projects
-        </Text>
-        <Heading as="h1" variant="hero"> A Restless Mind </Heading>
+        <Heading as="h1" variant="hero"
+          ><span class="line-through">My Projects</span><span
+            class="font-pangolin ml-2 text-blue-500 italic"
+            >A Restless Mind...</span
+          >
+        </Heading>
         <Text class="max-w-3xl">
           I'm constantly exploring new ideas, experimenting with different
           technologies, and building projects that range from small utilities to
@@ -78,7 +80,7 @@ const actionButtonClass =
             data-carousel-track={sectionIndex}
           >
             <div
-              class="flex gap-4 pb-4 pr-4"
+              class="flex gap-4 pb-4"
               style="padding-left: max(1rem, calc((100vw - 56rem) / 2));"
             >
               {section.projects.map((project) => (
@@ -96,35 +98,24 @@ const actionButtonClass =
                     <div class="pointer-events-none absolute inset-x-0 bottom-0 h-14 bg-linear-to-t from-slate-950/25 to-transparent" />
                   </div>
 
-                  <div class="px-1">
-                    <Text
-                      as="p"
-                      tone="muted"
-                      class="mb-2 text-xs uppercase tracking-wider"
+                  <Heading as="h3" class="py-2">
+                    <a
+                      href={`/projects/${project.slug}`}
+                      class="underline-offset-4 hover:underline after:absolute after:inset-0 after:content-[''] after:z-0"
                     >
-                      {project.stage}
-                    </Text>
-                    <Heading as="h3">
-                      <a
-                        href={`/projects/${project.slug}`}
-                        class="underline-offset-4 hover:underline after:absolute after:inset-0 after:content-[''] after:z-0"
-                      >
-                        {project.name}
-                      </a>
-                    </Heading>
-                  </div>
+                      {project.name}
+                    </a>
+                  </Heading>
 
                   <Text class="px-1">{project.summary}</Text>
 
-                  <Text
-                    as="ul"
-                    tone="soft"
-                    class="list-disc space-y-1 pl-6 text-sm"
-                  >
+                  <ul class="flex flex-row gap-2 text-xs">
                     {project.stack.map((item) => (
-                      <li>{item}</li>
+                      <li class=" px-1.5 py-0.5 rounded-xl bg-slate-200">
+                        {item}
+                      </li>
                     ))}
-                  </Text>
+                  </ul>
 
                   <div class="relative z-10 mt-auto px-1 pt-2">
                     <div class={actionButtonClass}>
@@ -134,12 +125,16 @@ const actionButtonClass =
                   </div>
                 </Card>
               ))}
+              <div
+                class="shrink-0"
+                style="width: max(1rem, calc((100vw - 56rem) / 2));"
+                aria-hidden="true"
+              />
             </div>
           </div>
         </div>
       ))
     }
-
     <Container class="flex flex-col gap-12 py-12" />
   </main>
   <Footer />

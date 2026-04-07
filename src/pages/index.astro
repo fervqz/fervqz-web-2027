@@ -10,8 +10,10 @@ import HeroTitle from "../components/HeroTitle.astro";
 import Sticker from "../components/sticker/Sticker.astro";
 import avatar from "../assets/img/avatar.svg";
 import Footer from "../components/Footer.astro";
-import Heading from "../components/ui/Heading.astro";
+import ExperienceTimeline from "../components/experience/ExperienceTimeline.astro";
+import { experience } from "../lib/experience";
 import type { ImageMetadata } from "astro";
+import { Icon } from "astro-icon/components";
 
 const stickerAssets = import.meta.glob("../assets/img/sticker-test-*.svg", {
   eager: true,
@@ -36,57 +38,36 @@ const stickers = Object.entries(stickerAssets)
   <Header />
   <main>
     <Container class="flex flex-1 flex-col gap-10 py-8 sm:py-10 md:py-12">
-      <Section
-        variant="content"
-        class="flex flex-col items-center gap-8 text-center md:flex-row md:items-center md:gap-10 md:text-left lg:gap-12"
-      >
-        <Sticker src={avatar} alt="avatar" width={300} />
-        <div class="max-w-3xl">
-          <Text as="p" tone="muted" class="text-sm uppercase tracking-[0.2em]">
-            Meet Your Next
-          </Text>
-          <HeroTitle />
-          <Text class="max-w-3xl mx-auto md:mx-0">
-            When I sarted coding, I was drawn to the web for its unique blend of
-            creativity and logic. Over the years, I've honed my skills as a
-            creative developer, with a particular focus on crafting engaging
-            user experiences.
-          </Text>
+      <Section variant="content">
+        <div
+          class="flex flex-col items-center gap-8 pt-18 pb-10 text-center md:flex-row md:items-center md:gap-10 md:text-left lg:gap-12"
+        >
+          <Sticker src={avatar} alt="avatar" width={300} />
+          <div class="max-w-3xl">
+            <Text
+              as="p"
+              tone="muted"
+              class="text-sm uppercase tracking-[0.2em]"
+            >
+              Meet Your Next
+            </Text>
+            <HeroTitle />
+            <Text class="max-w-3xl mx-auto md:mx-0">
+              When I sarted coding, I was drawn to the web for its unique blend
+              of creativity and logic. Over the years, I've honed my skills as a
+              creative developer, with a particular focus on crafting engaging
+              user experiences.
+            </Text>
+          </div>
+        </div>
+        <div class="flex justify-center py-8">
+          <Icon name="lucide:arrow-down" class="h-6 w-6 animate-bounce" />
         </div>
       </Section>
 
-      <!-- <Section variant="content" class="flex flex-col gap-8">
-        <Heading as="h1">Creative Development</Heading>
-        <Text class="">
-          I specialize in creative development, using code as a medium to bring
-          imaginative ideas to life. Whether it's interactive web experiences,
-          generative art, or experimental projects, I thrive on pushing the
-          boundaries of what's possible with code.
-        </Text>
-        <div class="flex flex-row gap-12">
-          <Sticker src={avatar} alt="avatar" width={200} />
-          <Sticker src={avatar} alt="avatar" width={200} />
-          <Sticker src={avatar} alt="avatar" width={200} />
-        </div>
-      </Section>
-
-      <Section>
-        <Heading as="h1">Let's Create Together</Heading>
-        <Text>
-          I'm always excited to collaborate on new projects and explore creative
-          ideas. If you're interested in working together or just want to say
-          hi, feel free to reach out!
-        </Text>
-
-        <div class="grid grid-cols-5 gap-4 place-items-center">
-          {
-            stickers.map((sticker, i) => (
-              <Sticker src={sticker} alt={`sticker ${i + 1}`} width={100} />
-            ))
-          }
-        </div>
-      </Section> -->
+      <ExperienceTimeline experience={experience} />
     </Container>
+
     <Footer />
   </main>
 </AppLayout>;

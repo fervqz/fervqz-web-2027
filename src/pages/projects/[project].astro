@@ -3,11 +3,13 @@ import { Image } from "astro:assets";
 import DotsBackground from "../../components/DotsBackground.astro";
 import Footer from "../../components/Footer.astro";
 import Header from "../../components/Header.astro";
+import ProjectStageProgress from "../../components/projects/ProjectStageProgress.astro";
 import Card from "../../components/ui/Card.astro";
 import Container from "../../components/ui/Container.astro";
 import Heading from "../../components/ui/Heading.astro";
 import Section from "../../components/ui/Section.astro";
 import Text from "../../components/ui/Text.astro";
+import { Icon } from "astro-icon/components";
 import { SITE_TITLE } from "../../consts";
 import {
   projectSections,
@@ -52,31 +54,16 @@ const actionButtonClass =
   <Header />
 
   <main class="relative flex-1 overflow-hidden">
-    <div class="pointer-events-none absolute inset-0 -z-10">
-      <div
-        class="absolute -top-40 left-1/2 h-112 w-md -translate-x-1/2 rounded-full bg-sky-400/25 blur-3xl"
-      >
-      </div>
-      <div
-        class="absolute bottom-0 right-0 h-88 w-88 rounded-full bg-violet-400/20 blur-3xl"
-      >
-      </div>
-      <div
-        class="absolute bottom-16 left-0 h-72 w-72 rounded-full bg-emerald-400/15 blur-3xl"
-      >
-      </div>
-    </div>
-
-    <Container class="relative z-10 flex flex-col gap-10 py-10">
+    <Container class="relative z-10 flex flex-col gap-16 py-10">
       <a
         href="/projects"
-        class="w-fit text-sm font-medium text-slate-600 underline underline-offset-4 transition-colors hover:text-slate-900"
+        class="w-fit text-sm font-medium text-slate-600 no-underline underline-offset-4 transition-colors hover:text-slate-900 mb-4"
       >
-        ← Back to all projects
+        <Icon name="lucide:arrow-left" class="size-8 absolute -left-1.5" />
       </a>
 
       <Section
-        class="relative overflow-hidden border border-slate-200/70 bg-slate-950 text-slate-100 shadow-2xl"
+        class="relative overflow-hidden bg-slate-950 text-slate-100 shadow-2xl"
       >
         <div
           class="absolute inset-0 bg-linear-to-br from-sky-500/20 via-violet-500/10 to-transparent"
@@ -84,12 +71,6 @@ const actionButtonClass =
         </div>
         <div class="relative grid gap-8 p-6 md:grid-cols-[1.1fr_0.9fr] md:p-8">
           <div class="space-y-5">
-            <Text
-              as="p"
-              class="text-xs uppercase tracking-[0.25em] text-slate-300"
-            >
-              {section.title} · {project.stage}
-            </Text>
             <Heading as="h1" variant="hero" class="text-balance text-white">
               {project.name}
             </Heading>
@@ -98,14 +79,21 @@ const actionButtonClass =
             <div class="flex flex-wrap gap-2">
               {
                 project.stack.map((item) => (
-                  <span class="border border-white/20 bg-white/10 px-3 py-1 text-xs font-medium text-slate-100">
+                  <span class="border border-white/20 rounded-xl  px-3 py-1 text-xs font-medium text-slate-100">
                     {item}
                   </span>
                 ))
               }
             </div>
 
-            <div class="flex flex-wrap gap-2 pt-2">
+            <div>
+              <Heading as="h5" variant="section" class="text-slate-200"
+                >Status</Heading
+              >
+              <ProjectStageProgress stages={project.stages} />
+            </div>
+
+            <div class="flex flex-col flex-wrap gap-2 pt-2">
               {
                 project.actions.map((action) => (
                   <a
@@ -134,42 +122,20 @@ const actionButtonClass =
         </div>
       </Section>
 
-      <Section variant="grid" class="gap-4 md:grid-cols-3">
-        <Card class="border-slate-200/70 bg-white/85 backdrop-blur">
-          <Text as="p" tone="muted" class="text-xs uppercase tracking-wider"
-            >Stage</Text
-          >
-          <Heading as="h3">{project.stage}</Heading>
-        </Card>
-        <Card class="border-slate-200/70 bg-white/85 backdrop-blur">
-          <Text as="p" tone="muted" class="text-xs uppercase tracking-wider"
-            >Category</Text
-          >
-          <Heading as="h3">{section.title}</Heading>
-        </Card>
-        <Card class="border-slate-200/70 bg-white/85 backdrop-blur">
-          <Text as="p" tone="muted" class="text-xs uppercase tracking-wider"
-            >Tech footprint</Text
-          >
-          <Heading as="h3">{project.stack.length} core tools</Heading>
-        </Card>
-      </Section>
-
-      <Section
-        variant="grid"
-        class="items-start gap-6 lg:grid-cols-[1.2fr_0.8fr]"
-      >
-        <Card class="space-y-4 border-slate-200/70 bg-white/90 backdrop-blur">
+      <Section>
+        <div class="space-y-4">
           <Heading as="h2" variant="section">Project narrative</Heading>
           {project.details.map((paragraph) => <Text>{paragraph}</Text>)}
-        </Card>
+        </div>
+      </Section>
 
-        <Card class="space-y-4 border-slate-200/70 bg-white/90 backdrop-blur">
+      <Section>
+        <div class="space-y-4">
           <Heading as="h2" variant="section">Highlights</Heading>
           <Text as="ul" tone="soft" class="list-disc space-y-2 pl-5 text-sm">
             {project.highlights.map((highlight) => <li>{highlight}</li>)}
           </Text>
-        </Card>
+        </div>
       </Section>
 
       {
