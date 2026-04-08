@@ -24,7 +24,15 @@ const { title, description, pubDate, updatedDate, heroImage, slug } =
   Astro.props;
 ---
 
-<AppLayout title={title} description={description} bodyClass="min-h-screen">
+<AppLayout
+  title={title}
+  description={description}
+  image={heroImage}
+  type="article"
+  publishedTime={pubDate.toISOString()}
+  modifiedTime={updatedDate?.toISOString()}
+  bodyClass="min-h-screen"
+>
   <DotsBackground />
   <Header />
   <main class="pb-20 pt-12">

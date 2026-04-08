@@ -8,6 +8,7 @@ import AppLayout from "../layouts/AppLayout.astro";
   description="Redirecting to projects."
 >
   <Fragment slot="head">
+    <meta name="robots" content="noindex,follow" />
     <meta http-equiv="refresh" content="0;url=/projects" />
     <link rel="canonical" href={new URL("/projects", Astro.site)} />
   </Fragment>

@@ -9,7 +9,7 @@ import Container from "../../components/ui/Container.astro";
 import Section from "../../components/ui/Section.astro";
 import Heading from "../../components/ui/Heading.astro";
 import Text from "../../components/ui/Text.astro";
-import { SITE_DESCRIPTION, SITE_TITLE } from "../../consts";
+import { SITE_TITLE } from "../../consts";
 
 const posts = (await getCollection("blog")).sort(
   (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
@@ -17,8 +17,8 @@ const posts = (await getCollection("blog")).sort(
 ---
 
 <AppLayout
-  title={SITE_TITLE}
-  description={SITE_DESCRIPTION}
+  title={`Blog | ${SITE_TITLE}`}
+  description="Articles, engineering notes, and development experiments from Fervqz."
   bodyClass="min-h-screen px-4"
 >
   <DotsBackground />
