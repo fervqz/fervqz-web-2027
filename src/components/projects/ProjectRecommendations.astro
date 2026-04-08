@@ -1,16 +1,20 @@
 ---
 import { Image } from "astro:assets";
-import type { Project } from "../../lib/projects";
+import { hardwareProjects, softwareProjects } from "../../lib/projects";
 import Card from "../ui/Card.astro";
 import Heading from "../ui/Heading.astro";
 import Section from "../ui/Section.astro";
 import Text from "../ui/Text.astro";
 
 interface Props {
-  relatedProjects: Project[];
+  currentProjectSlug: string;
 }
 
-const { relatedProjects } = Astro.props;
+const { currentProjectSlug } = Astro.props;
+
+const relatedProjects = [...softwareProjects, ...hardwareProjects]
+  .filter((project) => project.slug !== currentProjectSlug)
+  .slice(0, 3);
 ---
 
 {

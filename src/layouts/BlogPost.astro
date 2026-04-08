@@ -6,15 +6,14 @@ import Footer from "../components/Footer.astro";
 import FormattedDate from "../components/FormattedDate.astro";
 import Header from "../components/Header.astro";
 import AppLayout from "./AppLayout.astro";
+import BackLink from "../components/ui/BackLink.astro";
 import Container from "../components/ui/Container.astro";
 import Heading from "../components/ui/Heading.astro";
-import Link from "../components/ui/Link.astro";
 import Section from "../components/ui/Section.astro";
 import Text from "../components/ui/Text.astro";
 import Typography from "../components/ui/Typography.astro";
 import WavyDivider from "../components/ui/WavyDivider.astro";
 import FallbackImage from "../components/ui/FallbackImage.astro";
-import { Icon } from "astro-icon/components";
 
 type Props = CollectionEntry<"blog">["data"] & {
   slug: string;
@@ -38,11 +37,7 @@ const { title, description, pubDate, updatedDate, heroImage, slug } =
   <main class="pb-20 pt-12">
     <Container>
       <article class="mx-auto flex w-full max-w-190 flex-col gap-8">
-        <div class="relative h-8">
-          <Link href="/blog" class="no-underline">
-            <Icon name="lucide:arrow-left" class="size-8 absolute -left-1.5" />
-          </Link>
-        </div>
+        <BackLink href="/blog" ariaLabel="Back to blog" />
 
         <div class="mx-auto w-full">
           {

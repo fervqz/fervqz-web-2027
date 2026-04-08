@@ -11,22 +11,18 @@ import {
 import AppLayout from "../../layouts/AppLayout.astro";
 import ProjectDetailSection from "../../sections/ProjectDetailSection.astro";
 
-type ProjectCollection = "software" | "hardware";
-
 export async function getStaticPaths() {
   return [
     ...softwareProjects.map((project) => ({
       params: { project: project.slug },
       props: {
         project,
-        collection: "software" as const,
       },
     })),
     ...hardwareProjects.map((project) => ({
       params: { project: project.slug },
       props: {
         project,
-        collection: "hardware" as const,
       },
     })),
   ];
@@ -34,17 +30,9 @@ export async function getStaticPaths() {
 
 type Props = {
   project: Project;
-  collection: ProjectCollection;
 };
 
-const { project, collection } = Astro.props as Props;
-
-const projectCollection =
-  collection === "software" ? softwareProjects : hardwareProjects;
-
-const relatedProjects = projectCollection
-  .filter((item) => item.slug !== project.slug)
-  .slice(0, 3);
+const { project } = Astro.props as Props;
 ---
 
 <AppLayout
@@ -56,7 +44,7 @@ const relatedProjects = projectCollection
   <DotsBackground />
   <main class="flex min-h-screen flex-col gap-12">
     <Header />
-    <ProjectDetailSection project={project} relatedProjects={relatedProjects} />
+    <ProjectDetailSection project={project} />
     <Footer />
   </main>
 </AppLayout>

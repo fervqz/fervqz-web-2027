@@ -1,0 +1,17 @@
+---
+import { Icon } from "astro-icon/components";
+import Link from "./Link.astro";
+
+interface Props {
+  href: string;
+  ariaLabel?: string;
+}
+
+const { href, ariaLabel = "Go back" } = Astro.props;
+---
+
+<div class="relative h-8">
+  <Link href={href} class="no-underline" aria-label={ariaLabel}>
+    <Icon name="lucide:arrow-left" class="absolute -left-1.5 size-8" />
+  </Link>
+</div>
