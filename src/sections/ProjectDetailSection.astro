@@ -1,0 +1,49 @@
+---
+import type { Project } from "../lib/projects";
+import ProjectHeader from "../components/projects/ProjectHeader.astro";
+import ProjectRecommendations from "../components/projects/ProjectRecommendations.astro";
+import Container from "../components/ui/Container.astro";
+import Heading from "../components/ui/Heading.astro";
+import Section from "../components/ui/Section.astro";
+import Text from "../components/ui/Text.astro";
+import { Icon } from "astro-icon/components";
+
+interface Props {
+  project: Project;
+  relatedProjects: Project[];
+}
+
+const { project, relatedProjects } = Astro.props;
+---
+
+<main class="relative flex-1 overflow-hidden">
+  <Container class="relative z-10 flex flex-col gap-16 py-10">
+    <a
+      href="/projects"
+      class="mb-4 inline-flex w-fit items-center gap-1 text-sm font-medium text-slate-600 no-underline underline-offset-4 transition-colors hover:text-slate-900"
+    >
+      <Icon name="lucide:arrow-left" class="size-4" />
+      <span>Back to projects</span>
+    </a>
+
+    <ProjectHeader project={project} />
+
+    <Section>
+      <div class="space-y-4">
+        <Heading as="h2" variant="section">Motivation</Heading>
+        {project.details.map((paragraph) => <Text>{paragraph}</Text>)}
+      </div>
+    </Section>
+
+    <Section>
+      <div class="space-y-4">
+        <Heading as="h2" variant="section">Highlights</Heading>
+        <Text as="ul" tone="soft" class="list-disc space-y-2 pl-5 text-sm">
+          {project.highlights.map((highlight) => <li>{highlight}</li>)}
+        </Text>
+      </div>
+    </Section>
+
+    <ProjectRecommendations relatedProjects={relatedProjects} />
+  </Container>
+</main>

@@ -1,0 +1,40 @@
+---
+import Container from "../components/ui/Container.astro";
+import Section from "../components/ui/Section.astro";
+import Text from "../components/ui/Text.astro";
+import HeroTitle from "../components/HeroTitle.astro";
+import Sticker from "../components/sticker/Sticker.astro";
+import avatar from "../assets/img/avatar.svg";
+import { Icon } from "astro-icon/components";
+---
+
+<Container>
+  <Section variant="content">
+    <div
+      class="flex flex-col items-center gap-8 pt-8 md:pt-18 pb-10 text-center md:flex-row md:items-center md:gap-10 md:text-left lg:gap-12"
+    >
+      <Sticker
+        src={avatar}
+        alt="avatar"
+        width={300}
+        loading="eager"
+        fetchpriority="high"
+      />
+      <div class="max-w-3xl">
+        <Text as="p" tone="muted" class="text-sm uppercase tracking-[0.2em]">
+          Meet Your Next
+        </Text>
+        <HeroTitle />
+        <Text class="max-w-3xl mx-auto md:mx-0">
+          When I started coding, I was drawn to the web for its unique blend of
+          creativity and logic. Over the years, I've honed my skills as a
+          creative developer, with a particular focus on crafting engaging user
+          experiences.
+        </Text>
+      </div>
+    </div>
+    <div class="flex justify-center">
+      <Icon name="lucide:arrow-down" class="h-6 w-6 animate-bounce" />
+    </div>
+  </Section>
+</Container>

@@ -1,0 +1,21 @@
+---
+import Container from "../components/ui/Container.astro";
+import Heading from "../components/ui/Heading.astro";
+import Text from "../components/ui/Text.astro";
+import Section from "../components/ui/Section.astro";
+---
+
+<Container class="flex flex-col gap-18 py-12">
+  <Section variant="content">
+    <Heading as="h1" variant="hero"
+      ><span class="line-through">My Projects</span><span
+        class="font-pangolin ml-2 text-blue-500">A Restless Mind...</span
+      >
+    </Heading>
+    <Text class="max-w-3xl">
+      I'm constantly exploring new ideas, experimenting with different
+      technologies, and building projects that range from small utilities to
+      full-fledged applications. This page is a curated collection of my
+    </Text>
+  </Section>
+</Container>

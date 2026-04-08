@@ -1,48 +1,50 @@
 ---
-import { Image } from "astro:assets";
 import DotsBackground from "../../components/DotsBackground.astro";
 import Footer from "../../components/Footer.astro";
 import Header from "../../components/Header.astro";
-import ProjectStageProgress from "../../components/projects/ProjectStageProgress.astro";
-import Card from "../../components/ui/Card.astro";
-import Container from "../../components/ui/Container.astro";
-import Heading from "../../components/ui/Heading.astro";
-import Section from "../../components/ui/Section.astro";
-import Text from "../../components/ui/Text.astro";
-import { Icon } from "astro-icon/components";
 import { SITE_TITLE } from "../../consts";
 import {
-  projectSections,
+  hardwareProjects,
+  softwareProjects,
   type Project,
-  type ProjectSection,
 } from "../../lib/projects";
 import AppLayout from "../../layouts/AppLayout.astro";
+import ProjectDetailSection from "../../sections/ProjectDetailSection.astro";
+
+type ProjectCollection = "software" | "hardware";
 
 export async function getStaticPaths() {
-  return projectSections.flatMap((section) =>
-    section.projects.map((project) => ({
+  return [
+    ...softwareProjects.map((project) => ({
       params: { project: project.slug },
       props: {
         project,
-        section,
+        collection: "software" as const,
       },
     })),
-  );
+    ...hardwareProjects.map((project) => ({
+      params: { project: project.slug },
+      props: {
+        project,
+        collection: "hardware" as const,
+      },
+    })),
+  ];
 }
 
 type Props = {
   project: Project;
-  section: ProjectSection;
+  collection: ProjectCollection;
 };
 
-const { project, section } = Astro.props as Props;
+const { project, collection } = Astro.props as Props;
 
-const relatedProjects = section.projects
+const projectCollection =
+  collection === "software" ? softwareProjects : hardwareProjects;
+
+const relatedProjects = projectCollection
   .filter((item) => item.slug !== project.slug)
   .slice(0, 3);
-
-const actionButtonClass =
-  "inline-flex items-center justify-center border border-slate-300/30 bg-white/10 px-4 py-2 text-sm font-semibold text-white no-underline backdrop-blur-md transition-all hover:border-white/50 hover:bg-white hover:text-slate-950";
 ---
 
 <AppLayout
@@ -52,133 +54,9 @@ const actionButtonClass =
   bodyClass="flex min-h-screen flex-col px-4"
 >
   <DotsBackground />
-  <Header />
-
-  <main class="relative flex-1 overflow-hidden">
-    <Container class="relative z-10 flex flex-col gap-16 py-10">
-      <a
-        href="/projects"
-        class="mb-4 inline-flex w-fit items-center gap-1 text-sm font-medium text-slate-600 no-underline underline-offset-4 transition-colors hover:text-slate-900"
-      >
-        <Icon name="lucide:arrow-left" class="size-4" />
-        <span>Back to projects</span>
-      </a>
-
-      <Section
-        class="relative overflow-hidden bg-slate-950 text-slate-100 shadow-2xl"
-      >
-        <div
-          class="absolute inset-0 bg-linear-to-br from-sky-500/20 via-violet-500/10 to-transparent"
-        >
-        </div>
-        <div class="relative grid gap-8 p-6 md:grid-cols-[1.1fr_0.9fr] md:p-8">
-          <div class="space-y-5">
-            <Heading as="h1" variant="hero" class="text-balance text-white">
-              {project.name}
-            </Heading>
-            <Text class="max-w-2xl text-slate-200">{project.summary}</Text>
-
-            <div class="flex flex-wrap gap-2">
-              {
-                project.stack.map((item) => (
-                  <span class="border border-white/20 rounded-xl  px-3 py-1 text-xs font-medium text-slate-100">
-                    {item}
-                  </span>
-                ))
-              }
-            </div>
-
-            <div>
-              <Heading as="h5" variant="section" class="text-slate-200"
-                >Status</Heading
-              >
-              <ProjectStageProgress stages={project.stages} />
-            </div>
-
-            <div class="flex flex-col flex-wrap gap-2 pt-2">
-              {
-                project.actions.map((action) => (
-                  <a
-                    href={action.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class={actionButtonClass}
-                    aria-label={`${action.label}: ${project.name}`}
-                  >
-                    {action.label}
-                  </a>
-                ))
-              }
-            </div>
-          </div>
-
-          <div class="relative">
-            <div class="absolute inset-0 rounded-2xl bg-white/10 blur-xl"></div>
-            <Image
-              src={project.image}
-              alt={project.imageAlt}
-              width={1400}
-              sizes="(max-width: 768px) 92vw, (max-width: 1280px) 42vw, 560px"
-              loading="eager"
-              fetchpriority="high"
-              class="relative h-full min-h-72 w-full rounded-2xl border border-white/15 object-cover object-center"
-            />
-          </div>
-        </div>
-      </Section>
-
-      <Section>
-        <div class="space-y-4">
-          <Heading as="h2" variant="section">Motivation</Heading>
-          {project.details.map((paragraph) => <Text>{paragraph}</Text>)}
-        </div>
-      </Section>
-
-      <Section>
-        <div class="space-y-4">
-          <Heading as="h2" variant="section">Highlights</Heading>
-          <Text as="ul" tone="soft" class="list-disc space-y-2 pl-5 text-sm">
-            {project.highlights.map((highlight) => <li>{highlight}</li>)}
-          </Text>
-        </div>
-      </Section>
-
-      {
-        relatedProjects.length > 0 && (
-          <Section class="space-y-4 pb-8">
-            <Heading as="h2" variant="section">
-              More Projects
-            </Heading>
-            <div class="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-              {relatedProjects.map((item) => (
-                <Card class="space-y-3 backdrop-blur">
-                  <Image
-                    src={item.image}
-                    alt={item.imageAlt}
-                    width={1000}
-                    sizes="(max-width: 768px) 92vw, (max-width: 1280px) 44vw, 320px"
-                    loading="lazy"
-                    decoding="async"
-                    class="h-32 w-full border border-(--surface-border) object-cover"
-                  />
-                  <Heading as="h3">{item.name}</Heading>
-                  <Text tone="soft" class="text-sm">
-                    {item.summary}
-                  </Text>
-                  <a
-                    href={`/projects/${item.slug}`}
-                    class="text-sm font-semibold text-(--link-color) underline underline-offset-2 hover:text-(--link-hover-color)"
-                  >
-                    Open project page
-                  </a>
-                </Card>
-              ))}
-            </div>
-          </Section>
-        )
-      }
-    </Container>
+  <main class="flex min-h-screen flex-col gap-12">
+    <Header />
+    <ProjectDetailSection project={project} relatedProjects={relatedProjects} />
+    <Footer />
   </main>
-
-  <Footer />
 </AppLayout>

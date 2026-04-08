@@ -1,0 +1,57 @@
+---
+import { Image } from "astro:assets";
+import type { CollectionEntry } from "astro:content";
+import Container from "../components/ui/Container.astro";
+import Heading from "../components/ui/Heading.astro";
+import Section from "../components/ui/Section.astro";
+import Text from "../components/ui/Text.astro";
+
+interface Props {
+  posts: CollectionEntry<"blog">[];
+}
+
+const { posts } = Astro.props;
+---
+
+<section class="flex-1 pb-20 pt-12">
+  <Container>
+    <Section
+      id="blog-list"
+      class="mx-auto flex w-full max-w-190 flex-col gap-4"
+    >
+      {
+        posts.map((post) => (
+          <article class="blog-list-item group hover:bg-slate-200/60 transition-colors p-2">
+            <a
+              href={`/blog/${post.id}/`}
+              class="grid grid-cols-1 items-start gap-4 no-underline sm:grid-cols-[170px_1fr]"
+            >
+              {post.data.heroImage && (
+                <Image
+                  width={340}
+                  height={220}
+                  src={post.data.heroImage}
+                  alt={post.data.title}
+                  class="h-44 md:h-30 w-full object-cover sm:w-42.5"
+                  style={`view-transition-name: blog-image-${post.id};`}
+                />
+              )}
+              <div class="space-y-2">
+                <Heading
+                  as="h3"
+                  class="mb-0 transition-colors group-hover:text-(--link-hover-color)"
+                >
+                  {post.data.title}
+                </Heading>
+                <Text class="mb-0 text-[14px] leading-5">
+                  {post.data.description} — quick notes, context, tech stack,
+                  and progress updates from ongoing work.
+                </Text>
+              </div>
+            </a>
+          </article>
+        ))
+      }
+    </Section>
+  </Container>
+</section>

@@ -1,0 +1,46 @@
+---
+import Button from "../components/ui/Button.astro";
+import Card from "../components/ui/Card.astro";
+import Container from "../components/ui/Container.astro";
+import FormLabel from "../components/ui/FormLabel.astro";
+import Heading from "../components/ui/Heading.astro";
+import Section from "../components/ui/Section.astro";
+import Text from "../components/ui/Text.astro";
+import TextArea from "../components/ui/TextArea.astro";
+import TextInput from "../components/ui/TextInput.astro";
+---
+
+<Container class="pb-12">
+  <Section variant="grid" class="items-start gap-8 lg:grid-cols-[1.1fr_0.9fr]">
+    <Card class="space-y-4 shadow-sm backdrop-blur">
+      <Heading as="h2" variant="section">Send a message</Heading>
+      <!-- TODO: Replace with real form intro copy and wire up form backend -->
+      <Text>
+        Placeholder form for layout testing. Hook it up to your preferred form
+        backend or email workflow later.
+      </Text>
+      <div class="space-y-3">
+        <FormLabel for="contact-name">Name</FormLabel>
+        <TextInput id="contact-name" type="text" placeholder="Your name" />
+      </div>
+      <div class="space-y-3">
+        <FormLabel for="contact-email">Email</FormLabel>
+        <!-- TODO: Replace placeholder with real hint if needed -->
+        <TextInput
+          id="contact-email"
+          type="email"
+          placeholder="you@example.com"
+        />
+      </div>
+      <div class="space-y-3">
+        <FormLabel for="contact-message">Project details</FormLabel>
+        <TextArea
+          id="contact-message"
+          rows="6"
+          placeholder="Tell me a bit about your idea, timeline, or team..."
+        />
+      </div>
+      <Button type="button" class="hover:cursor-pointer">Send inquiry</Button>
+    </Card>
+  </Section>
+</Container>

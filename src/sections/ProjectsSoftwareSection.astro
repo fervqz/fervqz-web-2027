@@ -1,0 +1,21 @@
+---
+import ProjectCarouselSection from "../components/projects/ProjectCarouselSection.astro";
+import Container from "../components/ui/Container.astro";
+import Heading from "../components/ui/Heading.astro";
+import Text from "../components/ui/Text.astro";
+import Section from "../components/ui/Section.astro";
+import { softwareProjects } from "../lib/projects";
+---
+
+<Section variant="content">
+  <Container>
+    <div class="flex w-full flex-col gap-4 py-6">
+      <Heading as="h2" variant="section">Mobile and Web Apps</Heading>
+      <Text class="max-w-3xl" tone="soft">
+        Software that I wanted to use but didn't exist yet, so I built it
+        myself.
+      </Text>
+    </div>
+  </Container>
+  <ProjectCarouselSection projects={softwareProjects} />
+</Section>

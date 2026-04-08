@@ -1,0 +1,49 @@
+---
+import { Image } from "astro:assets";
+import type { Project } from "../../lib/projects";
+import Card from "../ui/Card.astro";
+import Heading from "../ui/Heading.astro";
+import Section from "../ui/Section.astro";
+import Text from "../ui/Text.astro";
+
+interface Props {
+  relatedProjects: Project[];
+}
+
+const { relatedProjects } = Astro.props;
+---
+
+{
+  relatedProjects.length > 0 && (
+    <Section class="space-y-4 pb-8">
+      <Heading as="h2" variant="section">
+        More Projects
+      </Heading>
+      <div class="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+        {relatedProjects.map((item) => (
+          <Card class="space-y-3 backdrop-blur">
+            <Image
+              src={item.image}
+              alt={item.imageAlt}
+              width={1000}
+              sizes="(max-width: 768px) 92vw, (max-width: 1280px) 44vw, 320px"
+              loading="lazy"
+              decoding="async"
+              class="h-32 w-full border border-(--surface-border) object-cover"
+            />
+            <Heading as="h3">{item.name}</Heading>
+            <Text tone="soft" class="text-sm">
+              {item.summary}
+            </Text>
+            <a
+              href={`/projects/${item.slug}`}
+              class="text-sm font-semibold text-(--link-color) underline underline-offset-2 hover:text-(--link-hover-color)"
+            >
+              Open project page
+            </a>
+          </Card>
+        ))}
+      </div>
+    </Section>
+  )
+}

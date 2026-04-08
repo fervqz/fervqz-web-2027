@@ -2,31 +2,11 @@
 import { SITE_DESCRIPTION, SITE_TITLE } from "../consts";
 import AppLayout from "../layouts/AppLayout.astro";
 import DotsBackground from "../components/DotsBackground.astro";
-import Container from "../components/ui/Container.astro";
-import Section from "../components/ui/Section.astro";
-import Text from "../components/ui/Text.astro";
 import Header from "../components/Header.astro";
-import HeroTitle from "../components/HeroTitle.astro";
-import Sticker from "../components/sticker/Sticker.astro";
-import avatar from "../assets/img/avatar.svg";
 import Footer from "../components/Footer.astro";
-import ExperienceTimeline from "../components/experience/ExperienceTimeline.astro";
+import ExperienceTimelineSection from "../sections/ExperienceTimelineSection.astro";
+import HeroSection from "../sections/HeroSection.astro";
 import { experience } from "../lib/experience";
-import type { ImageMetadata } from "astro";
-import { Icon } from "astro-icon/components";
-
-const stickerAssets = import.meta.glob("../assets/img/sticker-test-*.svg", {
-  eager: true,
-  import: "default",
-}) as Record<string, ImageMetadata>;
-
-const stickers = Object.entries(stickerAssets)
-  .sort(([pathA], [pathB]) => {
-    const a = Number(pathA.match(/sticker-test-(\d+)\.svg$/)?.[1] ?? 0);
-    const b = Number(pathB.match(/sticker-test-(\d+)\.svg$/)?.[1] ?? 0);
-    return a - b;
-  })
-  .map(([, image]) => image);
 ---
 
 <AppLayout
@@ -35,45 +15,10 @@ const stickers = Object.entries(stickerAssets)
   bodyClass="flex flex-col min-h-screen px-4"
 >
   <DotsBackground />
-  <Header />
-  <main>
-    <Container class="flex flex-1 flex-col gap-10 py-8 sm:py-10 md:py-12">
-      <Section variant="content">
-        <div
-          class="flex flex-col items-center gap-8 pt-8 md:pt-18 pb-10 text-center md:flex-row md:items-center md:gap-10 md:text-left lg:gap-12"
-        >
-          <Sticker
-            src={avatar}
-            alt="avatar"
-            width={300}
-            loading="eager"
-            fetchpriority="high"
-          />
-          <div class="max-w-3xl">
-            <Text
-              as="p"
-              tone="muted"
-              class="text-sm uppercase tracking-[0.2em]"
-            >
-              Meet Your Next
-            </Text>
-            <HeroTitle />
-            <Text class="max-w-3xl mx-auto md:mx-0">
-              When I started coding, I was drawn to the web for its unique blend
-              of creativity and logic. Over the years, I've honed my skills as a
-              creative developer, with a particular focus on crafting engaging
-              user experiences.
-            </Text>
-          </div>
-        </div>
-        <div class="flex justify-center">
-          <Icon name="lucide:arrow-down" class="h-6 w-6 animate-bounce" />
-        </div>
-      </Section>
-
-      <ExperienceTimeline experience={experience} />
-    </Container>
-
+  <main class="flex flex-col gap-18">
+    <Header />
+    <HeroSection />
+    <ExperienceTimelineSection experience={experience} />
     <Footer />
   </main>
 </AppLayout>

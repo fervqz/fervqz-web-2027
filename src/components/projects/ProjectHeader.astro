@@ -1,0 +1,80 @@
+---
+import { Image } from "astro:assets";
+import type { Project } from "../../lib/projects";
+import ProjectStageProgress from "./ProjectStageProgress.astro";
+import Heading from "../ui/Heading.astro";
+import Section from "../ui/Section.astro";
+import Text from "../ui/Text.astro";
+
+interface Props {
+  project: Project;
+}
+
+const { project } = Astro.props;
+
+const actionButtonClass =
+  "inline-flex items-center justify-center border border-slate-300/30 bg-white/10 px-4 py-2 text-sm font-semibold text-white no-underline backdrop-blur-md transition-all hover:border-white/50 hover:bg-white hover:text-slate-950";
+---
+
+<Section
+  class="relative overflow-hidden bg-slate-950 text-slate-100 shadow-2xl"
+>
+  <div
+    class="absolute inset-0 bg-linear-to-br from-sky-500/20 via-violet-500/10 to-transparent"
+  >
+  </div>
+  <div class="relative grid gap-8 p-6 md:grid-cols-[1.1fr_0.9fr] md:p-8">
+    <div class="space-y-5">
+      <Heading as="h1" variant="hero" class="text-balance text-white">
+        {project.name}
+      </Heading>
+      <Text class="max-w-2xl text-slate-200">{project.summary}</Text>
+
+      <div class="flex flex-wrap gap-2">
+        {
+          project.stack.map((item) => (
+            <span class="border border-white/20 rounded-xl  px-3 py-1 text-xs font-medium text-slate-100">
+              {item}
+            </span>
+          ))
+        }
+      </div>
+
+      <div>
+        <Heading as="h5" variant="section" class="text-slate-200"
+          >Status</Heading
+        >
+        <ProjectStageProgress stages={project.stages} />
+      </div>
+
+      <div class="flex flex-col flex-wrap gap-2 pt-2">
+        {
+          project.actions.map((action) => (
+            <a
+              href={action.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              class={actionButtonClass}
+              aria-label={`${action.label}: ${project.name}`}
+            >
+              {action.label}
+            </a>
+          ))
+        }
+      </div>
+    </div>
+
+    <div class="relative">
+      <div class="absolute inset-0 rounded-2xl bg-white/10 blur-xl"></div>
+      <Image
+        src={project.image}
+        alt={project.imageAlt}
+        width={1400}
+        sizes="(max-width: 768px) 92vw, (max-width: 1280px) 42vw, 560px"
+        loading="eager"
+        fetchpriority="high"
+        class="relative h-full min-h-72 w-full rounded-2xl border border-white/15 object-cover object-center"
+      />
+    </div>
+  </div>
+</Section>

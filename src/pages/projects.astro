@@ -2,14 +2,11 @@
 import DotsBackground from "../components/DotsBackground.astro";
 import Footer from "../components/Footer.astro";
 import Header from "../components/Header.astro";
-import ProjectCarouselSection from "../components/projects/ProjectCarouselSection.astro";
-import Container from "../components/ui/Container.astro";
-import Heading from "../components/ui/Heading.astro";
-import Section from "../components/ui/Section.astro";
-import Text from "../components/ui/Text.astro";
 import { SITE_TITLE } from "../consts";
-import { projectSections } from "../lib/projects";
 import AppLayout from "../layouts/AppLayout.astro";
+import ProjectsHeader from "../sections/ProjectsHeader.astro";
+import ProjectsSoftwareSection from "../sections/ProjectsSoftwareSection.astro";
+import ProjectsHardwareSection from "../sections/ProjectsHardwareSection.astro";
 ---
 
 <AppLayout
@@ -18,31 +15,11 @@ import AppLayout from "../layouts/AppLayout.astro";
   bodyClass="flex min-h-screen flex-col px-4"
 >
   <DotsBackground />
-  <Header />
-  <main class="flex-1 flex flex-col gap-12">
-    <Container class="flex flex-col gap-18 py-12">
-      <Section variant="content">
-        <Heading as="h1" variant="hero"
-          ><span class="line-through">My Projects</span><span
-            class="font-pangolin ml-2 text-blue-500">A Restless Mind...</span
-          >
-        </Heading>
-        <Text class="max-w-3xl">
-          I'm constantly exploring new ideas, experimenting with different
-          technologies, and building projects that range from small utilities to
-          full-fledged applications. This page is a curated collection of my
-        </Text>
-      </Section>
-    </Container>
+  <main class="flex flex-col gap-12">
+    <Header />
+    <ProjectsHeader />
+    <ProjectsSoftwareSection />
+    <ProjectsHardwareSection />
+    <Footer />
   </main>
-
-  {
-    projectSections.map((section) => (
-      <ProjectCarouselSection section={section} />
-    ))
-  }
-
-  <Container class="flex flex-col gap-12 py-12" />
-
-  <Footer />
 </AppLayout>
