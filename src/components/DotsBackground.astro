@@ -38,8 +38,10 @@
         background.dataset.active = "false";
       };
 
-      window.addEventListener("pointermove", onPointerMove, { passive: true });
-      window.addEventListener("pointerleave", onPointerLeave);
+      background.addEventListener("pointermove", onPointerMove, {
+        passive: true,
+      });
+      background.addEventListener("pointerleave", onPointerLeave);
     }
   }
 </script>

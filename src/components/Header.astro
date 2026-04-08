@@ -70,7 +70,13 @@ import EditStickers from "./sticker/EditStickers.astro";
 <script>
   import { initHeaderInteractions } from "./header/header.client";
 
-  initHeaderInteractions();
+  const scheduleInit = () => initHeaderInteractions();
+
+  if ("requestIdleCallback" in window) {
+    window.requestIdleCallback(scheduleInit, { timeout: 700 });
+  } else {
+    window.setTimeout(scheduleInit, 0);
+  }
 </script>
 
 <style>

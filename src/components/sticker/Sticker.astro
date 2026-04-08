@@ -8,6 +8,8 @@ interface Props {
   width: number;
   draggable?: boolean;
   class?: string;
+  loading?: "lazy" | "eager";
+  fetchpriority?: "high" | "low" | "auto";
 }
 
 const {
@@ -16,6 +18,8 @@ const {
   width,
   draggable = true,
   class: className = "",
+  loading = "lazy",
+  fetchpriority,
 } = Astro.props;
 
 const defaultImageClasses = "h-auto drop-shadow-sm drop-shadow-zinc-900/30";
@@ -40,6 +44,8 @@ const defaultImageClasses = "h-auto drop-shadow-sm drop-shadow-zinc-900/30";
         alt={alt}
         width={width}
         draggable="false"
+        loading={loading}
+        fetchpriority={fetchpriority}
         class={`${defaultImageClasses} ${className}`.trim()}
       />
     </div>

@@ -29,8 +29,7 @@ const actionButtonClass =
       <Section variant="content">
         <Heading as="h1" variant="hero"
           ><span class="line-through">My Projects</span><span
-            class="font-pangolin ml-2 text-blue-500 italic"
-            >A Restless Mind...</span
+            class="font-pangolin ml-2 text-blue-500">A Restless Mind...</span
           >
         </Heading>
         <Text class="max-w-3xl">
@@ -93,6 +92,9 @@ const actionButtonClass =
                       src={project.image}
                       alt={project.imageAlt}
                       width={1200}
+                      sizes="(max-width: 640px) 85vw, (max-width: 1024px) 60vw, 384px"
+                      loading="lazy"
+                      decoding="async"
                       class="h-86 w-full object-cover object-center transition-transform duration-300 group-hover:scale-120"
                     />
                     <div class="pointer-events-none absolute inset-x-0 bottom-0 h-14 bg-linear-to-t from-slate-950/25 to-transparent" />
@@ -223,10 +225,18 @@ const actionButtonClass =
     updateCurrentIndex();
   };
 
-  document.querySelectorAll("[data-carousel-track]").forEach((track) => {
-    const carouselId = track.getAttribute("data-carousel-track");
-    if (carouselId) setupCarousel(carouselId);
-  });
+  const initCarousels = () => {
+    document.querySelectorAll("[data-carousel-track]").forEach((track) => {
+      const carouselId = track.getAttribute("data-carousel-track");
+      if (carouselId) setupCarousel(carouselId);
+    });
+  };
+
+  if ("requestIdleCallback" in window) {
+    window.requestIdleCallback(initCarousels, { timeout: 800 });
+  } else {
+    window.setTimeout(initCarousels, 0);
+  }
 </script>
 
 <style>

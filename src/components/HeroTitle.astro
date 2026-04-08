@@ -1,15 +1,16 @@
 ---
-// HeroTitle.astro - Animated hero title with rotating words
+// HeroTitle.astro - Animated hero title with CSS-only rotating words
 ---
 
 <h1
   class="mt-3.5 mb-6 text-6xl leading-tight font-black font-[Zalando_Sans_Variable] tracking-[-0.02em]"
 >
-  <span class="rotating-word-stack w-full" aria-live="polite">
+  <span class="rotating-word-stack w-full" aria-hidden="true">
     <span class="rotating-word">Creative</span>
     <span class="rotating-word">Product</span>
     <span class="rotating-word">Frontend</span>
   </span>
+  <span class="sr-only">Creative Product Frontend</span>
   <br />
   Developer
 </h1>
@@ -28,72 +29,60 @@
     inset: 0 auto auto 0;
     white-space: nowrap;
     will-change: transform, opacity;
+    opacity: 0;
+    transform: translateY(100%);
+    animation: rotate-word 4.95s infinite;
   }
-</style>
 
-<script>
-  import { gsap } from "gsap";
+  .rotating-word:nth-child(1) {
+    animation-delay: 0s;
+  }
 
-  const stack = document.querySelector(".rotating-word-stack");
+  .rotating-word:nth-child(2) {
+    animation-delay: 1.65s;
+  }
 
-  if (stack instanceof HTMLElement) {
-    const words = Array.from(
-      stack.querySelectorAll<HTMLElement>(".rotating-word"),
-    );
+  .rotating-word:nth-child(3) {
+    animation-delay: 3.3s;
+  }
 
-    if (words.length > 0) {
-      const reduceMotion = window.matchMedia(
-        "(prefers-reduced-motion: reduce)",
-      ).matches;
+  @keyframes rotate-word {
+    0% {
+      opacity: 0;
+      transform: translateY(100%);
+    }
 
-      const maxWidth = Math.max(...words.map((word) => word.offsetWidth));
-      // stack.style.width = `${maxWidth}px`;
+    10% {
+      opacity: 1;
+      transform: translateY(0);
+    }
 
-      gsap.set(words, { yPercent: 100, autoAlpha: 1 });
-      gsap.set(words[0], { yPercent: 0 });
+    31% {
+      opacity: 1;
+      transform: translateY(0);
+    }
 
-      if (!reduceMotion && words.length > 1) {
-        let index = 0;
-        const stepDuration = 0.55;
-        const holdDuration = 1.1;
+    41% {
+      opacity: 0;
+      transform: translateY(-100%);
+    }
 
-        const rotatePush = () => {
-          const current = words[index];
-          const nextIndex = (index + 1) % words.length;
-          const next = words[nextIndex];
-
-          const tl = gsap.timeline({
-            onComplete: () => {
-              gsap.set(current, { yPercent: 100 });
-              index = nextIndex;
-              gsap.delayedCall(holdDuration, rotatePush);
-            },
-          });
-
-          tl.to(
-            current,
-            {
-              yPercent: -100,
-              duration: stepDuration,
-              ease: "power2.inOut",
-            },
-            0,
-          ).fromTo(
-            next,
-            { yPercent: 100 },
-            {
-              yPercent: 0,
-              duration: stepDuration,
-              ease: "power2.inOut",
-            },
-            0,
-          );
-        };
-
-        gsap.delayedCall(holdDuration, rotatePush);
-      } else {
-        gsap.set(words.slice(1), { yPercent: 100 });
-      }
+    100% {
+      opacity: 0;
+      transform: translateY(-100%);
     }
   }
-</script>
+
+  @media (prefers-reduced-motion: reduce) {
+    .rotating-word {
+      animation: none;
+      opacity: 0;
+      transform: translateY(100%);
+    }
+
+    .rotating-word:first-child {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+</style>
