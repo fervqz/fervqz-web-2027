@@ -19,6 +19,7 @@ const { class: className = "", showLabel = false } = Astro.props;
   secondaryIconKey="sun"
   aria-label="Toggle theme"
   tooltip="Toggle theme"
+  class={className}
 >
-  {showLabel && <span>Toggle theme</span>}
+  {showLabel && <span class="ml-2">Toggle theme</span>}
 </IconButton>

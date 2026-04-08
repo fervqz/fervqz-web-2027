@@ -2,19 +2,14 @@
 import DotsBackground from "../components/DotsBackground.astro";
 import Footer from "../components/Footer.astro";
 import Header from "../components/Header.astro";
-import { Image } from "astro:assets";
-import { SITE_TITLE } from "../consts";
-import { projectSections } from "../lib/projects";
-import AppLayout from "../layouts/AppLayout.astro";
-import Card from "../components/ui/Card.astro";
+import ProjectCarouselSection from "../components/projects/ProjectCarouselSection.astro";
 import Container from "../components/ui/Container.astro";
 import Heading from "../components/ui/Heading.astro";
 import Section from "../components/ui/Section.astro";
 import Text from "../components/ui/Text.astro";
-import { Icon } from "astro-icon/components";
-
-const actionButtonClass =
-  "inline-flex w-full items-center justify-center border border-(--button-border) bg-(--button-bg) px-3 py-2 text-xs font-semibold text-(--button-text) no-underline transition-colors group-hover:bg-(--button-hover-bg) group-hover:text-(--button-hover-text)";
+import { SITE_TITLE } from "../consts";
+import { projectSections } from "../lib/projects";
+import AppLayout from "../layouts/AppLayout.astro";
 ---
 
 <AppLayout
@@ -39,213 +34,15 @@ const actionButtonClass =
         </Text>
       </Section>
     </Container>
-
-    {
-      projectSections.map((section, sectionIndex) => (
-        <div class="space-y-5">
-          <Container class="flex flex-col gap-4 py-6">
-            <div class="flex items-start justify-between gap-4">
-              <Heading as="h2" variant="section">
-                {section.title}
-              </Heading>
-              <div class="flex items-center gap-2">
-                <button
-                  type="button"
-                  class="project-scroll-prev inline-flex h-9 w-9 items-center justify-center border border-(--button-border) bg-(--button-bg) text-sm font-semibold text-(--button-text) transition-colors hover:bg-(--button-hover-bg) hover:text-(--button-hover-text) disabled:cursor-not-allowed disabled:opacity-40"
-                  data-carousel-prev={sectionIndex}
-                  aria-label={`Previous project in ${section.title}`}
-                  disabled
-                >
-                  ←
-                </button>
-                <button
-                  type="button"
-                  class="project-scroll-next inline-flex h-9 w-9 items-center justify-center border border-(--button-border) bg-(--button-bg) text-sm font-semibold text-(--button-text) transition-colors hover:bg-(--button-hover-bg) hover:text-(--button-hover-text) disabled:cursor-not-allowed disabled:opacity-40"
-                  data-carousel-next={sectionIndex}
-                  aria-label={`Next project in ${section.title}`}
-                >
-                  →
-                </button>
-              </div>
-            </div>
-            <Text class="max-w-3xl" tone="soft">
-              {section.subtitle}
-            </Text>
-          </Container>
-
-          <div
-            class="project-carousel w-screen overflow-x-auto scroll-smooth snap-x snap-mandatory"
-            style="scroll-padding-left: max(1rem, calc((100vw - 56rem) / 2));"
-            data-carousel-track={sectionIndex}
-          >
-            <div
-              class="flex gap-4 pb-4"
-              style="padding-left: max(1rem, calc((100vw - 56rem) / 2));"
-            >
-              {section.projects.map((project) => (
-                <Card
-                  class="group relative cursor-pointer project-carousel-item flex w-96 shrink-0 snap-start flex-col space-y-4 overflow-hidden backdrop-blur"
-                  data-carousel-item={sectionIndex}
-                >
-                  <div class="relative -mx-5 -mt-5 mb-2 overflow-hidden border-b border-(--surface-border) bg-slate-100/70 dark:bg-slate-900/60">
-                    <Image
-                      src={project.image}
-                      alt={project.imageAlt}
-                      width={1200}
-                      sizes="(max-width: 640px) 85vw, (max-width: 1024px) 60vw, 384px"
-                      loading="lazy"
-                      decoding="async"
-                      class="h-86 w-full object-cover object-center transition-transform duration-300 group-hover:scale-120"
-                    />
-                    <div class="pointer-events-none absolute inset-x-0 bottom-0 h-14 bg-linear-to-t from-slate-950/25 to-transparent" />
-                  </div>
-
-                  <Heading as="h3" class="py-2">
-                    <a
-                      href={`/projects/${project.slug}`}
-                      class="underline-offset-4 hover:underline after:absolute after:inset-0 after:content-[''] after:z-0"
-                    >
-                      {project.name}
-                    </a>
-                  </Heading>
-
-                  <Text class="px-1">{project.summary}</Text>
-
-                  <ul class="flex flex-row gap-2 text-xs">
-                    {project.stack.map((item) => (
-                      <li class="rounded-xl bg-(--inline-code-bg) px-2.5 py-1 text-(--muted-text-color)">
-                        {item}
-                      </li>
-                    ))}
-                  </ul>
-
-                  <div class="relative z-10 mt-auto px-1 pt-2">
-                    <div class={actionButtonClass}>
-                      Explore{" "}
-                      <Icon name="lucide:arrow-right" class="ml-1" size={16} />
-                    </div>
-                  </div>
-                </Card>
-              ))}
-              <div
-                class="shrink-0"
-                style="width: max(1rem, calc((100vw - 56rem) / 2));"
-                aria-hidden="true"
-              />
-            </div>
-          </div>
-        </div>
-      ))
-    }
-    <Container class="flex flex-col gap-12 py-12" />
   </main>
+
+  {
+    projectSections.map((section) => (
+      <ProjectCarouselSection section={section} />
+    ))
+  }
+
+  <Container class="flex flex-col gap-12 py-12" />
+
   <Footer />
 </AppLayout>
-
-<script>
-  const getClosestIndex = (track: HTMLElement, items: HTMLElement[]) => {
-    const trackLeft = track.getBoundingClientRect().left;
-    let closestIndex = 0;
-    let closestDistance = Number.POSITIVE_INFINITY;
-
-    items.forEach((item: HTMLElement, index: number) => {
-      const distance = Math.abs(item.getBoundingClientRect().left - trackLeft);
-      if (distance < closestDistance) {
-        closestDistance = distance;
-        closestIndex = index;
-      }
-    });
-
-    return closestIndex;
-  };
-
-  const setupCarousel = (carouselId: string) => {
-    const track = document.querySelector(
-      `[data-carousel-track="${carouselId}"]`,
-    );
-    const prevButton = document.querySelector(
-      `[data-carousel-prev="${carouselId}"]`,
-    );
-    const nextButton = document.querySelector(
-      `[data-carousel-next="${carouselId}"]`,
-    );
-
-    if (!(track instanceof HTMLElement)) return;
-    if (!(prevButton instanceof HTMLButtonElement)) return;
-    if (!(nextButton instanceof HTMLButtonElement)) return;
-
-    const items: HTMLElement[] = Array.from(
-      track.querySelectorAll(`[data-carousel-item="${carouselId}"]`),
-    );
-
-    if (items.length === 0) {
-      prevButton.disabled = true;
-      nextButton.disabled = true;
-      return;
-    }
-
-    let currentIndex = 0;
-    let ticking = false;
-
-    const updateButtons = () => {
-      prevButton.disabled = currentIndex <= 0;
-      nextButton.disabled = currentIndex >= items.length - 1;
-    };
-
-    const updateCurrentIndex = () => {
-      currentIndex = getClosestIndex(track, items);
-      updateButtons();
-    };
-
-    const scrollToIndex = (index: number) => {
-      const boundedIndex = Math.max(0, Math.min(index, items.length - 1));
-      items[boundedIndex]?.scrollIntoView({
-        behavior: "smooth",
-        block: "nearest",
-        inline: "start",
-      });
-      currentIndex = boundedIndex;
-      updateButtons();
-    };
-
-    prevButton.addEventListener("click", () => scrollToIndex(currentIndex - 1));
-    nextButton.addEventListener("click", () => scrollToIndex(currentIndex + 1));
-
-    track.addEventListener("scroll", () => {
-      if (ticking) return;
-      ticking = true;
-      requestAnimationFrame(() => {
-        updateCurrentIndex();
-        ticking = false;
-      });
-    });
-
-    window.addEventListener("resize", updateCurrentIndex);
-
-    updateCurrentIndex();
-  };
-
-  const initCarousels = () => {
-    document.querySelectorAll("[data-carousel-track]").forEach((track) => {
-      const carouselId = track.getAttribute("data-carousel-track");
-      if (carouselId) setupCarousel(carouselId);
-    });
-  };
-
-  if ("requestIdleCallback" in window) {
-    window.requestIdleCallback(initCarousels, { timeout: 800 });
-  } else {
-    setTimeout(initCarousels, 0);
-  }
-</script>
-
-<style>
-  .project-carousel {
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-  }
-
-  .project-carousel::-webkit-scrollbar {
-    display: none;
-  }
-</style>

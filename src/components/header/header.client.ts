@@ -39,14 +39,12 @@ export const initHeaderInteractions = () => {
         if (!menu || !menuButton || !menuIcon) return;
         menu.dataset.open = "false";
         menuButton.setAttribute("aria-expanded", "false");
-        menuIcon.textContent = "☰";
     };
 
     const openMobileMenu = () => {
         if (!menu || !menuButton || !menuIcon) return;
         menu.dataset.open = "true";
         menuButton.setAttribute("aria-expanded", "true");
-        menuIcon.textContent = "✕";
     };
 
     themeButtons.forEach((button) => {

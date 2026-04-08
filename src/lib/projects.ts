@@ -53,7 +53,7 @@ export const projectSections: ProjectSection[] = [
             {
                 slug: "sonoguides",
                 name: "Sonoguides",
-                summary: "Hear the stories behind places, Sonoguides allows you to listen to audioguides everywhere you go, with personalized recommendations and offline access.",
+                summary: "Listen to location-based audio guides with personalized recommendations and offline access.",
                 stack: ["React Native", "Expo", "Supabase"],
                 stages: [
                     { name: "Concept", status: "completed" },
@@ -89,7 +89,7 @@ export const projectSections: ProjectSection[] = [
             {
                 slug: "f1lmlog",
                 name: "F1lmlog",
-                summary: "Save your camera settings, lens choices, and lighting conditions with F1lmlog, the ultimate companion app for film photographers to log their shots and build a personalized database of their work.",
+                summary: "Log film shots, camera settings, and lighting conditions in one organized journal.",
                 stack: ["React Native", "Expo", "SQLite"],
                 stages: [
                     { name: "Concept", status: "completed" },
@@ -126,7 +126,7 @@ export const projectSections: ProjectSection[] = [
             {
                 slug: "fitbro",
                 name: "FitBro",
-                summary: "Not another macro app, but a goal achiever buddy. Reach your fitness goals with the help of AI. FitBro helps you keep on track with your fitness journey by providing personalized feedback on diet and workouts.",
+                summary: "An AI fitness companion that keeps you on track with personalized diet and workout feedback.",
                 stack: ["React Native", "Expo", "Supabase"],
                 stages: [
                     { name: "Concept", status: "completed" },
@@ -163,7 +163,7 @@ export const projectSections: ProjectSection[] = [
             {
                 slug: "just-a-stream",
                 name: "@fervqz/just-a-stream",
-                summary: "A light weight js library for creating, transforming and merging streams.",
+                summary: "A lightweight JS library to create, transform, and merge streams.",
                 stack: ["JavaScript", "TypeScript"],
                 stages: [
                     { name: "API Design", status: "completed" },
@@ -198,7 +198,7 @@ export const projectSections: ProjectSection[] = [
                 slug: "clonify",
                 name: "UI Studies",
                 summary:
-                    "The best way of learning is by copying. This is a collection of UI clones from popular apps, rebuilt with clean code and modern best practices for educational purposes.",
+                    "A collection of UI clones rebuilt with clean code and modern frontend best practices.",
                 stack: ["Astro", "Tailwind CSS", "React"],
                 stages: [
                     { name: "Concept", status: "completed" },
@@ -265,7 +265,7 @@ export const projectSections: ProjectSection[] = [
                 slug: "driving-simulator",
                 name: "Driving Simulator",
                 summary:
-                    "A placeholder multi-tenant portal with invoice history, status updates, and role-based document access.",
+                    "A custom Arduino-powered driving simulator with pneumatic actuation and a steel frame.",
                 stack: ["Arduino", "Custom circuitry", "Pneumatic Actuators", "Custom Steel Frame"],
                 stages: [
                     { name: "Planning", status: "completed" },

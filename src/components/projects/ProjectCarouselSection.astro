@@ -1,0 +1,108 @@
+---
+import { Image } from "astro:assets";
+import { Icon } from "astro-icon/components";
+import type { ProjectSection } from "../../lib/projects";
+import Card from "../ui/Card.astro";
+import Container from "../ui/Container.astro";
+import Heading from "../ui/Heading.astro";
+import Text from "../ui/Text.astro";
+
+interface Props {
+  section: ProjectSection;
+}
+
+const { section } = Astro.props;
+
+const actionButtonClass =
+  "inline-flex w-full items-center justify-center border border-(--button-border) bg-(--button-bg) px-3 py-2 text-xs font-semibold text-(--button-text) no-underline transition-colors group-hover:bg-(--button-hover-bg) group-hover:text-(--button-hover-text)";
+---
+
+<div>
+  <Container>
+    <div class="flex w-full flex-col gap-4 py-6">
+      <Heading as="h2" variant="section">
+        {section.title}
+      </Heading>
+      <Text class="max-w-3xl" tone="soft">
+        {section.subtitle}
+      </Text>
+    </div>
+  </Container>
+
+  <div class="project-carousel-bleed relative left-1/2 w-screen -translate-x-1/2">
+    <div
+      class="project-carousel overflow-x-auto snap-x snap-mandatory"
+      style="--carousel-inline-start: max(1rem, calc((100vw - 56rem) / 2 + 1rem));"
+    >
+      <div class="project-carousel-track flex w-max gap-4 pb-4">
+        {
+          [...section.projects, ...section.projects].map((project) => (
+            <Card class="group relative cursor-pointer flex w-[85vw] max-w-96 shrink-0 snap-start flex-col space-y-4 overflow-hidden backdrop-blur sm:w-96">
+              <div class="relative -mx-5 -mt-5 mb-2 overflow-hidden border-b border-(--surface-border) bg-slate-100/70 dark:bg-slate-900/60">
+                <Image
+                  src={project.image}
+                  alt={project.imageAlt}
+                  width={1200}
+                  sizes="(max-width: 640px) 85vw, (max-width: 1024px) 60vw, 384px"
+                  loading="lazy"
+                  decoding="async"
+                  class="h-66 w-full object-cover object-center transition-transform duration-300 group-hover:scale-120"
+                />
+                <div class="pointer-events-none absolute inset-x-0 bottom-0 h-14 bg-linear-to-t from-slate-950/25 to-transparent" />
+              </div>
+
+              <Heading as="h3" class="py-2">
+                <a
+                  href={`/projects/${project.slug}`}
+                  class="underline-offset-4 hover:underline after:absolute after:inset-0 after:content-[''] after:z-0"
+                >
+                  {project.name}
+                </a>
+              </Heading>
+
+              <Text class="px-1">{project.summary}</Text>
+
+              <ul class="flex flex-wrap gap-2 text-xs">
+                {project.stack.map((item) => (
+                  <li class="rounded-xl bg-(--inline-code-bg) px-2.5 py-1 text-(--muted-text-color)">
+                    {item}
+                  </li>
+                ))}
+              </ul>
+
+              <div class="relative z-10 mt-auto px-1 pt-2">
+                <div class={actionButtonClass}>
+                  Explore{" "}
+                  <Icon name="lucide:arrow-right" class="ml-1" size={16} />
+                </div>
+              </div>
+            </Card>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .project-carousel {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    scroll-padding-left: var(--carousel-inline-start, 1rem);
+  }
+
+  .project-carousel::-webkit-scrollbar {
+    display: none;
+  }
+
+  .project-carousel-track {
+    padding-left: var(--carousel-inline-start, 1rem);
+    padding-right: 1rem;
+  }
+
+  @media (min-width: 640px) {
+    .project-carousel-track {
+      padding-right: 1.5rem;
+    }
+  }
+</style>

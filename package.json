@@ -20,6 +20,7 @@
     "prettier": "^3.3.3"
   },
   "dependencies": {
+    "@astrojs/check": "^0.9.8",
     "@astrojs/mdx": "^5.0.3",
     "@astrojs/rss": "^4.0.18",
     "@astrojs/sitemap": "^3.7.2",
@@ -31,6 +32,7 @@
     "astro": "^6.1.1",
     "astro-icon": "^1.1.5",
     "sharp": "^0.34.3",
-    "tailwindcss": "^4.2.2"
+    "tailwindcss": "^4.2.2",
+    "typescript": "^5.9.3"
   }
 }

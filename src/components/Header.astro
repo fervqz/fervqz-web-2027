@@ -6,10 +6,11 @@ import logo from "../assets/img/logo.svg";
 import ResetStickers from "./sticker/ResetStickers.astro";
 import ThemeToggle from "./ThemeToggle.astro";
 import { HEADER_NAV_LINKS } from "./header/navigation";
+import { Icon } from "astro-icon/components";
 import EditStickers from "./sticker/EditStickers.astro";
 ---
 
-<header class="m-0 py-2 flex flex-row">
+<header class="relative m-0 py-2 flex flex-row">
   <Container class="relative">
     <nav class="flex items-center justify-between gap-4">
       <div class="flex items-center gap-2">
@@ -28,22 +29,39 @@ import EditStickers from "./sticker/EditStickers.astro";
           }
         </div>
 
+        <div class="hidden md:flex md:items-center">
+          <ResetStickers />
+          <EditStickers />
+          <ThemeToggle />
+        </div>
+
         <button
           id="mobile-menu-toggle"
-          class="inline-flex h-9 w-9 items-center justify-center rounded-md border border-(--button-border) bg-(--surface-color) text-(--nav-link-color) md:hidden"
+          class="mobile-menu-toggle inline-flex h-9 w-9 items-center justify-center text-(--nav-link-color) md:hidden"
           type="button"
           aria-label="Toggle navigation menu"
           aria-expanded="false"
           aria-controls="mobile-menu"
         >
-          <span id="mobile-menu-icon" aria-hidden="true">☰</span>
+          <span
+            id="mobile-menu-icon"
+            class="mobile-menu-icon"
+            aria-hidden="true"
+          >
+            <span data-mobile-menu-icon="closed" class="mobile-menu-glyph">
+              <Icon name="lucide:menu" class="size-6" />
+            </span>
+            <span data-mobile-menu-icon="open" class="mobile-menu-glyph">
+              <Icon name="lucide:x" class="size-6" />
+            </span>
+          </span>
         </button>
       </div>
     </nav>
 
     <div
       id="mobile-menu"
-      class="absolute inset-x-0 top-full z-50 mt-2 rounded-xl border border-(--button-border) bg-(--surface-color) p-3 shadow-lg transition-all duration-200 ease-out md:hidden"
+      class="absolute inset-x-0 top-full z-50 mt-2 overflow-hidden border border-(--button-border) bg-white p-3 shadow-lg transition-all duration-250 ease-out md:hidden"
       data-open="false"
     >
       <div class="flex flex-col">
@@ -60,37 +78,91 @@ import EditStickers from "./sticker/EditStickers.astro";
       </div>
     </div>
   </Container>
-  <div class="absolute py-4 right-4 flex flex-row items-center">
-    <ResetStickers />
-    <EditStickers />
-    <ThemeToggle class="hidden md:inline-flex" />
-  </div>
 </header>
 
 <script>
   import { initHeaderInteractions } from "./header/header.client";
 
   const scheduleInit = () => initHeaderInteractions();
+  const idleCallback = globalThis.requestIdleCallback;
 
-  if ("requestIdleCallback" in window) {
-    window.requestIdleCallback(scheduleInit, { timeout: 700 });
+  if (typeof idleCallback === "function") {
+    idleCallback(scheduleInit, { timeout: 700 });
   } else {
-    window.setTimeout(scheduleInit, 0);
+    globalThis.setTimeout(scheduleInit, 0);
   }
 </script>
 
 <style>
-  #mobile-menu {
-    display: none;
+  .mobile-menu-toggle {
+    transform: rotate(0deg);
+    transition: transform 320ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .mobile-menu-toggle[aria-expanded="true"] {
+    transform: rotate(-90deg);
+  }
+
+  .mobile-menu-icon {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+
+  .mobile-menu-glyph {
+    position: absolute;
+    inset: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition:
+      opacity 240ms ease,
+      transform 280ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .mobile-menu-glyph[data-mobile-menu-icon="closed"] {
+    opacity: 1;
+    transform: rotate(0deg) scale(1);
+  }
+
+  .mobile-menu-glyph[data-mobile-menu-icon="open"] {
     opacity: 0;
-    transform: translateY(-4px);
+    transform: rotate(90deg) scale(0.7);
+  }
+
+  .mobile-menu-toggle[aria-expanded="true"]
+    .mobile-menu-glyph[data-mobile-menu-icon="closed"] {
+    opacity: 0;
+    transform: rotate(-90deg) scale(0.7);
+  }
+
+  .mobile-menu-toggle[aria-expanded="true"]
+    .mobile-menu-glyph[data-mobile-menu-icon="open"] {
+    opacity: 1;
+    transform: rotate(0deg) scale(1);
+  }
+
+  #mobile-menu {
+    opacity: 0;
+    transform: translateY(-8px) scale(0.98);
+    visibility: hidden;
+    max-height: 0;
     pointer-events: none;
+    transition:
+      opacity 220ms ease,
+      transform 220ms ease,
+      max-height 260ms ease,
+      visibility 220ms ease;
   }
 
   #mobile-menu[data-open="true"] {
-    display: block;
     opacity: 1;
-    transform: translateY(0);
+    transform: translateY(0) scale(1);
+    visibility: visible;
+    max-height: 28rem;
     pointer-events: auto;
   }
 </style>

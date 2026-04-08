@@ -32,7 +32,7 @@ const stickers = Object.entries(stickerAssets)
 <AppLayout
   title={SITE_TITLE}
   description={SITE_DESCRIPTION}
-  bodyClass="flex flex-col min-h-screen"
+  bodyClass="flex flex-col min-h-screen px-4"
 >
   <DotsBackground />
   <Header />
@@ -40,7 +40,7 @@ const stickers = Object.entries(stickerAssets)
     <Container class="flex flex-1 flex-col gap-10 py-8 sm:py-10 md:py-12">
       <Section variant="content">
         <div
-          class="flex flex-col items-center gap-8 pt-18 pb-10 text-center md:flex-row md:items-center md:gap-10 md:text-left lg:gap-12"
+          class="flex flex-col items-center gap-8 pt-8 md:pt-18 pb-10 text-center md:flex-row md:items-center md:gap-10 md:text-left lg:gap-12"
         >
           <Sticker
             src={avatar}
@@ -66,7 +66,7 @@ const stickers = Object.entries(stickerAssets)
             </Text>
           </div>
         </div>
-        <div class="flex justify-center py-8">
+        <div class="flex justify-center">
           <Icon name="lucide:arrow-down" class="h-6 w-6 animate-bounce" />
         </div>
       </Section>
