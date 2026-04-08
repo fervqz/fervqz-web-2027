@@ -84,10 +84,10 @@ const actionButtonClass =
             >
               {section.projects.map((project) => (
                 <Card
-                  class="group relative cursor-pointer project-carousel-item flex w-96 shrink-0 snap-start flex-col space-y-4 overflow-hidden border-slate-200/80 bg-white/90"
+                  class="group relative cursor-pointer project-carousel-item flex w-96 shrink-0 snap-start flex-col space-y-4 overflow-hidden backdrop-blur"
                   data-carousel-item={sectionIndex}
                 >
-                  <div class="relative -mx-5 -mt-5 mb-2 overflow-hidden border-b border-slate-200/70 bg-slate-100/70">
+                  <div class="relative -mx-5 -mt-5 mb-2 overflow-hidden border-b border-(--surface-border) bg-slate-100/70 dark:bg-slate-900/60">
                     <Image
                       src={project.image}
                       alt={project.imageAlt}
@@ -113,7 +113,7 @@ const actionButtonClass =
 
                   <ul class="flex flex-row gap-2 text-xs">
                     {project.stack.map((item) => (
-                      <li class=" px-1.5 py-0.5 rounded-xl bg-slate-200">
+                      <li class="rounded-xl bg-(--inline-code-bg) px-2.5 py-1 text-(--muted-text-color)">
                         {item}
                       </li>
                     ))}
@@ -235,7 +235,7 @@ const actionButtonClass =
   if ("requestIdleCallback" in window) {
     window.requestIdleCallback(initCarousels, { timeout: 800 });
   } else {
-    window.setTimeout(initCarousels, 0);
+    setTimeout(initCarousels, 0);
   }
 </script>
 
