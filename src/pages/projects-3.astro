@@ -1,145 +1,18 @@
 ---
-import { Image } from "astro:assets";
-import DotsBackground from "../components/DotsBackground.astro";
-import Footer from "../components/Footer.astro";
-import Header from "../components/Header.astro";
-import Card from "../components/ui/Card.astro";
-import Container from "../components/ui/Container.astro";
-import Heading from "../components/ui/Heading.astro";
-import Section from "../components/ui/Section.astro";
-import Text from "../components/ui/Text.astro";
 import { SITE_TITLE } from "../consts";
-import { projectSections } from "../lib/projects";
 import AppLayout from "../layouts/AppLayout.astro";
 ---
 
 <AppLayout
-  title={`Projects Alt 3 | ${SITE_TITLE}`}
-  description="Alternative projects layout with immersive dark timeline rows."
-  bodyClass="flex min-h-screen flex-col px-4"
+  title={`Redirecting | ${SITE_TITLE}`}
+  description="Redirecting to projects."
 >
-  <DotsBackground />
-  <Header />
+  <Fragment slot="head">
+    <meta http-equiv="refresh" content="0;url=/projects" />
+    <link rel="canonical" href={new URL("/projects", Astro.site)} />
+  </Fragment>
 
-  <main class="relative flex-1 overflow-hidden">
-    <div class="pointer-events-none absolute inset-0 -z-10">
-      <div
-        class="absolute -top-24 left-10 h-80 w-80 rounded-full bg-cyan-400/20 blur-3xl"
-      >
-      </div>
-      <div
-        class="absolute right-8 top-40 h-72 w-72 rounded-full bg-fuchsia-400/15 blur-3xl"
-      >
-      </div>
-      <div
-        class="absolute bottom-10 left-1/2 h-96 w-96 -translate-x-1/2 rounded-full bg-indigo-500/15 blur-3xl"
-      >
-      </div>
-    </div>
-
-    <Container class="flex flex-col gap-10 py-12">
-      <Section class="space-y-4">
-        <Text as="p" class="text-sm uppercase tracking-[0.2em] text-slate-500">
-          Projects · Alternative 03
-        </Text>
-        <Heading as="h1" variant="hero">Immersive timeline layout</Heading>
-        <Text class="max-w-3xl">
-          A dark, cinematic alternative with stacked project rows and visual
-          gradients. Each row emphasizes momentum, stage, and quick actions.
-        </Text>
-        <div class="flex flex-wrap gap-3">
-          <a
-            href="/projects"
-            class="inline-flex items-center justify-center border border-(--button-border) bg-(--button-bg) px-3 py-2 text-xs font-semibold text-(--button-text) no-underline transition-colors hover:bg-(--button-hover-bg) hover:text-(--button-hover-text)"
-          >
-            Open default projects
-          </a>
-          <a
-            href="/projects-2"
-            class="inline-flex items-center justify-center border border-(--button-border) bg-(--button-bg) px-3 py-2 text-xs font-semibold text-(--button-text) no-underline transition-colors hover:bg-(--button-hover-bg) hover:text-(--button-hover-text)"
-          >
-            Open alternative 02
-          </a>
-        </div>
-      </Section>
-    </Container>
-
-    {
-      projectSections.map((section) => (
-        <section class="py-5">
-          <Container class="space-y-4">
-            <div class="flex items-center justify-between gap-4">
-              <Heading as="h2" variant="section">
-                {section.title}
-              </Heading>
-              <Text tone="muted" class="text-xs uppercase tracking-wider">
-                {section.projects.length} projects
-              </Text>
-            </div>
-            <Text class="max-w-3xl" tone="soft">
-              {section.subtitle}
-            </Text>
-
-            <div class="space-y-4">
-              {section.projects.map((project) => (
-                <Card class="relative overflow-hidden border-slate-200/15 bg-slate-950/90 text-slate-100 shadow-xl">
-                  <div class="absolute inset-0 bg-linear-to-r from-cyan-400/10 via-indigo-400/10 to-fuchsia-400/10" />
-                  <div class="relative grid gap-4 p-5 md:grid-cols-[0.75fr_1.25fr] md:p-6">
-                    <Image
-                      src={project.image}
-                      alt={project.imageAlt}
-                      width={1200}
-                      class="h-full min-h-40 w-full rounded-xl border border-white/15 object-cover"
-                    />
-
-                    <div class="space-y-3">
-                      <Text
-                        as="p"
-                        class="text-xs uppercase tracking-wider text-slate-300"
-                      >
-                        {project.stage}
-                      </Text>
-                      <Heading as="h3" class="text-white">
-                        {project.name}
-                      </Heading>
-                      <Text class="text-slate-200">{project.summary}</Text>
-
-                      <div class="flex flex-wrap gap-2">
-                        {project.stack.map((item) => (
-                          <span class="border border-white/15 bg-white/10 px-2.5 py-1 text-xs text-slate-100">
-                            {item}
-                          </span>
-                        ))}
-                      </div>
-
-                      <div class="flex flex-wrap gap-2 pt-1">
-                        <a
-                          href={`/projects/${project.slug}`}
-                          class="inline-flex items-center justify-center border border-white/25 bg-white/10 px-3 py-2 text-xs font-semibold text-white no-underline transition-colors hover:bg-white hover:text-slate-950"
-                        >
-                          View project
-                        </a>
-                        {project.actions.slice(0, 2).map((action) => (
-                          <a
-                            href={action.href}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            class="inline-flex items-center justify-center border border-white/25 bg-white/10 px-3 py-2 text-xs font-semibold text-white no-underline transition-colors hover:bg-white hover:text-slate-950"
-                          >
-                            {action.label}
-                          </a>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-                </Card>
-              ))}
-            </div>
-          </Container>
-        </section>
-      ))
-    }
-  </main>
-
-  <Footer />
+  <script>
+    window.location.replace("/projects");
+  </script>
 </AppLayout>

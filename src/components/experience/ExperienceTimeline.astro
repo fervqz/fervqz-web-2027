@@ -13,12 +13,8 @@ const { experience: rawExperience } = Astro.props;
 const experience = rawExperience.filter((entry) => entry.show);
 ---
 
-<!-- Variant 2: Alternating center timeline -->
 <Container class="py-16">
   <div class="mb-10">
-    <!-- <Text as="p" tone="muted" class="mb-2 text-sm uppercase tracking-[0.2em]">
-      Experience
-    </Text> -->
     <Heading as="h1" variant="section">Experience Journey 🚀</Heading>
   </div>
   <div class="relative">
@@ -37,28 +33,13 @@ const experience = rawExperience.filter((entry) => entry.show);
             <div class="md:w-[calc(50%-2rem)]">
               <Card class="experience-timeline-card space-y-3">
                 <div>
-                  {/* <Text
-                    tone="muted"
-                    class="mb-1 text-xs uppercase tracking-wider"
-                  >
-                    {entry.period}
-                  </Text> */}
                   <Heading as="h3" class="mb-0!">
                     {entry.role}
                   </Heading>
                   <Text tone="soft" class="text-sm">
                     {entry.company}
-                    {/* {entry.company} · {entry.location} */}
                   </Text>
                 </div>
-                {/* <Text class="text-sm">{entry.description}</Text> */}
-                {/* <div class="flex flex-wrap gap-2 pt-1">
-                  {entry.stack.map((s) => (
-                    <span class="rounded-full border border-slate-200 bg-slate-100 px-3 py-0.5 text-xs font-medium text-slate-600">
-                      {s}
-                    </span>
-                  ))}
-                </div> */}
               </Card>
             </div>
             <div class="hidden md:flex md:w-16 md:shrink-0 md:items-start md:justify-center md:pt-5">
@@ -70,7 +51,6 @@ const experience = rawExperience.filter((entry) => entry.show);
               class={`experience-timeline-label hidden md:flex md:w-[calc(50%-2rem)] md:items-start md:pt-6 ${i % 2 === 0 ? "md:justify-start" : "md:justify-end"}`}
             >
               <span class="text-xs font-semibold uppercase tracking-widest text-(--soft-text-color)">
-                {/* {entry.type} */}
                 {entry.period}
               </span>
             </div>

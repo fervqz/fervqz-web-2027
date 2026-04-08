@@ -13,6 +13,7 @@ import Section from "../components/ui/Section.astro";
 import Text from "../components/ui/Text.astro";
 import Typography from "../components/ui/Typography.astro";
 import WavyDivider from "../components/ui/WavyDivider.astro";
+import FallbackImage from "../components/ui/FallbackImage.astro";
 import { Icon } from "astro-icon/components";
 
 type Props = CollectionEntry<"blog">["data"] & {
@@ -35,9 +36,9 @@ const { title, description, pubDate, updatedDate, heroImage, slug } =
           </Link>
         </div>
 
-        {
-          heroImage && (
-            <div class="mx-auto w-full">
+        <div class="mx-auto w-full">
+          {
+            heroImage ? (
               <Image
                 width={1040}
                 height={700}
@@ -46,9 +47,17 @@ const { title, description, pubDate, updatedDate, heroImage, slug } =
                 class="h-auto w-full object-cover"
                 style={`view-transition-name: blog-image-${slug};`}
               />
-            </div>
-          )
-        }
+            ) : (
+              <FallbackImage
+                alt={title}
+                width={1040}
+                height={700}
+                class="h-auto w-full object-cover"
+                style={`view-transition-name: blog-image-${slug};`}
+              />
+            )
+          }
+        </div>
 
         <header class="space-y-2">
           <Heading as="h1" variant="hero" class="mb-0 max-w-3xl"

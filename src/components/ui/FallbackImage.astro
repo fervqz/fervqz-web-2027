@@ -1,0 +1,29 @@
+---
+import { Image } from "astro:assets";
+import fallbackSrc from "../../assets/blog-placeholder-1.jpg";
+
+interface Props {
+  alt?: string;
+  class?: string;
+  width?: number;
+  height?: number;
+  style?: string;
+}
+
+const {
+  alt = "Fallback image",
+  class: className,
+  width,
+  height,
+  style,
+} = Astro.props;
+---
+
+<Image
+  src={fallbackSrc}
+  alt={alt}
+  class={className}
+  width={width}
+  height={height}
+  style={style}
+/>

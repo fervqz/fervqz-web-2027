@@ -77,9 +77,11 @@ export const projectSections: ProjectSection[] = [
                     "Inspired by that experience, I set out to create Sonoguides, a mobile app that brings those serendipitous discoveries to life. The app offers personalized audio guides for any location, allowing users to explore their surroundings in a new and meaningful way.",
                 ],
                 actions: [
+                    // TODO: Replace with real URL
                     { label: "Download", href: "https://example.com/mobile/habit-tracker" },
                     {
                         label: "Visit landing",
+                        // TODO: Replace with real URL
                         href: "https://example.com/mobile/habit-tracker/landing",
                     },
                 ],
@@ -110,10 +112,13 @@ export const projectSections: ProjectSection[] = [
                     "That's why I created F1lmlog, a mobile app that allows film photographers to effortlessly log their shots and build a personalized database of their work. With F1lmlog, you can easily save your camera settings, lens choices, and lighting conditions, and review them later to learn from your successes and mistakes.",
                 ],
                 actions: [
+                    // TODO: Replace with real URL
                     { label: "Download", href: "https://example.com/mobile/meal-planner" },
+                    // TODO: Replace with real URL
                     { label: "Visit", href: "https://example.com/mobile/meal-planner/changelog" },
                     {
                         label: "Visit landing",
+                        // TODO: Replace with real URL
                         href: "https://example.com/mobile/meal-planner/landing",
                     },
                 ],
@@ -144,10 +149,13 @@ export const projectSections: ProjectSection[] = [
                     "I know by myself the struggle of tryingy to find the right direction and motivation to keep going, and I wanted to create something that could help with that. FitBro is designed to be a supportive companion on your fitness journey, providing guidance and encouragement along the way.",
                 ],
                 actions: [
+                    // TODO: Replace with real URL
                     { label: "Download", href: "https://example.com/mobile/focus-timer" },
+                    // TODO: Replace with real URL
                     { label: "Visit", href: "https://example.com/mobile/focus-timer/docs" },
                     {
                         label: "Visit landing",
+                        // TODO: Replace with real URL
                         href: "https://example.com/mobile/focus-timer/landing",
                     },
                 ],
@@ -175,10 +183,13 @@ export const projectSections: ProjectSection[] = [
                     "The interaction model prioritizes one-tap starts and glanceable progress feedback.",
                 ],
                 actions: [
+                    // TODO: Replace with real URL
                     { label: "Download", href: "https://example.com/mobile/focus-timer" },
+                    // TODO: Replace with real URL
                     { label: "Visit", href: "https://example.com/mobile/focus-timer/docs" },
                     {
                         label: "Visit landing",
+                        // TODO: Replace with real URL
                         href: "https://example.com/mobile/focus-timer/landing",
                     },
                 ],
@@ -206,10 +217,13 @@ export const projectSections: ProjectSection[] = [
                     "The interaction model prioritizes one-tap starts and glanceable progress feedback.",
                 ],
                 actions: [
+                    // TODO: Replace with real URL
                     { label: "Download", href: "https://example.com/mobile/focus-timer" },
+                    // TODO: Replace with real URL
                     { label: "Visit", href: "https://example.com/mobile/focus-timer/docs" },
                     {
                         label: "Visit landing",
+                        // TODO: Replace with real URL
                         href: "https://example.com/mobile/focus-timer/landing",
                     },
                 ],
