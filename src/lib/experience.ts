@@ -15,7 +15,7 @@ export const experience: ExperienceEntry[] = [
         show: true,
         role: "Expert Frontend Developer",
         company: "Sngular",
-        period: "2025 - Present",
+        period: "Oct 2025 - Present",
         location: "Remote",
         type: "full-time",
         description:
@@ -31,7 +31,7 @@ export const experience: ExperienceEntry[] = [
         show: true,
         role: "Frontend Developer",
         company: "Knack",
-        period: "Mar 2021 - Dec 2022",
+        period: "Jul 2024 - Jan 2025",
         location: "Remote",
         type: "full-time",
         description:
@@ -47,7 +47,7 @@ export const experience: ExperienceEntry[] = [
         show: true,
         role: "Full-Stack Developer",
         company: "Freelancer",
-        period: "Jun 2019 - Feb 2021",
+        period: "Jan 2024 - Jul 2024",
         location: "Remote",
         type: "freelance",
         description:
@@ -63,7 +63,7 @@ export const experience: ExperienceEntry[] = [
         show: true,
         role: "Full-Stack Developer",
         company: "Softec.Cloud",
-        period: "Sep 2017 - May 2019",
+        period: "Mar 2022 - Jan 2024",
         location: "Remote",
         type: "full-time",
         description:
@@ -79,7 +79,7 @@ export const experience: ExperienceEntry[] = [
         show: true,
         role: "Full-Stack Developer",
         company: "Diatomea Technology",
-        period: "Sep 2017 - May 2019",
+        period: "Jul 2018 - Mar 2022",
         location: "Remote",
         type: "full-time",
         description:
@@ -95,7 +95,7 @@ export const experience: ExperienceEntry[] = [
         show: false,
         role: "Junior Full-Stack Developer",
         company: "FUNIBER",
-        period: "Sep 2017 - May 2019",
+        period: "Nov 2016 - Jul 2018",
         location: "Remote",
         type: "part-time",
         description:
