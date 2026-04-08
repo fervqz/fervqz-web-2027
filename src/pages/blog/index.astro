@@ -5,6 +5,7 @@ import DotsBackground from "../../components/DotsBackground.astro";
 import Header from "../../components/Header.astro";
 import { SITE_TITLE } from "../../consts";
 import AppLayout from "../../layouts/AppLayout.astro";
+import BlogPageHeader from "../../sections/BlogPageHeader.astro";
 import BlogPostsSection from "../../sections/BlogPostsSection.astro";
 
 const posts = (await getCollection("blog")).sort(
@@ -20,6 +21,7 @@ const posts = (await getCollection("blog")).sort(
   <DotsBackground />
   <main class="flex min-h-screen flex-col gap-12">
     <Header />
+    <BlogPageHeader />
     <BlogPostsSection posts={posts} />
     <Footer />
   </main>
