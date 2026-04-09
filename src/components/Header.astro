@@ -13,26 +13,26 @@ import EditStickers from "./sticker/EditStickers.astro";
 <header class="relative m-0 py-2 flex flex-row">
   <Container class="relative">
     <nav class="flex items-center justify-between gap-4">
-      <div class="flex items-center gap-2">
-        <Sticker src={logo} alt="logo" width={50} />
-        <a href="/" class="hover:scale-105 transition-transform duration-200">
-          <span class="text-2xl font-black font-[JetBrains Mono]">Fervqz</span>
-        </a>
-      </div>
+      <a
+        href="/"
+        class="hover:scale-105 transition-transform duration-200 flex items-center gap-2"
+      >
+        <Sticker src={logo} alt="logo" width={50} draggable={false} />
+        <span class="text-2xl font-black font-[JetBrains Mono]">Fervqz</span>
+      </a>
 
       <div class="flex items-center gap-1">
+        <div class="hidden md:flex md:items-center">
+          <ResetStickers />
+          <EditStickers />
+          <ThemeToggle />
+        </div>
         <div class="internal-links hidden items-center gap-1 md:flex">
           {
             HEADER_NAV_LINKS.map((link) => (
               <HeaderLink href={link.href}>{link.label}</HeaderLink>
             ))
           }
-        </div>
-
-        <div class="hidden md:flex md:items-center">
-          <ResetStickers />
-          <EditStickers />
-          <ThemeToggle />
         </div>
 
         <button

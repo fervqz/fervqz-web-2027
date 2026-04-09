@@ -6,11 +6,13 @@ import IconButton from "../ui/IconButton.astro";
   id="reset-stickers"
   icon="lucide:rotate-ccw"
   as="button"
+  class="sticker-reset-button"
   type="button"
   aria-label="Reset stickers"
   tooltip="Reset stickers"
   hidden
   aria-hidden="true"
+  data-visible="false"
 />
 
 <script>
@@ -26,14 +28,49 @@ import IconButton from "../ui/IconButton.astro";
   const stickerWindow = globalThis as StickerWindow;
   const button = document.getElementById("reset-stickers");
 
-  const syncVisibility = (enabled: boolean) => {
+  let hideAfterTransitionHandler: ((event: TransitionEvent) => void) | null =
+    null;
+
+  const syncVisibility = (enabled: boolean, immediate = false) => {
     if (!(button instanceof HTMLButtonElement)) return;
 
-    button.hidden = !enabled;
-    button.setAttribute("aria-hidden", String(!enabled));
+    if (hideAfterTransitionHandler) {
+      button.removeEventListener("transitionend", hideAfterTransitionHandler);
+      hideAfterTransitionHandler = null;
+    }
+
+    if (immediate) {
+      button.hidden = !enabled;
+      button.dataset.visible = enabled ? "true" : "false";
+      button.setAttribute("aria-hidden", String(!enabled));
+      return;
+    }
+
+    if (enabled) {
+      button.hidden = false;
+      button.setAttribute("aria-hidden", "false");
+      globalThis.requestAnimationFrame(() => {
+        button.dataset.visible = "true";
+      });
+      return;
+    }
+
+    button.dataset.visible = "false";
+    button.setAttribute("aria-hidden", "true");
+
+    hideAfterTransitionHandler = (event: TransitionEvent) => {
+      if (event.propertyName !== "opacity") return;
+      if (!(button instanceof HTMLButtonElement)) return;
+      if (button.dataset.visible === "true") return;
+      button.hidden = true;
+      button.removeEventListener("transitionend", hideAfterTransitionHandler!);
+      hideAfterTransitionHandler = null;
+    };
+
+    button.addEventListener("transitionend", hideAfterTransitionHandler);
   };
 
-  syncVisibility(stickerWindow.__stickerEditModeEnabled === true);
+  syncVisibility(stickerWindow.__stickerEditModeEnabled === true, true);
 
   if (button && button.dataset.stickerResetInitialized !== "true") {
     button.dataset.stickerResetInitialized = "true";
@@ -47,3 +84,20 @@ import IconButton from "../ui/IconButton.astro";
     });
   }
 </script>
+
+<style is:global>
+  #reset-stickers {
+    opacity: 0;
+    transform: translateX(6px) scale(0.96);
+    pointer-events: none;
+    transition:
+      opacity 180ms ease,
+      transform 220ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  #reset-stickers[data-visible="true"] {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+    pointer-events: auto;
+  }
+</style>

@@ -1,0 +1,141 @@
+---
+import { Image } from "astro:assets";
+import type { ImageMetadata } from "astro";
+
+interface Props {
+  src?: ImageMetadata;
+  alt?: string;
+  width: number;
+  draggable?: boolean;
+  class?: string;
+  loading?: "lazy" | "eager";
+  fetchpriority?: "high" | "low" | "auto";
+}
+
+const {
+  src,
+  alt = "",
+  width,
+  draggable = true,
+  class: className = "",
+  loading = "lazy",
+  fetchpriority,
+} = Astro.props;
+
+const outlineThickness = "8px";
+const hasDefaultSlot = Astro.slots.has("default");
+
+if (!src && !hasDefaultSlot) {
+  throw new Error(
+    "StickerSVG requires either an SVG src or slotted SVG content.",
+  );
+}
+
+if (src && src.format !== "svg") {
+  throw new Error("StickerSVG only accepts SVG sources.");
+}
+---
+
+<div
+  data-sticker={draggable ? "true" : undefined}
+  data-sticker-edit-mode={draggable ? "false" : undefined}
+  data-sticker-interacting={draggable ? "false" : undefined}
+  class="relative z-20 inline-flex overflow-visible touch-none select-none transition-transform ease-out duration-150"
+  style={`transform: translate3d(0px, 0px, 0px); --sticker-outline-size: ${outlineThickness}; --sticker-edit-outline-padding: 4px;`}
+>
+  <div data-sticker-motion class="origin-center">
+    <div
+      data-sticker-inner
+      class="relative inline-flex transition duration-150 ease-out"
+    >
+      <div
+        data-sticker-outline
+        class="pointer-events-none absolute rounded-sm border-2 border-sky-500 opacity-0 transition-opacity duration-150"
+      >
+      </div>
+      {
+        src ? (
+          <Image
+            src={src}
+            alt={alt}
+            width={width}
+            draggable="false"
+            loading={loading}
+            fetchpriority={fetchpriority}
+            class={`h-auto sticker-svg-image ${className}`.trim()}
+          />
+        ) : (
+          <div
+            class={`sticker-svg-slot ${className}`.trim()}
+            style={`width: ${width}px;`}
+            role={alt ? "img" : undefined}
+            aria-label={alt || undefined}
+            aria-hidden={alt ? undefined : "true"}
+          >
+            <slot />
+          </div>
+        )
+      }
+    </div>
+  </div>
+</div>
+
+<script>
+  import { initStickerInteractions } from "./interaction";
+
+  initStickerInteractions();
+</script>
+
+<style>
+  @keyframes sticker-wobble {
+    0% {
+      transform: rotate(-1.5deg);
+    }
+
+    50% {
+      transform: rotate(1.5deg);
+    }
+
+    100% {
+      transform: rotate(-1.5deg);
+    }
+  }
+
+  [data-sticker-edit-mode="true"][data-sticker-interacting="false"]
+    [data-sticker-motion] {
+    animation: sticker-wobble 250ms ease-in-out infinite;
+  }
+
+  [data-sticker-edit-mode="false"] [data-sticker-motion],
+  [data-sticker-interacting="true"] [data-sticker-motion] {
+    animation: none;
+  }
+
+  .sticker-svg-image {
+    filter: drop-shadow(var(--sticker-outline-size) 0 0 #fff)
+      drop-shadow(calc(var(--sticker-outline-size) * -1) 0 0 #fff)
+      drop-shadow(0 var(--sticker-outline-size) 0 #fff)
+      drop-shadow(0 calc(var(--sticker-outline-size) * -1) 0 #fff)
+      drop-shadow(0 1px 1px rgb(24 24 27 / 0.3));
+  }
+
+  .sticker-svg-slot {
+    display: inline-flex;
+    width: 100%;
+  }
+
+  .sticker-svg-slot :global(svg) {
+    display: block;
+    width: 100%;
+    height: auto;
+    filter: drop-shadow(var(--sticker-outline-size) 0 0 #fff)
+      drop-shadow(calc(var(--sticker-outline-size) * -1) 0 0 #fff)
+      drop-shadow(0 var(--sticker-outline-size) 0 #fff)
+      drop-shadow(0 calc(var(--sticker-outline-size) * -1) 0 #fff)
+      drop-shadow(0 1px 1px rgb(24 24 27 / 0.3));
+  }
+
+  [data-sticker-outline] {
+    inset: calc(var(--sticker-edit-outline-padding) * -1);
+  }
+</style>

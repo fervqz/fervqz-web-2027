@@ -6,18 +6,38 @@ import {
 } from "./events";
 
 const ACTIVE_SHADOW_CLASSES = ["drop-shadow-xl", "drop-shadow-zinc-900/20"];
-const RESIZE_HIT_RADIUS = 14;
-const ROTATE_HIT_RADIUS = 34;
-const MIN_SCALE = 0.45;
-const MAX_SCALE = 3;
 
-const toDeg = (radians: number) => (radians * 180) / Math.PI;
+const getAncestorRotationRadians = (element: HTMLElement) => {
+    let angle = 0;
+    let current: HTMLElement | null = element.parentElement;
 
-const normalizeDegrees = (value: number) => {
-    let angle = value % 360;
-    if (angle > 180) angle -= 360;
-    if (angle < -180) angle += 360;
+    while (current) {
+        const transform = globalThis.getComputedStyle(current).transform;
+
+        if (transform && transform !== "none") {
+            try {
+                const matrix = new DOMMatrixReadOnly(transform);
+                angle += Math.atan2(matrix.b, matrix.a);
+            } catch {
+                // Ignore malformed transform strings.
+            }
+        }
+
+        current = current.parentElement;
+    }
+
     return angle;
+};
+
+const toLocalAxisDelta = (element: HTMLElement, dx: number, dy: number) => {
+    const angle = getAncestorRotationRadians(element);
+    const cos = Math.cos(angle);
+    const sin = Math.sin(angle);
+
+    return {
+        dx: dx * cos + dy * sin,
+        dy: -dx * sin + dy * cos,
+    };
 };
 
 type StickerWindow = Window & {
@@ -27,7 +47,7 @@ type StickerWindow = Window & {
 };
 
 export function initStickerInteractions(root: ParentNode = document) {
-    const stickerWindow = globalThis as StickerWindow;
+    const stickerWindow = globalThis as unknown as StickerWindow;
 
     if (typeof stickerWindow.__stickerZIndexCounter !== "number") {
         stickerWindow.__stickerZIndexCounter = 10000;
@@ -57,27 +77,13 @@ export function initStickerInteractions(root: ParentNode = document) {
 
         wrapper.dataset.stickerInitialized = "true";
 
-        type Mode = "drag" | "resize" | "rotate";
-        type Corner = {
-            x: number;
-            y: number;
-            resizeCursor: string;
-        };
-
         let offsetX = 0;
         let offsetY = 0;
-        let scale = 1;
-        let rotation = 0;
 
         let startX = 0;
         let startY = 0;
-        let startScale = 1;
-        let startRotation = 0;
-        let startDistance = 0;
-        let startAngle = 0;
 
         let activePointerId: number | null = null;
-        let activeMode: Mode | null = null;
         let isHovered = false;
         let isSelected = false;
         let isInteracting = false;
@@ -113,7 +119,6 @@ export function initStickerInteractions(root: ParentNode = document) {
 
         const resetInteractionState = () => {
             isInteracting = false;
-            activeMode = null;
 
             if (activePointerId !== null && wrapper.hasPointerCapture(activePointerId)) {
                 wrapper.releasePointerCapture(activePointerId);
@@ -140,111 +145,31 @@ export function initStickerInteractions(root: ParentNode = document) {
             wrapper.style.zIndex = String(stickerWindow.__stickerZIndexCounter);
         };
 
-        const getCorners = (rect: DOMRect): Corner[] => [
-            { x: rect.left, y: rect.top, resizeCursor: "nwse-resize" },
-            { x: rect.right, y: rect.top, resizeCursor: "nesw-resize" },
-            { x: rect.right, y: rect.bottom, resizeCursor: "nwse-resize" },
-            { x: rect.left, y: rect.bottom, resizeCursor: "nesw-resize" },
-        ];
-
-        const getNearestCorner = (event: PointerEvent) => {
-            const rect = wrapper.getBoundingClientRect();
-            const corners = getCorners(rect);
-
-            let nearest = corners[0];
-            let minDistance = Number.POSITIVE_INFINITY;
-
-            for (const corner of corners) {
-                const distance = Math.hypot(
-                    event.clientX - corner.x,
-                    event.clientY - corner.y,
-                );
-                if (distance < minDistance) {
-                    minDistance = distance;
-                    nearest = corner;
-                }
-            }
-
-            return { nearest, minDistance, rect };
-        };
-
-        const getModeForEvent = (event: PointerEvent): Mode => {
-            const { minDistance } = getNearestCorner(event);
-            if (minDistance <= RESIZE_HIT_RADIUS) return "resize";
-            if (minDistance <= ROTATE_HIT_RADIUS) return "rotate";
-            return "drag";
-        };
-
         const updatePosition = () => {
             wrapper.style.transform = `translate3d(${offsetX}px, ${offsetY}px, 0)`;
         };
 
-        const updateInnerTransform = () => {
-            const transform = `rotate(${rotation}deg) scale(${scale})`;
-            inner.style.transform = transform;
-            outline.style.transform = transform;
-        };
-
-        const setHoverCursor = (event: PointerEvent) => {
+        const setHoverCursor = () => {
             if (!isEditModeEnabled()) {
                 setWrapperCursor("default");
                 return;
             }
             if (activePointerId !== null) return;
-            const { nearest, minDistance } = getNearestCorner(event);
-            if (minDistance <= RESIZE_HIT_RADIUS) {
-                setWrapperCursor(nearest.resizeCursor);
-                return;
-            }
-            if (minDistance <= ROTATE_HIT_RADIUS) {
-                setWrapperCursor("crosshair");
-                return;
-            }
             setWrapperCursor("grab");
         };
 
         const onPointerMove = (event: PointerEvent) => {
             if (event.pointerId !== activePointerId) return;
 
-            if (activeMode === "drag") {
-                offsetX += event.clientX - startX;
-                offsetY += event.clientY - startY;
-                startX = event.clientX;
-                startY = event.clientY;
-                updatePosition();
-                return;
-            }
+            const dx = event.clientX - startX;
+            const dy = event.clientY - startY;
+            const localDelta = toLocalAxisDelta(wrapper, dx, dy);
 
-            const rect = wrapper.getBoundingClientRect();
-            const centerX = rect.left + rect.width / 2;
-            const centerY = rect.top + rect.height / 2;
-
-            if (activeMode === "resize") {
-                const currentDistance = Math.hypot(
-                    event.clientX - centerX,
-                    event.clientY - centerY,
-                );
-                if (startDistance > 0) {
-                    scale = Math.min(
-                        MAX_SCALE,
-                        Math.max(
-                            MIN_SCALE,
-                            startScale * (currentDistance / startDistance),
-                        ),
-                    );
-                    updateInnerTransform();
-                }
-                return;
-            }
-
-            if (activeMode === "rotate") {
-                const currentAngle = toDeg(
-                    Math.atan2(event.clientY - centerY, event.clientX - centerX),
-                );
-                const delta = currentAngle - startAngle;
-                rotation = normalizeDegrees(startRotation + delta);
-                updateInnerTransform();
-            }
+            offsetX += localDelta.dx;
+            offsetY += localDelta.dy;
+            startX = event.clientX;
+            startY = event.clientY;
+            updatePosition();
         };
 
         const stopDragging = (event: PointerEvent) => {
@@ -259,23 +184,9 @@ export function initStickerInteractions(root: ParentNode = document) {
 
             bringToFront();
 
-            activeMode = getModeForEvent(event);
             activePointerId = event.pointerId;
             startX = event.clientX;
             startY = event.clientY;
-
-            const rect = wrapper.getBoundingClientRect();
-            const centerX = rect.left + rect.width / 2;
-            const centerY = rect.top + rect.height / 2;
-            startScale = scale;
-            startRotation = rotation;
-            startDistance = Math.hypot(
-                event.clientX - centerX,
-                event.clientY - centerY,
-            );
-            startAngle = toDeg(
-                Math.atan2(event.clientY - centerY, event.clientX - centerX),
-            );
 
             globalThis.dispatchEvent(
                 new CustomEvent<HTMLElement>(STICKER_SELECT_EVENT, {
@@ -284,13 +195,7 @@ export function initStickerInteractions(root: ParentNode = document) {
             );
 
             setActiveVisual(true);
-            let nextCursor = "crosshair";
-            if (activeMode === "drag") {
-                nextCursor = "grabbing";
-            } else if (activeMode === "resize") {
-                nextCursor = getNearestCorner(event).nearest.resizeCursor;
-            }
-            setWrapperCursor(nextCursor);
+            setWrapperCursor("grabbing");
 
             wrapper.classList.remove("transition-transform");
             inner.classList.remove("transition-transform");
@@ -306,7 +211,7 @@ export function initStickerInteractions(root: ParentNode = document) {
             updateOutlineVisibility();
         });
 
-        wrapper.addEventListener("pointermove", setHoverCursor);
+        wrapper.addEventListener("pointermove", () => setHoverCursor());
         wrapper.addEventListener("pointerleave", () => {
             isHovered = false;
             updateOutlineVisibility();
@@ -327,13 +232,10 @@ export function initStickerInteractions(root: ParentNode = document) {
         globalThis.addEventListener(STICKER_RESET_EVENT, () => {
             offsetX = 0;
             offsetY = 0;
-            scale = 1;
-            rotation = 0;
             isSelected = false;
             isHovered = false;
             setActiveVisual(false);
             resetInteractionState();
-            updateInnerTransform();
             updatePosition();
         });
 
@@ -357,6 +259,5 @@ export function initStickerInteractions(root: ParentNode = document) {
         syncEditModeState();
         setWrapperCursor(isEditModeEnabled() ? "grab" : "default");
         updateOutlineVisibility();
-        updateInnerTransform();
     });
 }
