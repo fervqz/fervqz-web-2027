@@ -1,0 +1,118 @@
+---
+import { Image } from "astro:assets";
+import Container from "../components/ui/Container.astro";
+import Heading from "../components/ui/Heading.astro";
+import Section from "../components/ui/Section.astro";
+import project1 from "../assets/img/project-1.png";
+import project2 from "../assets/img/project-2.png";
+import project3 from "../assets/img/project-3.png";
+
+const images = [
+  { src: project1, alt: "Project 1", delay: "0ms", rotation: "-8deg" },
+  { src: project2, alt: "Project 2", delay: "120ms", rotation: "6deg" },
+  { src: project3, alt: "Project 3", delay: "240ms", rotation: "-4deg" },
+];
+---
+
+<Section variant="content" class="px-4 mx-auto max-w-7xl space-y-18">
+  <Container>
+    <Heading as="h1" variant="section" class="text-center"
+      >💻 Explore My Projects</Heading
+    >
+  </Container>
+
+  <div class="projects-showcase-grid">
+    {
+      images.map((img) => (
+        <div
+          class="projects-showcase-item"
+          style={`--item-delay: ${img.delay}; --item-rotation: ${img.rotation};`}
+          data-projects-showcase-item
+        >
+          <Image
+            src={img.src}
+            alt={img.alt}
+            width={600}
+            loading="lazy"
+            decoding="async"
+            class="projects-showcase-img"
+          />
+        </div>
+      ))
+    }
+  </div>
+</Section>
+
+<script>
+  if (
+    typeof window !== "undefined" &&
+    "IntersectionObserver" in window &&
+    !window.matchMedia("(prefers-reduced-motion: reduce)").matches
+  ) {
+    const observer = new IntersectionObserver(
+      (entries, obs) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          entry.target.setAttribute("data-in-view", "true");
+          obs.unobserve(entry.target);
+        });
+      },
+      { threshold: 0.15, rootMargin: "0px 0px -60px 0px" },
+    );
+
+    document
+      .querySelectorAll("[data-projects-showcase-item]")
+      .forEach((el) => observer.observe(el));
+  } else {
+    document
+      .querySelectorAll("[data-projects-showcase-item]")
+      .forEach((el) => el.setAttribute("data-in-view", "true"));
+  }
+</script>
+
+<style>
+  .projects-showcase-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+
+  @media (max-width: 48rem) {
+    .projects-showcase-grid {
+      grid-template-columns: 1fr;
+      max-width: 28rem;
+      margin: 0 auto;
+    }
+  }
+
+  .projects-showcase-item {
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(48px) rotate(var(--item-rotation));
+    transition:
+      opacity 600ms cubic-bezier(0.22, 1, 0.36, 1),
+      transform 600ms cubic-bezier(0.22, 1, 0.36, 1);
+    transition-delay: var(--item-delay);
+    will-change: opacity, transform;
+  }
+
+  .projects-showcase-item[data-in-view="true"] {
+    opacity: 1;
+    transform: translateY(0) rotate(var(--item-rotation));
+  }
+
+  .projects-showcase-img {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: cover;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .projects-showcase-item {
+      opacity: 1;
+      transform: none;
+      transition: none;
+    }
+  }
+</style>
