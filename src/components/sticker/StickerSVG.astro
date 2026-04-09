@@ -10,6 +10,7 @@ interface Props {
   class?: string;
   loading?: "lazy" | "eager";
   fetchpriority?: "high" | "low" | "auto";
+  class?: string;
 }
 
 const {
@@ -20,6 +21,7 @@ const {
   class: className = "",
   loading = "lazy",
   fetchpriority,
+  class: asClassName,
 } = Astro.props;
 
 const outlineThickness = "8px";
@@ -40,7 +42,7 @@ if (src && src.format !== "svg") {
   data-sticker={draggable ? "true" : undefined}
   data-sticker-edit-mode={draggable ? "false" : undefined}
   data-sticker-interacting={draggable ? "false" : undefined}
-  class="relative z-20 inline-flex overflow-visible touch-none select-none transition-transform ease-out duration-150"
+  class={`relative z-20 inline-flex overflow-visible touch-none select-none transition-transform ease-out duration-150 ${asClassName}`.trim()}
   style={`transform: translate3d(0px, 0px, 0px); --sticker-outline-size: ${outlineThickness}; --sticker-edit-outline-padding: 4px;`}
 >
   <div data-sticker-motion class="origin-center">

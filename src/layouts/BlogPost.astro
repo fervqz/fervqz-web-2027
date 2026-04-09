@@ -14,13 +14,22 @@ import Text from "../components/ui/Text.astro";
 import Typography from "../components/ui/Typography.astro";
 import WavyDivider from "../components/ui/WavyDivider.astro";
 import FallbackImage from "../components/ui/FallbackImage.astro";
+import { Icon } from "astro-icon/components";
 
 type Props = CollectionEntry<"blog">["data"] & {
   slug: string;
+  readingTimeMinutes: number;
 };
 
-const { title, description, pubDate, updatedDate, heroImage, slug } =
-  Astro.props;
+const {
+  title,
+  description,
+  pubDate,
+  updatedDate,
+  heroImage,
+  slug,
+  readingTimeMinutes,
+} = Astro.props;
 ---
 
 <AppLayout
@@ -66,11 +75,17 @@ const { title, description, pubDate, updatedDate, heroImage, slug } =
           <Heading as="h1" variant="hero" class="mb-0 max-w-3xl"
             >{title}</Heading
           >
-          <Text class="mb-0 max-w-3xl text-[14px] leading-5">
+          <!-- <Text class="mb-0 max-w-3xl text-[14px] leading-5">
             {description}
-          </Text>
+          </Text> -->
           <Text as="div" tone="muted" class="text-[12px] leading-5">
-            <FormattedDate date={pubDate} />
+            <Icon
+              name="lucide:calendar"
+              size={14}
+              class="inline-block mb-0.5"
+            />{" "}
+            <FormattedDate date={pubDate} /> ·
+            <span>{readingTimeMinutes} min read</span>
             {
               updatedDate && (
                 <div class="italic">

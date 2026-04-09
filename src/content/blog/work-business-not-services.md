@@ -2,6 +2,7 @@
 title: 'Work on the Business, not the Services'
 description: 'Lorem ipsum dolor sit amet'
 pubDate: 'Mar 31 2026'
+hidden: false
 heroImage: '../../assets/blog-placeholder-4.jpg'
 tags: ["MDX", "Markdown", "Astro"]
 ---
