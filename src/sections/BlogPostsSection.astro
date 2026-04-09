@@ -1,6 +1,7 @@
 ---
 import { Image } from "astro:assets";
 import type { CollectionEntry } from "astro:content";
+import Badge from "../components/ui/Badge.astro";
 import Container from "../components/ui/Container.astro";
 import Heading from "../components/ui/Heading.astro";
 import Section from "../components/ui/Section.astro";
@@ -21,7 +22,7 @@ const { posts } = Astro.props;
     >
       {
         posts.map((post) => (
-          <article class="blog-list-item group hover:bg-slate-200/60 transition-colors p-2">
+          <article class="blog-list-item group border border-transparent p-2 transition-colors hover:border-(--surface-border) hover:bg-(--surface-color)">
             <a
               href={`/blog/${post.id}/`}
               class="grid grid-cols-1 items-start gap-4 no-underline sm:grid-cols-[170px_1fr]"
@@ -47,6 +48,13 @@ const { posts } = Astro.props;
                   {post.data.description} — quick notes, context, tech stack,
                   and progress updates from ongoing work.
                 </Text>
+                {post.data.tags?.length ? (
+                  <ul class="mb-0 flex flex-wrap gap-2 pt-1">
+                    {post.data.tags.map((tag) => (
+                      <Badge as="li">{tag}</Badge>
+                    ))}
+                  </ul>
+                ) : null}
               </div>
             </a>
           </article>

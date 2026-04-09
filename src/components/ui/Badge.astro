@@ -1,0 +1,23 @@
+---
+import type { HTMLAttributes } from "astro/types";
+
+type BadgeTag = "span" | "li";
+
+interface Props extends HTMLAttributes<"span"> {
+  as?: BadgeTag;
+}
+
+const { as = "span", class: className, ...props } = Astro.props;
+
+const Tag = as;
+---
+
+<Tag
+  class:list={[
+    "inline-flex items-center rounded-xl bg-(--inline-code-bg) px-2.5 py-1 text-xs text-(--muted-text-color)",
+    className,
+  ]}
+  {...props}
+>
+  <slot />
+</Tag>

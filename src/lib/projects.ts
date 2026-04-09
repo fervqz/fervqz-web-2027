@@ -57,8 +57,8 @@ export const softwareProjects: Project[] = [
         details: [
             "About a year ago, I found myself on a solo trip to Vienna, wandering through the city with no plan or itinerary. I stumbled upon a museum + park with free audio guides by scanning a QR code.",
             "It barely scratched the surface of the rich history and culture around me, but it sparked a sense of wonder and curiosity that I hadn't felt in a long time.",
-            "Right after that, I ask an AI to generate a guide for the park I was walking in, then I copy that text into a text-to-speech free app (loaded with ads).",
-            "I was amazed by how much more connected I felt to my surroundings just by having a voice narrating the stories and details of the place. It turned a simple walk into an immersive experience, and I wished I had something like that for every place I visited and also being way easy to use.",
+            "Right after that, I asked an AI to generate a guide for the park I was walking in, then copied that text into a free text-to-speech app (loaded with ads).",
+            "I was amazed by how much more connected I felt to my surroundings just by having a voice narrating the stories and details of the place. It turned a simple walk into an immersive experience, and I wished I had something like that for every place I visited that was also much easier to use.",
             "Inspired by that experience, I set out to create Sonoguides, a mobile app that brings those serendipitous discoveries to life. The app offers personalized audio guides for any location, allowing users to explore their surroundings in a new and meaningful way.",
         ],
         actions: [
@@ -134,9 +134,9 @@ export const softwareProjects: Project[] = [
         ],
         details: [
             "Everybody can create a basic fitness app, in fact, everybody is vibe-coding one right now!",
-            "Most of my projects comes from real-life problems I encounter, and this one is no different. As someone who has struggled with following a healthy diet and maintaining a consistent fitness routine, I found myself wishing for a personalized approach to keep on track and reach my goals.",
-            "But FitBro is not a macros or fitness app, it's a goal achiever buddy. It uses AI to provide personalized feedback in order to make you stay on track and reach your fitness goals.",
-            "I know by myself the struggle of tryingy to find the right direction and motivation to keep going, and I wanted to create something that could help with that. FitBro is designed to be a supportive companion on your fitness journey, providing guidance and encouragement along the way.",
+            "Most of my projects come from real-life problems I encounter, and this one is no different. As someone who has struggled with following a healthy diet and maintaining a consistent fitness routine, I found myself wishing for a personalized approach to stay on track and reach my goals.",
+            "FitBro isn't just a macro-tracking or fitness app; it's a goal-oriented companion. It uses AI to provide personalized feedback to help you stay on track and reach your fitness goals.",
+            "I know the struggle of trying to find the right direction and motivation to keep going, and I wanted to create something that could help with that. FitBro is designed to be a supportive companion on your fitness journey, providing guidance and encouragement along the way.",
         ],
         actions: [
             // TODO: Replace with real URL
@@ -225,7 +225,7 @@ export const hardwareProjects: Project[] = [
     {
         slug: "v60-dripper",
         name: "Coffee Dripper",
-        summary: "A dripper for a Hario's V60 coffee maker.",
+        summary: "A dripper for a Hario V60 coffee maker.",
         stack: ["3D Printing", "Fusion 360"],
         stages: [
             { name: "Design", status: "completed" },
