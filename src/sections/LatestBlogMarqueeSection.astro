@@ -34,19 +34,24 @@ const marqueePosts = posts.slice(0, 6);
               aria-label={`Read ${post.data.title}`}
               data-duplicate={i >= marqueePosts.length ? "true" : undefined}
             >
-              {post.data.heroImage && (
-                <Image
-                  src={post.data.heroImage}
-                  alt=""
-                  width={80}
-                  height={50}
-                  class="latest-blog-marquee-image"
-                  loading="lazy"
-                  decoding="async"
-                />
-              )}
+              <div class="latest-blog-marquee-image-wrapper">
+                {post.data.heroImage && (
+                  <Image
+                    src={post.data.heroImage}
+                    alt=""
+                    width={300}
+                    height={300}
+                    class="latest-blog-marquee-image"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                )}
+              </div>
               <div class="latest-blog-marquee-content">
                 <span class="latest-blog-marquee-title">{post.data.title}</span>
+                <span class="latest-blog-marquee-description">
+                  {post.data.description}
+                </span>
                 <span class="latest-blog-marquee-date">
                   {post.data.pubDate.toLocaleDateString("en-US", {
                     month: "short",
@@ -54,6 +59,13 @@ const marqueePosts = posts.slice(0, 6);
                     year: "numeric",
                   })}
                 </span>
+                {post.data.tags && post.data.tags.length > 0 && (
+                  <ul class="latest-blog-marquee-tags">
+                    {post.data.tags.slice(0, 3).map((tag) => (
+                      <li class="latest-blog-marquee-tag">{tag}</li>
+                    ))}
+                  </ul>
+                )}
               </div>
             </a>
           ))}
@@ -79,9 +91,9 @@ const marqueePosts = posts.slice(0, 6);
   .latest-blog-marquee-track {
     display: flex;
     width: max-content;
-    gap: 0.9rem;
-    padding: 0.5rem 0;
-    animation: latest-blog-marquee-scroll 26s linear infinite;
+    gap: 1.25rem;
+    padding: 1rem 0;
+    animation: latest-blog-marquee-scroll 30s linear infinite;
   }
 
   .latest-blog-marquee:hover .latest-blog-marquee-track {
@@ -89,47 +101,87 @@ const marqueePosts = posts.slice(0, 6);
   }
 
   .latest-blog-marquee-item {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.75rem;
-    white-space: nowrap;
+    display: flex;
+    flex-direction: column;
+    width: 280px;
+    height: 380px;
     border: 1px solid var(--surface-border);
     background: var(--surface-color);
-    padding: 0.5rem 0.75rem;
     text-decoration: none;
     transition:
       border-color 180ms ease,
       transform 180ms ease;
     flex-shrink: 0;
+    overflow: hidden;
   }
 
   .latest-blog-marquee-item:hover {
     border-color: var(--link-hover-color);
-    transform: translateY(-1px);
+    transform: translateY(-4px);
+  }
+
+  .latest-blog-marquee-image-wrapper {
+    width: 100%;
+    height: 180px;
+    overflow: hidden;
   }
 
   .latest-blog-marquee-image {
-    width: 80px;
-    height: 50px;
+    width: 100%;
+    height: 100%;
     object-fit: cover;
-    flex-shrink: 0;
   }
 
   .latest-blog-marquee-content {
     display: flex;
     flex-direction: column;
-    gap: 0.25rem;
+    gap: 0.5rem;
+    padding: 1rem;
+    flex: 1;
+    overflow: hidden;
   }
 
   .latest-blog-marquee-title {
     font-size: 0.9rem;
     font-weight: 600;
     color: var(--text-color);
+    line-height: 1.3;
+  }
+
+  .latest-blog-marquee-description {
+    font-size: 0.8rem;
+    color: var(--soft-text-color);
+    line-height: 1.4;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
   }
 
   .latest-blog-marquee-date {
-    font-size: 0.75rem;
+    font-size: 0.7rem;
     color: var(--soft-text-color);
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+  }
+
+  .latest-blog-marquee-tags {
+    display: flex;
+    gap: 0.4rem;
+    flex-wrap: wrap;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    margin-top: auto;
+  }
+
+  .latest-blog-marquee-tag {
+    font-size: 0.65rem;
+    padding: 0.25rem 0.5rem;
+    background: var(--surface-border);
+    color: var(--soft-text-color);
+    border-radius: 0.25rem;
+    white-space: nowrap;
   }
 
   @keyframes latest-blog-marquee-scroll {
