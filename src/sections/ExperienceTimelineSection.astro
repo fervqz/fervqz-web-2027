@@ -5,7 +5,6 @@ import Container from "../components/ui/Container.astro";
 import Heading from "../components/ui/Heading.astro";
 import Sticker from "../components/sticker/Sticker.astro";
 import Text from "../components/ui/Text.astro";
-import experienceSticker from "../assets/img/sticker-test-4.svg";
 
 interface Props {
   experience: ExperienceEntry[];
@@ -47,11 +46,11 @@ const experience = rawExperience.filter((entry) => entry.show);
             </div>
 
             <div class="experience-timeline-card-wrap relative">
-              <div class="size-38 experience-timeline-sticker hidden md:flex justify-center items-center">
+              <div class="size-32 md:size-44 experience-timeline-sticker flex justify-center items-center">
                 <Sticker
-                  src={experienceSticker}
+                  src={entry.icon as unknown as ImageMetadata}
                   alt=""
-                  width={92}
+                  width={entry.iconSize}
                   loading="lazy"
                 />
               </div>
@@ -131,10 +130,11 @@ const experience = rawExperience.filter((entry) => entry.show);
 
   .experience-timeline-sticker {
     position: absolute;
-    top: 50%;
-    z-index: 5;
+    right: 0;
+    bottom: 0;
+    z-index: 10;
     opacity: 0;
-    transform: translateY(-50%) rotate(-10deg);
+    transform: translate(14%, 30%) rotate(-10deg);
   }
 
   .experience-timeline-dot {
@@ -160,6 +160,14 @@ const experience = rawExperience.filter((entry) => entry.show);
     .experience-timeline-item .experience-timeline-card-wrap,
     .experience-timeline-item .experience-timeline-label-wrap {
       grid-row: 1;
+    }
+
+    .experience-timeline-sticker {
+      top: 50%;
+      right: auto;
+      bottom: auto;
+      z-index: 5;
+      transform: translateY(-50%) rotate(-10deg);
     }
 
     .experience-timeline-item:nth-child(odd) .experience-timeline-card-wrap {
@@ -213,16 +221,23 @@ const experience = rawExperience.filter((entry) => entry.show);
     transform: translate3d(0, 0, 0) scale(1);
   }
 
-  .experience-timeline-item[data-in-view="true"]:nth-child(odd)
-    .experience-timeline-sticker {
+  .experience-timeline-item[data-in-view="true"] .experience-timeline-sticker {
     opacity: 1;
-    transform: translate(0, -50%) rotate(-10deg);
+    transform: translate(8%, 24%) rotate(-10deg);
   }
 
-  .experience-timeline-item[data-in-view="true"]:nth-child(even)
-    .experience-timeline-sticker {
-    opacity: 1;
-    transform: translate(0, -50%) rotate(10deg);
+  @media (min-width: 48rem) {
+    .experience-timeline-item[data-in-view="true"]:nth-child(odd)
+      .experience-timeline-sticker {
+      opacity: 1;
+      transform: translate(0, -50%) rotate(-10deg);
+    }
+
+    .experience-timeline-item[data-in-view="true"]:nth-child(even)
+      .experience-timeline-sticker {
+      opacity: 1;
+      transform: translate(0, -50%) rotate(10deg);
+    }
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -236,12 +251,18 @@ const experience = rawExperience.filter((entry) => entry.show);
       transition: none;
     }
 
-    .experience-timeline-item:nth-child(odd) .experience-timeline-sticker {
-      transform: translate(0, -50%) rotate(-10deg);
+    .experience-timeline-sticker {
+      transform: translate(8%, 24%) rotate(-10deg);
     }
 
-    .experience-timeline-item:nth-child(even) .experience-timeline-sticker {
-      transform: translate(0, -50%) rotate(10deg);
+    @media (min-width: 48rem) {
+      .experience-timeline-item:nth-child(odd) .experience-timeline-sticker {
+        transform: translate(0, -50%) rotate(-10deg);
+      }
+
+      .experience-timeline-item:nth-child(even) .experience-timeline-sticker {
+        transform: translate(0, -50%) rotate(10deg);
+      }
     }
   }
 </style>

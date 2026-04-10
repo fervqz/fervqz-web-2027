@@ -1,3 +1,12 @@
+import type { SvgComponent } from "astro/types";
+import sngularLogoAsset from "../assets/svg/sngular.svg";
+import knackLogoAsset from "../assets/svg/knack.svg";
+import freelancerLogoAsset from "../assets/svg/freelancer.svg";
+import softecLogoAsset from "../assets/svg/softec.svg";
+import diatomeaLogoAsset from "../assets/svg/diatomea.svg";
+import funiberLogoAsset from "../assets/svg/funiber.svg";
+
+
 export type ExperienceEntry = {
     show: boolean;
     role: string;
@@ -8,6 +17,8 @@ export type ExperienceEntry = {
     highlights: string[];
     stack: string[];
     type: "full-time" | "part-time" | "freelance";
+    icon: SvgComponent;
+    iconSize: number;
 };
 
 export const experience: ExperienceEntry[] = [
@@ -26,6 +37,8 @@ export const experience: ExperienceEntry[] = [
             "Established component library used across 3 product teams",
         ],
         stack: ["React", "TypeScript", "Vite", "Tailwind CSS", "GraphQL"],
+        icon: sngularLogoAsset,
+        iconSize: 200,
     },
     {
         show: true,
@@ -42,6 +55,8 @@ export const experience: ExperienceEntry[] = [
             "Migrated legacy jQuery codebase to Vue 3",
         ],
         stack: ["Vue 3", "Nuxt", "SCSS", "Storybook", "Figma"],
+        icon: knackLogoAsset,
+        iconSize: 200,
     },
     {
         show: true,
@@ -58,6 +73,8 @@ export const experience: ExperienceEntry[] = [
             "Improved Lighthouse performance score from 54 to 91",
         ],
         stack: ["D3.js", "React", "Node.js", "PostgreSQL"],
+        icon: freelancerLogoAsset,
+        iconSize: 90,
     },
     {
         show: true,
@@ -74,6 +91,8 @@ export const experience: ExperienceEntry[] = [
             "Grew referral revenue by building a recurring client base",
         ],
         stack: ["WordPress", "Shopify", "JavaScript", "PHP", "CSS"],
+        icon: softecLogoAsset,
+        iconSize: 150,
     },
     {
         show: true,
@@ -90,6 +109,8 @@ export const experience: ExperienceEntry[] = [
             "Grew referral revenue by building a recurring client base",
         ],
         stack: ["WordPress", "Shopify", "JavaScript", "PHP", "CSS"],
+        icon: diatomeaLogoAsset,
+        iconSize: 100,
     },
     {
         show: false,
@@ -106,5 +127,7 @@ export const experience: ExperienceEntry[] = [
             "Grew referral revenue by building a recurring client base",
         ],
         stack: ["WordPress", "Shopify", "JavaScript", "PHP", "CSS"],
+        icon: funiberLogoAsset,
+        iconSize: 40,
     },
 ];
