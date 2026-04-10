@@ -30,11 +30,13 @@ const images = [
     </div>
   </Container>
 
-  <div class="projects-showcase-grid">
+  <div
+    class="grid grid-cols-3 gap-6 max-md:mx-auto max-md:max-w-md max-md:grid-cols-1"
+  >
     {
       images.map((img) => (
         <div
-          class="projects-showcase-item"
+          class="overflow-hidden opacity-0 transform-[translateY(48px)_rotate(0deg)] transition-[opacity,transform] duration-600 ease-[cubic-bezier(0.22,1,0.36,1)] delay-(--item-delay) will-change-[opacity,transform] data-[in-view=true]:opacity-100 data-[in-view=true]:transform-[translateY(0)_rotate(var(--item-rotation))] motion-reduce:opacity-100 motion-reduce:transform-none motion-reduce:transition-none"
           style={`--item-delay: ${img.delay}; --item-rotation: ${img.rotation};`}
           data-projects-showcase-item
         >
@@ -44,7 +46,7 @@ const images = [
             width={600}
             loading="lazy"
             decoding="async"
-            class="projects-showcase-img"
+            class="block h-auto w-full object-cover"
           />
         </div>
       ))
@@ -78,50 +80,3 @@ const images = [
       .forEach((el) => el.setAttribute("data-in-view", "true"));
   }
 </script>
-
-<style>
-  .projects-showcase-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1.5rem;
-  }
-
-  @media (max-width: 48rem) {
-    .projects-showcase-grid {
-      grid-template-columns: 1fr;
-      max-width: 28rem;
-      margin: 0 auto;
-    }
-  }
-
-  .projects-showcase-item {
-    overflow: hidden;
-    opacity: 0;
-    transform: translateY(48px) rotate(0deg);
-    transition:
-      opacity 600ms cubic-bezier(0.22, 1, 0.36, 1),
-      transform 600ms cubic-bezier(0.22, 1, 0.36, 1);
-    transition-delay: var(--item-delay);
-    will-change: opacity, transform;
-  }
-
-  .projects-showcase-item[data-in-view="true"] {
-    opacity: 1;
-    transform: translateY(0) rotate(var(--item-rotation));
-  }
-
-  .projects-showcase-img {
-    width: 100%;
-    height: auto;
-    display: block;
-    object-fit: cover;
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .projects-showcase-item {
-      opacity: 1;
-      transform: none;
-      transition: none;
-    }
-  }
-</style>
