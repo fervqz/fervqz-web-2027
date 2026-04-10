@@ -29,7 +29,7 @@ const experience = rawExperience.filter((entry) => entry.show);
       {
         experience.map((entry, i) => (
           <li
-            class="experience-timeline-item relative pl-12 md:grid md:grid-cols-[minmax(0,1fr)_4rem_minmax(0,1fr)] md:items-start"
+            class="experience-timeline-item relative pl-12 md:grid md:grid-cols-[minmax(0,1fr)_4rem_minmax(0,1fr)] md:items-start md:pl-0 md:[&:nth-child(odd)_.experience-timeline-card-wrap]:col-1 md:[&:nth-child(even)_.experience-timeline-card-wrap]:col-3 md:[&:nth-child(odd)_.experience-timeline-label-wrap]:col-3 md:[&:nth-child(odd)_.experience-timeline-label-wrap]:justify-start md:[&:nth-child(even)_.experience-timeline-label-wrap]:col-1 md:[&:nth-child(even)_.experience-timeline-label-wrap]:justify-end md:[&:nth-child(even)_.experience-timeline-label-wrap]:text-right md:[&:nth-child(odd)_.experience-timeline-sticker]:right-[calc(100%+1rem)] md:[&:nth-child(even)_.experience-timeline-sticker]:left-[calc(100%+1rem)]"
             style={`--timeline-delay: ${i * 120}ms;`}
             data-timeline-item
           >
@@ -39,14 +39,14 @@ const experience = rawExperience.filter((entry) => entry.show);
               </span>
             </div>
 
-            <div class="experience-timeline-label experience-timeline-label-wrap mb-3 flex items-start md:mb-0 md:pt-6">
+            <div class="experience-timeline-label experience-timeline-label-wrap mb-3 flex items-start md:row-start-1 md:mb-0 md:pt-6">
               <span class="text-xs font-semibold uppercase tracking-widest text-(--soft-text-color)">
                 {entry.period}
               </span>
             </div>
 
-            <div class="experience-timeline-card-wrap relative">
-              <div class="size-32 md:size-44 experience-timeline-sticker flex justify-center items-center">
+            <div class="experience-timeline-card-wrap relative md:row-start-1">
+              <div class="experience-timeline-sticker absolute right-0 bottom-0 z-10 flex size-32 items-center justify-center md:top-1/2 md:right-auto md:bottom-auto md:z-5 md:size-44">
                 <Sticker
                   src={entry.icon as unknown as ImageMetadata}
                   alt=""
@@ -129,10 +129,6 @@ const experience = rawExperience.filter((entry) => entry.show);
   }
 
   .experience-timeline-sticker {
-    position: absolute;
-    right: 0;
-    bottom: 0;
-    z-index: 10;
     opacity: 0;
     transform: translate(14%, 30%) rotate(-10deg);
   }
@@ -140,7 +136,6 @@ const experience = rawExperience.filter((entry) => entry.show);
   .experience-timeline-dot {
     opacity: 0;
     transform: scale(0.72);
-    border-radius: 9999px;
   }
 
   .experience-timeline-label {
@@ -149,54 +144,12 @@ const experience = rawExperience.filter((entry) => entry.show);
   }
 
   @media (min-width: 48rem) {
-    .experience-timeline-item {
-      padding-left: 0;
-    }
-
-    .experience-timeline-item .experience-timeline-dot-wrap {
-      grid-row: 1;
-    }
-
-    .experience-timeline-item .experience-timeline-card-wrap,
-    .experience-timeline-item .experience-timeline-label-wrap {
-      grid-row: 1;
-    }
-
     .experience-timeline-sticker {
-      top: 50%;
-      right: auto;
-      bottom: auto;
-      z-index: 5;
       transform: translateY(-50%) rotate(-10deg);
     }
 
-    .experience-timeline-item:nth-child(odd) .experience-timeline-card-wrap {
-      grid-column: 1;
-    }
-
     .experience-timeline-item:nth-child(odd) .experience-timeline-sticker {
-      right: calc(100% + 1rem);
-      transform: translate(-28px, -50%) rotate(-10deg);
-    }
-
-    .experience-timeline-item:nth-child(odd) .experience-timeline-label-wrap {
-      grid-column: 3;
-      justify-content: flex-start;
-    }
-
-    .experience-timeline-item:nth-child(even) .experience-timeline-card-wrap {
-      grid-column: 3;
-    }
-
-    .experience-timeline-item:nth-child(even) .experience-timeline-sticker {
-      left: calc(100% + 1rem);
-      transform: translate(28px, -50%) rotate(10deg);
-    }
-
-    .experience-timeline-item:nth-child(even) .experience-timeline-label-wrap {
-      grid-column: 1;
-      justify-content: flex-end;
-      text-align: right;
+      transform: translateY(-50%) rotate(10deg);
     }
 
     .experience-timeline-item:nth-child(odd) .experience-timeline-card,

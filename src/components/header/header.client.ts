@@ -1,7 +1,9 @@
 const HEADER_RESIZE_LISTENER_FLAG = "__headerResizeListenerAdded";
+const HEADER_SCROLL_LISTENER_FLAG = "__headerScrollListenerAdded";
 
 type HeaderGlobal = typeof globalThis & {
     [HEADER_RESIZE_LISTENER_FLAG]?: boolean;
+    [HEADER_SCROLL_LISTENER_FLAG]?: boolean;
 };
 
 export const initHeaderInteractions = () => {
@@ -14,6 +16,9 @@ export const initHeaderInteractions = () => {
     const menuIcon = document.getElementById("mobile-menu-icon");
     const closeMenuLinks = Array.from(
         document.querySelectorAll<HTMLElement>("[data-mobile-menu-close]"),
+    );
+    const siteHeaders = Array.from(
+        document.querySelectorAll<HTMLElement>("[data-site-header]"),
     );
 
     const getTheme = () => root.dataset.theme || "light";
@@ -45,6 +50,13 @@ export const initHeaderInteractions = () => {
         if (!menu || !menuButton || !menuIcon) return;
         menu.dataset.open = "true";
         menuButton.setAttribute("aria-expanded", "true");
+    };
+
+    const syncHeaderScrollState = () => {
+        const isScrolled = globalThis.scrollY > 0;
+        siteHeaders.forEach((header) => {
+            header.dataset.scrolled = isScrolled ? "true" : "false";
+        });
     };
 
     themeButtons.forEach((button) => {
@@ -91,6 +103,17 @@ export const initHeaderInteractions = () => {
                 }
             });
             headerGlobal[HEADER_RESIZE_LISTENER_FLAG] = true;
+        }
+    }
+
+    if (siteHeaders.length > 0) {
+        syncHeaderScrollState();
+        const headerGlobal = globalThis as HeaderGlobal;
+        if (!headerGlobal[HEADER_SCROLL_LISTENER_FLAG]) {
+            globalThis.addEventListener("scroll", syncHeaderScrollState, {
+                passive: true,
+            });
+            headerGlobal[HEADER_SCROLL_LISTENER_FLAG] = true;
         }
     }
 };

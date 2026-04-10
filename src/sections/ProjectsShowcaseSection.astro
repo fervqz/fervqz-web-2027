@@ -3,6 +3,7 @@ import { Image } from "astro:assets";
 import Container from "../components/ui/Container.astro";
 import Heading from "../components/ui/Heading.astro";
 import Section from "../components/ui/Section.astro";
+import { Icon } from "astro-icon/components";
 import project1 from "../assets/img/project-1.png";
 import project2 from "../assets/img/project-2.png";
 import project3 from "../assets/img/project-3.png";
@@ -23,9 +24,11 @@ const images = [
     <div class="mt-10 flex justify-center">
       <a
         href="/projects"
-        class="inline-flex items-center justify-center border border-(--button-border) bg-(--button-bg) px-4 py-2 text-sm font-semibold text-(--button-text) transition-colors hover:bg-(--button-hover-bg) hover:text-(--button-hover-text)"
+        class="inline-flex items-center justify-center border border-(--button-border) bg-(--button-bg) px-6 py-3 text-sm font-semibold text-(--button-text) transition-[color,background-color,transform] duration-250 ease-out will-change-transform hover:bg-(--button-hover-bg) hover:text-(--button-hover-text)"
+        data-magnetic-button
       >
         Explore Projects Gallery
+        <Icon name="lucide:arrow-up-right" class="ml-2 size-4" />
       </a>
     </div>
   </Container>
@@ -55,6 +58,75 @@ const images = [
 </Section>
 
 <script>
+  const MAGNETIC_ACTIVATION_AREA = 200;
+  const MAGNETIC_STRENGTH = 0.22;
+  const MAGNETIC_MAX_OFFSET = 50;
+
+  const clamp = (value: number, min: number, max: number) =>
+    Math.min(max, Math.max(min, value));
+
+  const setupMagneticButtons = () => {
+    if (typeof window === "undefined") return;
+    if (!window.matchMedia("(pointer: fine)").matches) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    document
+      .querySelectorAll<HTMLElement>("[data-magnetic-button]")
+      .forEach((button) => {
+        if (button.dataset.magneticInitialized === "true") return;
+        button.dataset.magneticInitialized = "true";
+
+        let pointerInsideActivationArea = false;
+
+        const reset = () => {
+          pointerInsideActivationArea = false;
+          button.style.transform = "translate3d(0, 0, 0)";
+        };
+
+        const handlePointerMove = (event: PointerEvent) => {
+          const rect = button.getBoundingClientRect();
+          const expandedLeft = rect.left - MAGNETIC_ACTIVATION_AREA;
+          const expandedRight = rect.right + MAGNETIC_ACTIVATION_AREA;
+          const expandedTop = rect.top - MAGNETIC_ACTIVATION_AREA;
+          const expandedBottom = rect.bottom + MAGNETIC_ACTIVATION_AREA;
+
+          pointerInsideActivationArea =
+            event.clientX >= expandedLeft &&
+            event.clientX <= expandedRight &&
+            event.clientY >= expandedTop &&
+            event.clientY <= expandedBottom;
+
+          if (!pointerInsideActivationArea) {
+            button.style.transform = "translate3d(0, 0, 0)";
+            return;
+          }
+
+          const centerX = rect.left + rect.width / 2;
+          const centerY = rect.top + rect.height / 2;
+          const offsetX = clamp(
+            (event.clientX - centerX) * MAGNETIC_STRENGTH,
+            -MAGNETIC_MAX_OFFSET,
+            MAGNETIC_MAX_OFFSET,
+          );
+          const offsetY = clamp(
+            (event.clientY - centerY) * MAGNETIC_STRENGTH,
+            -MAGNETIC_MAX_OFFSET,
+            MAGNETIC_MAX_OFFSET,
+          );
+
+          button.style.transform = `translate3d(${offsetX}px, ${offsetY}px, 0)`;
+        };
+
+        globalThis.addEventListener("pointermove", handlePointerMove, {
+          passive: true,
+        });
+        button.addEventListener("pointerleave", reset);
+        globalThis.addEventListener("blur", reset);
+      });
+  };
+
+  setupMagneticButtons();
+
   if (
     typeof window !== "undefined" &&
     "IntersectionObserver" in window &&

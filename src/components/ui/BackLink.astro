@@ -12,6 +12,9 @@ const { href, ariaLabel = "Go back" } = Astro.props;
 
 <div class="relative h-8">
   <Link href={href} class="no-underline" aria-label={ariaLabel}>
-    <Icon name="lucide:arrow-left" class="absolute -left-1.5 size-8" />
+    <Icon
+      name="lucide:arrow-left"
+      class="absolute -left-1.5 size-8 text-slate-600 hover:text-black"
+    />
   </Link>
 </div>

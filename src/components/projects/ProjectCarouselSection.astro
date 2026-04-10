@@ -6,6 +6,7 @@ import Card from "../ui/Card.astro";
 import Badge from "../ui/Badge.astro";
 import Heading from "../ui/Heading.astro";
 import Text from "../ui/Text.astro";
+import Container from "../ui/Container.astro";
 
 interface Props {
   projects: Project[];
@@ -23,21 +24,13 @@ const actionButtonClass =
     data-project-carousel-shell
     style="--carousel-inline-start: max(1rem, calc((100vw - 56rem) / 2 + 1rem));"
   >
-    <button
-      type="button"
-      class="project-carousel-arrow project-carousel-arrow-left"
-      data-project-carousel-prev
-      aria-label="Scroll projects left"
-      hidden
-    >
-      <Icon name="lucide:chevron-left" size={18} />
-    </button>
-
     <div
-      class="project-carousel overflow-x-auto snap-x snap-mandatory"
+      class="project-carousel overflow-x-auto snap-x snap-mandatory [-ms-overflow-style:none] [scrollbar-width:none] scroll-pl-(--carousel-inline-start,1rem)"
       data-project-carousel
     >
-      <div class="project-carousel-track flex w-max gap-4 pb-4">
+      <div
+        class="project-carousel-track flex w-max gap-4 pb-4 pl-(--carousel-inline-start,1rem) pr-4 sm:pr-6"
+      >
         {
           projects.map((project) => (
             <Card
@@ -77,7 +70,7 @@ const actionButtonClass =
               <div class="relative z-10 mt-auto px-1 pt-2 pointer-events-none">
                 <div class={actionButtonClass}>
                   Explore{" "}
-                  <Icon name="lucide:arrow-right" class="ml-1" size={16} />
+                  <Icon name="lucide:arrow-up-right" class="ml-1" size={16} />
                 </div>
               </div>
             </Card>
@@ -86,15 +79,31 @@ const actionButtonClass =
       </div>
     </div>
 
-    <button
-      type="button"
-      class="project-carousel-arrow project-carousel-arrow-right"
-      data-project-carousel-next
-      aria-label="Scroll projects right"
-      hidden
-    >
-      <Icon name="lucide:chevron-right" size={18} />
-    </button>
+    <Container>
+      <div
+        class="project-carousel-controls mt-3 flex items-center justify-center md:justify-start gap-6 md:gap-4 px-4 md:px-0"
+      >
+        <button
+          type="button"
+          class="project-carousel-arrow inline-flex size-14 cursor-pointer items-center justify-center border border-black text-(--text-color) backdrop-blur transition-colors duration-180 disabled:opacity-40 enabled:hover:border-(--button-border) enabled:hover:bg-(--button-hover-bg) enabled:hover:text-(--button-hover-text)"
+          data-project-carousel-prev
+          aria-label="Scroll projects left"
+          hidden
+        >
+          <Icon name="lucide:chevron-left" size={20} />
+        </button>
+
+        <button
+          type="button"
+          class="project-carousel-arrow inline-flex size-14 cursor-pointer items-center justify-center border border-black text-(--text-color) backdrop-blur transition-colors duration-180 disabled:opacity-40 enabled:hover:border-(--button-border) enabled:hover:bg-(--button-hover-bg) enabled:hover:text-(--button-hover-text)"
+          data-project-carousel-next
+          aria-label="Scroll projects right"
+          hidden
+        >
+          <Icon name="lucide:chevron-right" size={20} />
+        </button>
+      </div>
+    </Container>
   </div>
 </div>
 
@@ -167,75 +176,7 @@ const actionButtonClass =
 </script>
 
 <style>
-  .project-carousel-shell {
-    --carousel-arrow-offset: 1.35rem;
-  }
-
-  .project-carousel {
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-    scroll-padding-left: var(--carousel-inline-start, 1rem);
-  }
-
   .project-carousel::-webkit-scrollbar {
     display: none;
-  }
-
-  .project-carousel-track {
-    padding-left: var(--carousel-inline-start, 1rem);
-    padding-right: 1rem;
-  }
-
-  .project-carousel-arrow {
-    position: absolute;
-    top: 50%;
-    z-index: 20;
-    display: inline-flex;
-    height: 3rem;
-    width: 3rem;
-    cursor: pointer;
-    transform: translateY(-50%);
-    align-items: center;
-    justify-content: center;
-    border: 1px solid var(--surface-border);
-    background: var(--surface-color);
-    color: var(--text-color);
-    backdrop-filter: blur(8px);
-    transition:
-      opacity 180ms ease,
-      border-color 180ms ease,
-      background-color 180ms ease,
-      color 180ms ease;
-  }
-
-  .project-carousel-arrow:disabled {
-    opacity: 0.35;
-    cursor: not-allowed;
-  }
-
-  .project-carousel-arrow:not(:disabled):hover {
-    border-color: var(--button-border);
-    background: var(--button-hover-bg);
-    color: var(--button-hover-text);
-  }
-
-  .project-carousel-arrow-left {
-    left: max(
-      0.25rem,
-      calc(var(--carousel-inline-start, 1rem) - var(--carousel-arrow-offset))
-    );
-  }
-
-  .project-carousel-arrow-right {
-    right: max(
-      0.25rem,
-      calc(var(--carousel-inline-start, 1rem) - var(--carousel-arrow-offset))
-    );
-  }
-
-  @media (min-width: 640px) {
-    .project-carousel-track {
-      padding-right: 1.5rem;
-    }
   }
 </style>
