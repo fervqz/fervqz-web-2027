@@ -1,0 +1,24 @@
+---
+import ProjectCarouselSection from "../components/projects/ProjectCarouselSection.astro";
+import Container from "../components/ui/Container.astro";
+import Heading from "../components/ui/Heading.astro";
+import Text from "../components/ui/Text.astro";
+import Section from "../components/ui/Section.astro";
+import { hardwareProjects } from "../lib/projects";
+---
+
+<Section variant="content">
+  <Container>
+    <div class="flex w-full flex-col gap-2">
+      <Heading as="h1" variant="section">Failed Projects</Heading>
+      <Text class="max-w-3xl">
+        Why would I show failed projects? Because <span
+          class="font-black underline decoration-2 decoration-wavy underline-offset-8 decoration-(--nav-link-active-color)"
+          >failure is the best master</span
+        >. Here are some projects that didn't go as planned, along with the
+        lessons I learned from them.
+      </Text>
+    </div>
+  </Container>
+  <ProjectCarouselSection projects={hardwareProjects} />
+</Section>

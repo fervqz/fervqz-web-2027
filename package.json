@@ -27,6 +27,7 @@
     "@fontsource-variable/jetbrains-mono": "5.2.8",
     "@fontsource-variable/zalando-sans": "5.2.1",
     "@fontsource/pangolin": "5.2.8",
+    "@google/model-viewer": "4.2.0",
     "@iconify-json/lucide": "1.2.100",
     "@tailwindcss/vite": "4.2.2",
     "astro": "6.1.1",

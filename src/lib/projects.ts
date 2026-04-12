@@ -1,15 +1,15 @@
 import type { ImageMetadata } from "astro";
 
-import sonoguides from "../assets/sonoguides.png";
-import f1lmlog from "../assets/f1lmlog-1.png";
-import fitbro from "../assets/fitbro.png";
-import clonify from "../assets/clonify.webp";
-import jas from "../assets/jas.webp";
-import dripper from "../assets/dripper.png";
-import drivingSimulator from "../assets/driving-simulator.png";
+import sonoguides from "../assets/img/projects/sonoguides.png";
+import f1lmlog from "../assets/img/projects/f1lmlog.png";
+import fitbro from "../assets/img/projects/fitbro.png";
+import clonify from "../assets/img/projects/clonify.webp";
+import jas from "../assets/img/projects/jas.webp";
+import v60Dryer from "../assets/img/projects/v60-dryer.png";
+import drivingSimulator from "../assets/img/projects/driving-simulator.png";
 
 export type ProjectAction = {
-    label: "Download" | "Visit" | "Visit landing";
+    label: string;
     href: string;
 };
 
@@ -174,15 +174,7 @@ export const softwareProjects: Project[] = [
             "The interaction model prioritizes one-tap starts and glanceable progress feedback.",
         ],
         actions: [
-            // TODO: Replace with real URL
-            { label: "Download", href: "https://example.com/mobile/focus-timer" },
-            // TODO: Replace with real URL
-            { label: "Visit", href: "https://example.com/mobile/focus-timer/docs" },
-            {
-                label: "Visit landing",
-                // TODO: Replace with real URL
-                href: "https://example.com/mobile/focus-timer/landing",
-            },
+            { label: "View on NPM ", href: "https://www.npmjs.com/package/@fervqz/just-a-stream" },
         ],
     },
     {
@@ -223,16 +215,16 @@ export const softwareProjects: Project[] = [
 
 export const hardwareProjects: Project[] = [
     {
-        slug: "v60-dripper",
-        name: "Coffee Dripper",
-        summary: "A dripper for a Hario V60 coffee maker.",
+        slug: "v60-dryer",
+        name: "V60 Dryer",
+        summary: "A dryer for a Hario V60 coffee maker.",
         stack: ["3D Printing", "Fusion 360"],
         stages: [
             { name: "Design", status: "completed" },
             { name: "Prototyping", status: "completed" },
             { name: "Available", status: "completed" },
         ],
-        image: dripper,
+        image: v60Dryer,
         imageAlt: "Operations dashboard preview",
         highlights: [
             "SLA heatmaps and incident drill-downs",
@@ -243,7 +235,9 @@ export const hardwareProjects: Project[] = [
             "This placeholder project simulates a dashboard environment where leadership and operations teams share a single source of operational truth.",
             "It prioritizes high signal density while preserving readability, using strong hierarchy and clear status semantics.",
         ],
-        actions: [],
+        actions: [
+            // { label: "View on Makerworld", href: "https://makerworld.com" },
+        ],
     },
     {
         slug: "driving-simulator",

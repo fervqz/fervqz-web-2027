@@ -20,6 +20,14 @@ const stagesArray = Array.isArray(stages)
 const currentIndex = stagesArray.findIndex(
   (stage) => stage.status === "current",
 );
+
+const allStagesCompleted =
+  stagesArray.length > 0 &&
+  stagesArray.every((stage) => stage.status === "completed");
+
+const connectorActiveUntil = allStagesCompleted
+  ? stagesArray.length - 1
+  : currentIndex;
 ---
 
 <div class:list={["my-10 w-full", className]}>
@@ -36,7 +44,8 @@ const currentIndex = stagesArray.findIndex(
           {stagesArray.map((stage, index) => {
             const isCompleted = stage.status === "completed";
             const isCurrent = stage.status === "current";
-            const isConnectorActive = currentIndex >= 0 && index < currentIndex;
+            const isConnectorActive =
+              connectorActiveUntil >= 0 && index < connectorActiveUntil;
 
             return (
               <li class="relative">

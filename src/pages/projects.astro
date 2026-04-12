@@ -4,9 +4,9 @@ import Footer from "../components/Footer.astro";
 import Header from "../components/Header.astro";
 import { SITE_TITLE } from "../consts";
 import AppLayout from "../layouts/AppLayout.astro";
-import ProjectsHeader from "../sections/ProjectsHeader.astro";
 import ProjectsSoftwareSection from "../sections/ProjectsSoftwareSection.astro";
 import ProjectsHardwareSection from "../sections/ProjectsHardwareSection.astro";
+import ProjectsFailsSection from "../sections/ProjectsFailsSection.astro";
 ---
 
 <AppLayout
@@ -17,9 +17,9 @@ import ProjectsHardwareSection from "../sections/ProjectsHardwareSection.astro";
   <DotsBackground />
   <main class="flex flex-col gap-12">
     <Header />
-    <!-- <ProjectsHeader /> -->
     <ProjectsSoftwareSection />
     <ProjectsHardwareSection />
+    <ProjectsFailsSection />
     <Footer />
   </main>
 </AppLayout>

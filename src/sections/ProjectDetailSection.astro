@@ -4,9 +4,8 @@ import ProjectHeader from "../components/projects/ProjectHeader.astro";
 import ProjectRecommendations from "../components/projects/ProjectRecommendations.astro";
 import BackLink from "../components/ui/BackLink.astro";
 import Container from "../components/ui/Container.astro";
-import Heading from "../components/ui/Heading.astro";
 import Section from "../components/ui/Section.astro";
-import Text from "../components/ui/Text.astro";
+import Typography from "../components/ui/Typography.astro";
 
 interface Props {
   project: Project;
@@ -22,20 +21,10 @@ const { project } = Astro.props;
       <ProjectHeader project={project} />
     </Section>
 
-    <Section>
-      <div class="space-y-4">
-        <Heading as="h2" variant="section">Motivation</Heading>
-        {project.details.map((paragraph) => <Text>{paragraph}</Text>)}
-      </div>
-    </Section>
-
-    <Section>
-      <div class="space-y-4">
-        <Heading as="h2" variant="section">Highlights</Heading>
-        <Text as="ul" tone="soft" class="list-disc space-y-2 pl-5 text-sm">
-          {project.highlights.map((highlight) => <li>{highlight}</li>)}
-        </Text>
-      </div>
+    <Section variant="content">
+      <Typography>
+        <slot />
+      </Typography>
     </Section>
 
     <ProjectRecommendations currentProjectSlug={project.slug} />

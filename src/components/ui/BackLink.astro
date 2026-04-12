@@ -10,11 +10,16 @@ interface Props {
 const { href, ariaLabel = "Go back" } = Astro.props;
 ---
 
-<div class="relative h-8">
-  <Link href={href} class="no-underline" aria-label={ariaLabel}>
+<div>
+  <Link
+    href={href}
+    class="project-carousel-arrow group inline-flex size-14 cursor-pointer items-center justify-center border border-(--button-border) no-underline backdrop-blur transition-colors duration-180 hover:bg-(--button-hover-bg)"
+    aria-label={ariaLabel}
+  >
     <Icon
-      name="lucide:arrow-left"
-      class="absolute -left-1.5 size-8 text-slate-600 hover:text-black"
+      name="lucide:chevron-left"
+      size={20}
+      class="text-(--text-color) transition-colors duration-180 group-hover:text-(--button-hover-text)"
     />
   </Link>
 </div>

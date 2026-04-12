@@ -1,4 +1,5 @@
 ---
+import { getCollection, render, type CollectionEntry } from "astro:content";
 import DotsBackground from "../../components/DotsBackground.astro";
 import Footer from "../../components/Footer.astro";
 import Header from "../../components/Header.astro";
@@ -12,27 +13,44 @@ import AppLayout from "../../layouts/AppLayout.astro";
 import ProjectDetailSection from "../../sections/ProjectDetailSection.astro";
 
 export async function getStaticPaths() {
-  return [
-    ...softwareProjects.map((project) => ({
+  const projects = [...softwareProjects, ...hardwareProjects];
+  const contentEntries = await getCollection("projects-content");
+  const toContentSlug = (id: string) =>
+    id
+      .replace(/\.(md|mdx)$/i, "")
+      .split("/")
+      .pop() ?? id;
+
+  const contentBySlug = new Map(
+    contentEntries.map((entry) => [toContentSlug(entry.id), entry]),
+  );
+
+  return projects.map((project) => {
+    const content = contentBySlug.get(project.slug);
+
+    if (!content) {
+      throw new Error(
+        `Missing MDX content for project \"${project.slug}\" in src/content/projects-content/`,
+      );
+    }
+
+    return {
       params: { project: project.slug },
       props: {
         project,
+        content,
       },
-    })),
-    ...hardwareProjects.map((project) => ({
-      params: { project: project.slug },
-      props: {
-        project,
-      },
-    })),
-  ];
+    };
+  });
 }
 
 type Props = {
   project: Project;
+  content: CollectionEntry<"projects-content">;
 };
 
-const { project } = Astro.props as Props;
+const { project, content } = Astro.props as Props;
+const { Content } = await render(content);
 ---
 
 <AppLayout
@@ -44,7 +62,9 @@ const { project } = Astro.props as Props;
   <DotsBackground />
   <main class="flex min-h-screen flex-col gap-12">
     <Header />
-    <ProjectDetailSection project={project} />
+    <ProjectDetailSection project={project}>
+      <Content />
+    </ProjectDetailSection>
     <Footer />
   </main>
 </AppLayout>
