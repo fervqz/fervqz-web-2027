@@ -11,12 +11,14 @@ import EditStickers from "./sticker/EditStickers.astro";
 ---
 
 <header
-  class="fixed inset-x-0 top-0 z-50 m-0 flex flex-row px-4 md:px-0"
+  class="fixed inset-x-0 top-0 z-50 m-0 flex flex-row px-4 pt-3 md:px-0"
   data-site-header
   data-scrolled="false"
 >
-  <Container class="relative">
-    <nav class="flex items-center justify-between gap-4">
+  <Container class="header-shell relative">
+    <nav
+      class="header-bar flex w-full items-center justify-between gap-4 rounded-none border border-transparent bg-transparent px-4 py-3 shadow-none md:px-5"
+    >
       <a href="/" class="site-brand flex items-center gap-2">
         <Sticker src={logo} alt="logo" width={50} draggable={false} />
         <span class="text-2xl font-black font-[JetBrains Mono]">Fervqz</span>
@@ -31,7 +33,14 @@ import EditStickers from "./sticker/EditStickers.astro";
         <div class="internal-links hidden items-center gap-1 md:flex">
           {
             HEADER_NAV_LINKS.map((link) => (
-              <HeaderLink href={link.href}>{link.label}</HeaderLink>
+              <HeaderLink
+                href={link.href}
+                data-contact-link={
+                  link.href === "/contact" ? "true" : undefined
+                }
+              >
+                {link.label}
+              </HeaderLink>
             ))
           }
         </div>
@@ -62,7 +71,7 @@ import EditStickers from "./sticker/EditStickers.astro";
 
     <div
       id="mobile-menu"
-      class="absolute inset-x-0 top-full z-50 mt-2 overflow-hidden border border-(--button-border) bg-white p-3 shadow-lg transition-all duration-250 ease-out md:hidden"
+      class="absolute inset-x-0 top-full z-50 mt-2 overflow-hidden rounded-3xl border border-(--button-border) bg-white/95 p-3 shadow-lg transition-all duration-250 ease-out md:hidden"
       data-open="false"
     >
       <div class="flex flex-col">
@@ -98,27 +107,70 @@ import EditStickers from "./sticker/EditStickers.astro";
 
 <style>
   [data-site-header] {
-    padding-block: 0.5rem;
-    border-bottom: 1px solid transparent;
-    background-color: transparent;
     transition:
       padding-block 220ms ease,
-      background-color 220ms ease,
-      backdrop-filter 220ms ease,
-      -webkit-backdrop-filter 220ms ease,
-      border-color 220ms ease;
+      top 220ms ease,
+      transform 220ms ease;
   }
 
   [data-site-header][data-scrolled="true"] {
-    padding-block: 0.05rem;
+    top: 0.5rem;
+    padding-block: 0;
+  }
+
+  .header-shell {
+    transition: transform 220ms ease;
+  }
+
+  .header-bar {
+    transition:
+      padding 220ms ease,
+      border-color 220ms ease,
+      border-radius 220ms ease,
+      background-color 220ms ease,
+      box-shadow 220ms ease,
+      backdrop-filter 220ms ease,
+      -webkit-backdrop-filter 220ms ease,
+      transform 220ms ease;
+  }
+
+  [data-contact-link="true"] {
+    border: 1px solid transparent;
+    border-radius: 9999px;
+    transition:
+      padding 220ms ease,
+      border-color 220ms ease,
+      background-color 220ms ease,
+      box-shadow 220ms ease,
+      color 220ms ease;
+  }
+
+  [data-site-header][data-scrolled="true"] .header-bar {
     border-color: var(--surface-border);
+    border-radius: 10rem;
     background-color: color-mix(
       in oklab,
       var(--surface-color) 78%,
       transparent
     );
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
+    box-shadow: 0 18px 40px
+      color-mix(in oklab, var(--surface-color) 40%, transparent);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    transform: scale(0.985);
+  }
+
+  [data-site-header][data-scrolled="true"] [data-contact-link="true"] {
+    padding: 0.6rem 1rem;
+    border-color: color-mix(in oklab, var(--nav-link-color) 16%, transparent);
+    background-color: black;
+    color: white;
+    box-shadow: 0 10px 24px
+      color-mix(in oklab, var(--surface-color) 28%, transparent);
+  }
+
+  [data-site-header][data-scrolled="true"] [data-contact-link="true"]:hover {
+    background: rgb(34, 34, 34);
   }
 
   .site-brand {
@@ -196,6 +248,8 @@ import EditStickers from "./sticker/EditStickers.astro";
     visibility: hidden;
     max-height: 0;
     pointer-events: none;
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
     transition:
       opacity 220ms ease,
       transform 220ms ease,

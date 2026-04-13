@@ -9,32 +9,10 @@ import ModelViewer from "../../components/ui/ModelViewer.astro";
 import v60DryerFusion from "../../assets/img/projects/v60-dryer-fusion.png";
 import v60DryerSketch from "../../assets/img/projects/v60-dryer-sketch.jpg";
 import v60DryerPoster from "../../assets/img/projects/v60-dryer-poster.png";
-import PLACEHOLDER from "../../assets/img/placeholder.webp";
 
 ## Motivation
 
 I really like coffee... a lot. I have been brewing with a V60 dryer for years, and always have the same problem: where do I put the brewer when I've just finished brewing my coffee and the filter isn't dry yet? A simple question with a not-so-simple answer.
-
-{/* If I put it in the counter it staines the surface, and if I put it in the sink it can get damage by kitchen stuff. I wanted a dedicated place to put the dryer that was both functional and aesthetically pleasing. */}
-
-<div class="px-6 py-22 flex flex-row gap-6">
-  <div class="flex-1 text-center space-y-4">
-    <Image
-      src={PLACEHOLDER}
-      alt="Solving the problem with a mug"
-      class="aspect-square object-cover border border-slate-300"
-    />
-    <p class="text-sm">Solving the problem with a mug</p>
-  </div>
-  <div class="flex-1 text-center space-y-4">
-    <Image
-      src={PLACEHOLDER}
-      alt="Using a napkin to absorb the spills"
-      class="aspect-square object-cover"
-    />
-    <p class="text-sm">Using a napkin to absorb the spills</p>
-  </div>
-</div>
 
 ## Inspiration
 
@@ -66,7 +44,7 @@ This may sound like a lot of work just for a coffee dryer, but I knew this was g
 I looked at how I was handling the problem and how I could solve it right away. The first thing I used was another mug.
 However, I didn't want to use an extra mug just for that; at least I had a starting point.
 
-I designed a cylinder in Fusion 360 with the dimensions of the V60's base—problem solved, right? Not quite in an aesthetically pleasing way. From this first design, I iterated and tried a couple of variants until I came across the final version: an aesthetically pleasing, functional, and 3D-printable design that I'm really happy with.
+I designed a cylinder in Fusion 360 with the dimensions of the V60's base, problem solved, right? Not quite in an aesthetically pleasing way. From this first design, I iterated and tried a couple of variants until I came across the final version: an aesthetically pleasing, functional, and 3D-printable design that I'm really happy with.
 
 <div class="mx-6 mt-22 mb-12 space-y-4 text-center">
   <ModelViewer
@@ -74,9 +52,9 @@ I designed a cylinder in Fusion 360 with the dimensions of the V60's base—prob
     alt="Interactive 3D model of the V60 dryer holder"
     src="/3d-models/v60-dryer-3d.glb"
     poster={v60DryerPoster.src}
-    shadow-intensity="1"
-    shadow-softness="1"
-    exposure="1"
+    shadow-intensity={1}
+    shadow-softness={1}
+    exposure={0.8}
     environment-image="neutral"
     touch-action="pan-y"
     ar

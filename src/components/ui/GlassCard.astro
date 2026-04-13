@@ -1,0 +1,33 @@
+---
+import type { HTMLAttributes } from "astro/types";
+
+type GlassCardTag = "article" | "aside" | "div" | "section";
+
+interface Props extends HTMLAttributes<"div"> {
+  as?: GlassCardTag;
+}
+
+const { as = "div", class: className, ...props } = Astro.props;
+
+const Tag = as;
+---
+
+<Tag
+  class:list={[
+    "glass-card border border-(--surface-border) bg-(--surface-color)/78 shadow-none",
+    "rounded-[1.75rem] p-5 md:p-6",
+    className,
+  ]}
+  {...props}
+>
+  <slot />
+</Tag>
+
+<style>
+  .glass-card {
+    box-shadow: 0 18px 40px
+      color-mix(in oklab, var(--surface-color) 40%, transparent);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+  }
+</style>
