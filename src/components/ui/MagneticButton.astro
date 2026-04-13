@@ -1,0 +1,163 @@
+---
+import type { HTMLAttributes } from "astro/types";
+
+interface Props extends HTMLAttributes<"a"> {
+  activationArea?: number;
+  magneticStrength?: number;
+  maxOffset?: number;
+}
+
+const {
+  class: className,
+  activationArea = 200,
+  magneticStrength = 0.22,
+  maxOffset = 50,
+  ...props
+} = Astro.props;
+---
+
+<a
+  class:list={[
+    "inline-flex items-center justify-center border border-(--button-border) bg-(--button-bg) px-4 py-2 text-sm font-semibold text-(--button-text) no-underline transition-[color,background-color,transform] duration-250 ease-out will-change-transform hover:bg-(--button-hover-bg) hover:text-(--button-hover-text)",
+    className,
+  ]}
+  data-magnetic-button
+  data-magnetic-activation-area={String(activationArea)}
+  data-magnetic-strength={String(magneticStrength)}
+  data-magnetic-max-offset={String(maxOffset)}
+  {...props}
+>
+  <slot />
+</a>
+
+<script>
+  type MagneticButtonWindow = Window & {
+    __magneticButtonsInitialized?: boolean;
+    __magneticButtonsMoveListener?: (event: PointerEvent) => void;
+    __magneticButtonsBlurListener?: () => void;
+    __magneticButtonsAfterSwapListener?: () => void;
+  };
+
+  const clamp = (value: number, min: number, max: number) =>
+    Math.min(max, Math.max(min, value));
+
+  const resetButton = (button: HTMLElement) => {
+    button.style.transform = "translate3d(0, 0, 0)";
+  };
+
+  const shouldEnableMagneticEffect = () => {
+    if (typeof window === "undefined") return false;
+    if (!window.matchMedia("(pointer: fine)").matches) return false;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      return false;
+    }
+    return true;
+  };
+
+  const getNumberDatasetValue = (
+    button: HTMLElement,
+    key: "magneticActivationArea" | "magneticStrength" | "magneticMaxOffset",
+    fallback: number,
+  ) => {
+    const value = Number(button.dataset[key]);
+    return Number.isFinite(value) ? value : fallback;
+  };
+
+  const setupMagneticButtons = () => {
+    if (typeof window === "undefined") return;
+
+    const magneticButtons = Array.from(
+      document.querySelectorAll<HTMLElement>("[data-magnetic-button]"),
+    );
+
+    magneticButtons.forEach((button) => {
+      if (button.dataset.magneticInitialized === "true") return;
+      button.dataset.magneticInitialized = "true";
+      button.addEventListener("pointerleave", () => resetButton(button));
+    });
+
+    const magneticWindow = window as MagneticButtonWindow;
+
+    if (magneticWindow.__magneticButtonsInitialized) return;
+
+    const moveListener = (event: PointerEvent) => {
+      const enabled = shouldEnableMagneticEffect();
+
+      document
+        .querySelectorAll<HTMLElement>("[data-magnetic-button]")
+        .forEach((button) => {
+          if (!enabled) {
+            resetButton(button);
+            return;
+          }
+
+          const activationArea = getNumberDatasetValue(
+            button,
+            "magneticActivationArea",
+            200,
+          );
+          const magneticStrength = getNumberDatasetValue(
+            button,
+            "magneticStrength",
+            0.22,
+          );
+          const maxOffset = getNumberDatasetValue(
+            button,
+            "magneticMaxOffset",
+            50,
+          );
+
+          const rect = button.getBoundingClientRect();
+          const expandedLeft = rect.left - activationArea;
+          const expandedRight = rect.right + activationArea;
+          const expandedTop = rect.top - activationArea;
+          const expandedBottom = rect.bottom + activationArea;
+
+          const pointerInsideActivationArea =
+            event.clientX >= expandedLeft &&
+            event.clientX <= expandedRight &&
+            event.clientY >= expandedTop &&
+            event.clientY <= expandedBottom;
+
+          if (!pointerInsideActivationArea) {
+            resetButton(button);
+            return;
+          }
+
+          const centerX = rect.left + rect.width / 2;
+          const centerY = rect.top + rect.height / 2;
+          const offsetX = clamp(
+            (event.clientX - centerX) * magneticStrength,
+            -maxOffset,
+            maxOffset,
+          );
+          const offsetY = clamp(
+            (event.clientY - centerY) * magneticStrength,
+            -maxOffset,
+            maxOffset,
+          );
+
+          button.style.transform = `translate3d(${offsetX}px, ${offsetY}px, 0)`;
+        });
+    };
+
+    const blurListener = () => {
+      document
+        .querySelectorAll<HTMLElement>("[data-magnetic-button]")
+        .forEach(resetButton);
+    };
+
+    const afterSwapListener = () => setupMagneticButtons();
+
+    globalThis.addEventListener("pointermove", moveListener, { passive: true });
+    globalThis.addEventListener("blur", blurListener);
+    document.addEventListener("astro:after-swap", afterSwapListener);
+
+    magneticWindow.__magneticButtonsMoveListener = moveListener;
+    magneticWindow.__magneticButtonsBlurListener = blurListener;
+    magneticWindow.__magneticButtonsAfterSwapListener = afterSwapListener;
+    magneticWindow.__magneticButtonsInitialized = true;
+  };
+
+  setupMagneticButtons();
+</script>

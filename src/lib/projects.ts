@@ -236,7 +236,7 @@ export const hardwareProjects: Project[] = [
             "It prioritizes high signal density while preserving readability, using strong hierarchy and clear status semantics.",
         ],
         actions: [
-            // { label: "View on Makerworld", href: "https://makerworld.com" },
+            { label: "View on Makerworld", href: "https://makerworld.com/es/models/2658528-v60-brewer-dryer#profileId-2940231" },
         ],
     },
     {
