@@ -108,3 +108,15 @@ const {
   </main>
   <Footer />
 </AppLayout>
+
+<script>
+  const refreshInterval = 500; // 1 second
+  const SEPARATOR = "    ";
+  const fullString = document.title + SEPARATOR;
+  let offset = 0;
+
+  setInterval(() => {
+    offset = (offset + 1) % fullString.length;
+    document.title = fullString.slice(offset) + fullString.slice(0, offset);
+  }, refreshInterval);
+</script>

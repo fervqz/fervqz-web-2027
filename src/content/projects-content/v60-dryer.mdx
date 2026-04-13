@@ -9,6 +9,7 @@ import ModelViewer from "../../components/ui/ModelViewer.astro";
 import v60DryerFusion from "../../assets/img/projects/v60-dryer-fusion.png";
 import v60DryerSketch from "../../assets/img/projects/v60-dryer-sketch.jpg";
 import v60DryerPoster from "../../assets/img/projects/v60-dryer-poster.png";
+import PLACEHOLDER from "../../assets/img/placeholder.webp";
 
 ## Motivation
 
@@ -19,19 +20,19 @@ I really like coffee... a lot. I have been brewing with a V60 dryer for years, a
 <div class="px-6 py-22 flex flex-row gap-6">
   <div class="flex-1 text-center space-y-4">
     <Image
-      src={v60DryerSketch}
-      alt="Early sketch of V60 coffee dryer holder"
+      src={PLACEHOLDER}
+      alt="Solving the problem with a mug"
       class="aspect-square object-cover border border-slate-300"
     />
-    <p class="text-sm">Early sketch</p>
+    <p class="text-sm">Solving the problem with a mug</p>
   </div>
   <div class="flex-1 text-center space-y-4">
     <Image
-      src={v60DryerFusion}
-      alt="3D printed V60 coffee dryer holder"
+      src={PLACEHOLDER}
+      alt="Using a napkin to absorb the spills"
       class="aspect-square object-cover"
     />
-    <p class="text-sm">Screenshot of the design in Fusion 360</p>
+    <p class="text-sm">Using a napkin to absorb the spills</p>
   </div>
 </div>
 
@@ -69,7 +70,7 @@ I designed a cylinder in Fusion 360 with the dimensions of the V60's base—prob
 
 <div class="mx-6 mt-22 mb-12 space-y-4 text-center">
   <ModelViewer
-    class="block w-full h-100 md:h-125 lg:h-150 border border-(--surface-border) bg-[#EEE] dark:bg-black select-none"
+    class="block w-full h-100 md:h-125 lg:h-150  select-none"
     alt="Interactive 3D model of the V60 dryer holder"
     src="/3d-models/v60-dryer-3d.glb"
     poster={v60DryerPoster.src}

@@ -14,9 +14,17 @@
     "check": "astro check",
     "lint": "astro check",
     "format": "prettier --write .",
-    "format:check": "prettier --check ."
+    "format:check": "prettier --check .",
+    "precommit:images": "lint-staged --concurrent false",
+    "prepare": "husky"
+  },
+  "lint-staged": {
+    "**/*.{jpg,jpeg,png,webp,avif,tif,tiff,heic,heif}": "node scripts/strip-image-metadata.mjs"
   },
   "devDependencies": {
+    "exiftool-vendored": "^35.16.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.4.0",
     "prettier": "3.3.3"
   },
   "dependencies": {
