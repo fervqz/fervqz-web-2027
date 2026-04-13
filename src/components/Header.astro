@@ -16,11 +16,14 @@ import EditStickers from "./sticker/EditStickers.astro";
   data-site-header
   data-scrolled="false"
 >
-  <Container class="header-shell relative">
+  <Container class="relative">
     <nav
-      class="header-bar flex w-full items-center justify-between gap-4 rounded-none border border-transparent bg-transparent px-0 py-3 shadow-none md:px-5"
+      class="header-bar flex w-full items-center justify-between gap-4 rounded-none border border-transparent bg-transparent px-0 py-3 shadow-none md:px-5 [transition-property:padding,border-color,border-radius,background-color,box-shadow,backdrop-filter,-webkit-backdrop-filter,transform] duration-220 ease"
     >
-      <a href="/" class="site-brand flex items-center gap-2">
+      <a
+        href="/"
+        class="site-brand flex items-center gap-2 origin-left transition-transform duration-220 ease scale-100 hover:scale-105"
+      >
         <Sticker src={logo} alt="logo" width={50} draggable={false} />
         <span class="text-2xl font-black font-[JetBrains Mono]">Fervqz</span>
       </a>
@@ -48,7 +51,7 @@ import EditStickers from "./sticker/EditStickers.astro";
 
         <button
           id="mobile-menu-toggle"
-          class="mobile-menu-toggle inline-flex h-9 w-9 items-center justify-center text-(--nav-link-color) md:hidden"
+          class="mobile-menu-toggle inline-flex h-9 w-9 items-center justify-center text-(--nav-link-color) md:hidden rotate-0 transition-[transform] duration-320 ease-[cubic-bezier(0.22,1,0.36,1)]"
           type="button"
           aria-label="Toggle navigation menu"
           aria-expanded="false"
@@ -56,13 +59,19 @@ import EditStickers from "./sticker/EditStickers.astro";
         >
           <span
             id="mobile-menu-icon"
-            class="mobile-menu-icon"
+            class="relative inline-flex h-6 w-6 items-center justify-center"
             aria-hidden="true"
           >
-            <span data-mobile-menu-icon="closed" class="mobile-menu-glyph">
+            <span
+              data-mobile-menu-icon="closed"
+              class="absolute inset-0 inline-flex items-center justify-center [transition:opacity_240ms_ease,transform_280ms_cubic-bezier(0.22,1,0.36,1)]"
+            >
               <Icon name="lucide:menu" class="size-6" />
             </span>
-            <span data-mobile-menu-icon="open" class="mobile-menu-glyph">
+            <span
+              data-mobile-menu-icon="open"
+              class="absolute inset-0 inline-flex items-center justify-center [transition:opacity_240ms_ease,transform_280ms_cubic-bezier(0.22,1,0.36,1)]"
+            >
               <Icon name="lucide:x" class="size-6" />
             </span>
           </span>
@@ -119,22 +128,6 @@ import EditStickers from "./sticker/EditStickers.astro";
     padding-block: 0;
   }
 
-  .header-shell {
-    transition: transform 220ms ease;
-  }
-
-  .header-bar {
-    transition:
-      padding 220ms ease,
-      border-color 220ms ease,
-      border-radius 220ms ease,
-      background-color 220ms ease,
-      box-shadow 220ms ease,
-      backdrop-filter 220ms ease,
-      -webkit-backdrop-filter 220ms ease,
-      transform 220ms ease;
-  }
-
   [data-contact-link="true"] {
     border: 1px solid transparent;
     border-radius: 9999px;
@@ -175,16 +168,6 @@ import EditStickers from "./sticker/EditStickers.astro";
     background: rgb(34, 34, 34);
   }
 
-  .site-brand {
-    transform: scale(1);
-    transform-origin: left center;
-    transition: transform 220ms ease;
-  }
-
-  .site-brand:hover {
-    transform: scale(1.05);
-  }
-
   [data-site-header][data-scrolled="true"] .site-brand {
     transform: scale(0.9);
   }
@@ -193,53 +176,26 @@ import EditStickers from "./sticker/EditStickers.astro";
     transform: scale(0.95);
   }
 
-  .mobile-menu-toggle {
-    transform: rotate(0deg);
-    transition: transform 320ms cubic-bezier(0.22, 1, 0.36, 1);
-  }
-
   .mobile-menu-toggle[aria-expanded="true"] {
     transform: rotate(-90deg);
   }
 
-  .mobile-menu-icon {
-    position: relative;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 1.5rem;
-    height: 1.5rem;
-  }
-
-  .mobile-menu-glyph {
-    position: absolute;
-    inset: 0;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    transition:
-      opacity 240ms ease,
-      transform 280ms cubic-bezier(0.22, 1, 0.36, 1);
-  }
-
-  .mobile-menu-glyph[data-mobile-menu-icon="closed"] {
+  [data-mobile-menu-icon="closed"] {
     opacity: 1;
     transform: rotate(0deg) scale(1);
   }
 
-  .mobile-menu-glyph[data-mobile-menu-icon="open"] {
+  [data-mobile-menu-icon="open"] {
     opacity: 0;
     transform: rotate(90deg) scale(0.7);
   }
 
-  .mobile-menu-toggle[aria-expanded="true"]
-    .mobile-menu-glyph[data-mobile-menu-icon="closed"] {
+  .mobile-menu-toggle[aria-expanded="true"] [data-mobile-menu-icon="closed"] {
     opacity: 0;
     transform: rotate(-90deg) scale(0.7);
   }
 
-  .mobile-menu-toggle[aria-expanded="true"]
-    .mobile-menu-glyph[data-mobile-menu-icon="open"] {
+  .mobile-menu-toggle[aria-expanded="true"] [data-mobile-menu-icon="open"] {
     opacity: 1;
     transform: rotate(0deg) scale(1);
   }

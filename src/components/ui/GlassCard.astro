@@ -14,7 +14,7 @@ const Tag = as;
 
 <Tag
   class:list={[
-    "glass-card border border-(--surface-border) bg-(--surface-color)/78 shadow-none",
+    "border border-(--surface-border) bg-(--surface-color)/78 shadow-[0_18px_40px_color-mix(in_oklab,var(--surface-color)_40%,transparent)] [backdrop-filter:blur(14px)] [-webkit-backdrop-filter:blur(14px)]",
     "rounded-[1.75rem] p-5 md:p-6",
     className,
   ]}
@@ -22,12 +22,3 @@ const Tag = as;
 >
   <slot />
 </Tag>
-
-<style>
-  .glass-card {
-    box-shadow: 0 18px 40px
-      color-mix(in oklab, var(--surface-color) 40%, transparent);
-    backdrop-filter: blur(14px);
-    -webkit-backdrop-filter: blur(14px);
-  }
-</style>

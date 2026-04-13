@@ -13,14 +13,9 @@ import TextInput from "../components/ui/TextInput.astro";
 <Container class="pb-12">
   <Section class="flex justify-center">
     <Card
-      class="relative max-w-[50%] space-y-4 bg-(--surface-color) backdrop-blur pb-14 [clip-path:polygon(0_0,100%_0,100%_100%,95%_calc(100%-14px),90%_100%,85%_calc(100%-14px),80%_100%,75%_calc(100%-14px),70%_100%,65%_calc(100%-14px),60%_100%,55%_calc(100%-14px),50%_100%,45%_calc(100%-14px),40%_100%,35%_calc(100%-14px),30%_100%,25%_calc(100%-14px),20%_100%,15%_calc(100%-14px),10%_100%,5%_calc(100%-14px),0_100%)] shadow-lg"
+      class="relative min-w-full md:min-w-[50%] space-y-4 bg-(--surface-color) backdrop-blur pb-14 [clip-path:polygon(0_0,100%_0,100%_100%,95%_calc(100%-14px),90%_100%,85%_calc(100%-14px),80%_100%,75%_calc(100%-14px),70%_100%,65%_calc(100%-14px),60%_100%,55%_calc(100%-14px),50%_100%,45%_calc(100%-14px),40%_100%,35%_calc(100%-14px),30%_100%,25%_calc(100%-14px),20%_100%,15%_calc(100%-14px),10%_100%,5%_calc(100%-14px),0_100%)] shadow-lg"
     >
       <Heading as="h2" variant="section">Send a message</Heading>
-      <!-- TODO: Replace with real form intro copy and wire up form backend -->
-      <Text>
-        Placeholder form for layout testing. Hook it up to your preferred form
-        backend or email workflow later.
-      </Text>
       <div class="space-y-3">
         <FormLabel for="contact-name">Name</FormLabel>
         <TextInput id="contact-name" type="text" placeholder="Your name" />
