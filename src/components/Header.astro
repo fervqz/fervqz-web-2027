@@ -24,8 +24,10 @@ import EditStickers from "./sticker/EditStickers.astro";
         href="/"
         class="site-brand flex items-center gap-2 origin-left transition-transform duration-220 ease scale-100 hover:scale-105"
       >
-        <Sticker src={logo} alt="logo" width={50} draggable={false} />
-        <span class="text-2xl font-black font-[JetBrains Mono]">Fervqz</span>
+        <Sticker src={logo} alt="logo" width={40} draggable={false} />
+        <span class="text-[1.40rem] font-black font-[JetBrains Mono]"
+          >Fervqz</span
+        >
       </a>
 
       <div class="flex items-center gap-1">
@@ -118,14 +120,11 @@ import EditStickers from "./sticker/EditStickers.astro";
 <style>
   [data-site-header] {
     transition:
-      padding-block 220ms ease,
-      top 220ms ease,
-      transform 220ms ease;
-  }
-
-  [data-site-header][data-scrolled="true"] {
-    top: 0.5rem;
-    padding-block: 0;
+      border-color 220ms ease,
+      background-color 220ms ease,
+      box-shadow 220ms ease,
+      backdrop-filter 220ms ease,
+      -webkit-backdrop-filter 220ms ease;
   }
 
   [data-contact-link="true"] {
@@ -142,7 +141,6 @@ import EditStickers from "./sticker/EditStickers.astro";
   [data-site-header][data-scrolled="true"] .header-bar {
     border-color: var(--surface-border);
     border-radius: 10rem;
-    padding-inline: 1rem;
     background-color: color-mix(
       in oklab,
       var(--surface-color) 78%,
@@ -152,7 +150,6 @@ import EditStickers from "./sticker/EditStickers.astro";
       color-mix(in oklab, var(--surface-color) 40%, transparent);
     backdrop-filter: blur(14px);
     -webkit-backdrop-filter: blur(14px);
-    transform: scale(0.985);
   }
 
   [data-site-header][data-scrolled="true"] [data-contact-link="true"] {
@@ -166,14 +163,6 @@ import EditStickers from "./sticker/EditStickers.astro";
 
   [data-site-header][data-scrolled="true"] [data-contact-link="true"]:hover {
     background: rgb(34, 34, 34);
-  }
-
-  [data-site-header][data-scrolled="true"] .site-brand {
-    transform: scale(0.9);
-  }
-
-  [data-site-header][data-scrolled="true"] .site-brand:hover {
-    transform: scale(0.95);
   }
 
   .mobile-menu-toggle[aria-expanded="true"] {
