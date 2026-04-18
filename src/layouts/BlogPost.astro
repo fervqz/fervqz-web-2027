@@ -30,6 +30,9 @@ const {
   slug,
   readingTimeMinutes,
 } = Astro.props;
+
+const heroImageWidth = heroImage?.width ?? 1040;
+const heroImageHeight = heroImage?.height ?? 700;
 ---
 
 <AppLayout
@@ -52,20 +55,19 @@ const {
           {
             heroImage ? (
               <Image
-                width={1040}
-                height={700}
+                width={heroImageWidth}
+                height={heroImageHeight}
                 src={heroImage}
                 alt={title}
-                class="h-auto w-full object-cover"
-                style={`view-transition-name: blog-image-${slug};`}
+                sizes="(max-width: 1200px) 100vw, 1040px"
+                class="blog-hero-image h-auto w-full object-cover bg-slate-800"
               />
             ) : (
               <FallbackImage
                 alt={title}
-                width={1040}
-                height={700}
-                class="h-auto w-full object-cover"
-                style={`view-transition-name: blog-image-${slug};`}
+                width={heroImageWidth}
+                height={heroImageHeight}
+                class="blog-hero-image h-auto w-full object-cover"
               />
             )
           }
@@ -120,3 +122,19 @@ const {
     document.title = fullString.slice(offset) + fullString.slice(0, offset);
   }, refreshInterval);
 </script>
+
+<style>
+  .blog-hero-image {
+    animation: blog-image-fade-in 420ms ease-out both;
+  }
+
+  @keyframes blog-image-fade-in {
+    from {
+      opacity: 0;
+    }
+
+    to {
+      opacity: 1;
+    }
+  }
+</style>

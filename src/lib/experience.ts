@@ -1,4 +1,3 @@
-import type { SvgComponent } from "astro/types";
 import sngularLogoAsset from "../assets/svg/sngular.svg";
 import knackLogoAsset from "../assets/svg/knack.svg";
 import freelancerLogoAsset from "../assets/svg/freelancer.svg";
@@ -17,7 +16,7 @@ export type ExperienceEntry = {
     highlights: string[];
     stack: string[];
     type: "full-time" | "part-time" | "freelance";
-    icon: SvgComponent;
+    icon: ImageMetadata;
     iconSize: number;
 };
 

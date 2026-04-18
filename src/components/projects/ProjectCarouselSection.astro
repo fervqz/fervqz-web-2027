@@ -45,13 +45,14 @@ const actionButtonClass =
                   sizes="(max-width: 640px) 85vw, (max-width: 1024px) 60vw, 384px"
                   loading="lazy"
                   decoding="async"
-                  class="h-66 w-full object-cover object-center transition-transform duration-300 group-hover:scale-120"
+                  class="h-66 w-full object-cover object-center transition-transform duration-300 group-hover:scale-120 bg-slate-800"
                 />
                 <div class="pointer-events-none absolute inset-x-0 bottom-0 h-14 bg-linear-to-t from-slate-950/25 to-transparent" />
               </div>
 
               <Heading as="h3" class="py-2">
                 <a
+                  data-astro-prefetch="hover"
                   href={`/projects/${project.slug}`}
                   class="underline-offset-4 hover:underline after:absolute after:inset-0 after:content-[''] after:z-0"
                 >
@@ -81,24 +82,26 @@ const actionButtonClass =
 
     <Container>
       <div
-        class="project-carousel-controls mt-3 flex items-center justify-center md:justify-start gap-6 md:gap-4 px-4 md:px-0"
+        class="project-carousel-controls mt-3 flex min-h-14 items-center justify-center gap-6 px-4 md:justify-start md:gap-4 md:px-0"
       >
         <button
           type="button"
-          class="project-carousel-arrow inline-flex size-14 cursor-pointer items-center justify-center border border-(--button-border) text-(--text-color) backdrop-blur transition-colors duration-180 disabled:opacity-40 enabled:hover:bg-(--button-hover-bg) enabled:hover:text-(--button-hover-text)"
+          class="project-carousel-arrow inline-flex size-14 cursor-pointer items-center justify-center border border-(--button-border) text-(--text-color) opacity-0 backdrop-blur transition-[opacity,colors] duration-180 disabled:opacity-40 enabled:hover:bg-(--button-hover-bg) enabled:hover:text-(--button-hover-text)"
           data-project-carousel-prev
           aria-label="Scroll projects left"
-          hidden
+          disabled
+          aria-hidden="true"
         >
           <Icon name="lucide:chevron-left" size={20} />
         </button>
 
         <button
           type="button"
-          class="project-carousel-arrow inline-flex size-14 cursor-pointer items-center justify-center border border-(--button-border) text-(--text-color) backdrop-blur transition-colors duration-180 disabled:opacity-40 enabled:hover:bg-(--button-hover-bg) enabled:hover:text-(--button-hover-text)"
+          class="project-carousel-arrow inline-flex size-14 cursor-pointer items-center justify-center border border-(--button-border) text-(--text-color) opacity-0 backdrop-blur transition-[opacity,colors] duration-180 disabled:opacity-40 enabled:hover:bg-(--button-hover-bg) enabled:hover:text-(--button-hover-text)"
           data-project-carousel-next
           aria-label="Scroll projects right"
-          hidden
+          disabled
+          aria-hidden="true"
         >
           <Icon name="lucide:chevron-right" size={20} />
         </button>
@@ -138,8 +141,9 @@ const actionButtonClass =
         const maxScrollLeft = scroller.scrollWidth - scroller.clientWidth;
         const isScrollable = maxScrollLeft > SCROLL_THRESHOLD;
 
-        prevButton.hidden = !isScrollable;
-        nextButton.hidden = !isScrollable;
+        shell.dataset.carouselScrollable = isScrollable ? "true" : "false";
+        prevButton.setAttribute("aria-hidden", isScrollable ? "false" : "true");
+        nextButton.setAttribute("aria-hidden", isScrollable ? "false" : "true");
 
         if (!isScrollable) {
           prevButton.disabled = true;
@@ -178,5 +182,17 @@ const actionButtonClass =
 <style>
   .project-carousel::-webkit-scrollbar {
     display: none;
+  }
+
+  [data-project-carousel-shell]:not([data-carousel-scrollable="true"])
+    .project-carousel-arrow {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  [data-project-carousel-shell][data-carousel-scrollable="true"]
+    .project-carousel-arrow {
+    opacity: 1;
+    pointer-events: auto;
   }
 </style>

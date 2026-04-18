@@ -1,0 +1,39 @@
+---
+import { getCollection } from "astro:content";
+import { SITE_DESCRIPTION, SITE_TITLE } from "../consts";
+import AppLayout from "../layouts/AppLayout.astro";
+import DotsBackground from "../components/DotsBackground.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import ExperienceTimelineSection from "../sections/ExperienceTimelineSection.astro";
+import HeroSection from "../sections/HeroSection.astro";
+import { experience } from "../lib/experience";
+import ProjectsHardwareSection from "../sections/ProjectsHardwareSection.astro";
+import ProjectsSoftwareSection from "../sections/ProjectsSoftwareSection.astro";
+import BlogPageHeader from "../sections/BlogPageHeader.astro";
+import BlogPostsSection from "../sections/BlogPostsSection.astro";
+
+const posts = (await getCollection("blog", ({ data }) => !data.hidden)).sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+);
+---
+
+<AppLayout
+  title={SITE_TITLE}
+  description={SITE_DESCRIPTION}
+  bodyClass="flex flex-col min-h-screen px-4"
+>
+  <DotsBackground />
+  <main class="flex flex-col gap-24">
+    <Header />
+    <HeroSection />
+    <ProjectsSoftwareSection />
+    <ProjectsHardwareSection />
+    <div class="space-y-8">
+      <BlogPageHeader />
+      <BlogPostsSection posts={posts} />
+    </div>
+    <ExperienceTimelineSection experience={experience} />
+    <Footer />
+  </main>
+</AppLayout>

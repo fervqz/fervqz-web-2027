@@ -25,11 +25,10 @@ const isHomePage = Astro.url.pathname === "/";
       <a
         href="/"
         class="site-brand flex items-center gap-2 origin-left transition-transform duration-220 ease scale-100 hover:scale-105"
+        data-astro-prefetch="hover"
       >
         <Sticker src={logo} alt="logo" width={40} draggable={false} />
-        <span class="text-[1.40rem] font-black font-[JetBrains Mono]"
-          >Fervqz</span
-        >
+        <span class="site-brand-text text-[1.40rem] font-black">Fervqz</span>
       </a>
 
       <div class="flex items-center gap-1">
@@ -125,6 +124,12 @@ const isHomePage = Astro.url.pathname === "/";
 </script>
 
 <style>
+  .site-brand-text {
+    font-family: "JetBrains Mono Variable", "JetBrains Mono", ui-monospace,
+      "SFMono-Regular", Menlo, Monaco, Consolas, "Liberation Mono",
+      "Courier New", monospace;
+  }
+
   [data-site-header] {
     transition:
       border-color 220ms ease,

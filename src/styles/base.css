@@ -11,7 +11,9 @@ html {
 body {
   background: var(--bg-color);
   color: var(--text-color);
-  font-family: "JetBrains Mono Variable", "JetBrains Mono", monospace;
+  font-family: "JetBrains Mono Variable", "JetBrains Mono", ui-monospace,
+    "SFMono-Regular", Menlo, Monaco, Consolas, "Liberation Mono", "Courier New",
+    monospace;
   letter-spacing: 0.03em;
   line-height: 1.78;
   min-height: 100vh;

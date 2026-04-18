@@ -46,9 +46,9 @@ const experience = rawExperience.filter((entry) => entry.show);
             </div>
 
             <div class="experience-timeline-card-wrap relative md:row-start-1">
-              <div class="experience-timeline-sticker absolute right-0 bottom-0 z-10 flex size-32 items-center justify-center md:top-1/2 md:right-auto md:bottom-auto md:z-5 md:size-44">
+              <div class="experience-timeline-sticker absolute -right-2 -bottom-6 z-10 flex size-32 items-center justify-center md:top-1/2 md:right-auto md:bottom-auto md:z-5 md:size-44">
                 <Sticker
-                  src={entry.icon as unknown as ImageMetadata}
+                  src={entry.icon}
                   alt=""
                   width={entry.iconSize}
                   loading="lazy"
@@ -57,9 +57,9 @@ const experience = rawExperience.filter((entry) => entry.show);
 
               <Card class="experience-timeline-card space-y-3">
                 <div>
-                  <Heading as="h3" class="mb-0!">
+                  <h3 class="mb-0 text-[1.375rem] leading-[1.2727] tracking-[-0.26px]">
                     {entry.role}
-                  </Heading>
+                  </h3>
                   <Text tone="soft" class="text-sm">
                     {entry.company}
                   </Text>
@@ -130,7 +130,7 @@ const experience = rawExperience.filter((entry) => entry.show);
 
   .experience-timeline-sticker {
     opacity: 0;
-    transform: translate(14%, 30%) rotate(-10deg);
+    transform: translate(14%, 30%) rotate(10deg);
   }
 
   .experience-timeline-dot {
@@ -176,7 +176,7 @@ const experience = rawExperience.filter((entry) => entry.show);
 
   .experience-timeline-item[data-in-view="true"] .experience-timeline-sticker {
     opacity: 1;
-    transform: translate(8%, 24%) rotate(-10deg);
+    transform: translate(8%, 24%) rotate(10deg);
   }
 
   @media (min-width: 48rem) {
@@ -205,7 +205,7 @@ const experience = rawExperience.filter((entry) => entry.show);
     }
 
     .experience-timeline-sticker {
-      transform: translate(8%, 24%) rotate(-10deg);
+      transform: translate(8%, 24%) rotate(10deg);
     }
 
     @media (min-width: 48rem) {

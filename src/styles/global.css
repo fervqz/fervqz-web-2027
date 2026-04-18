@@ -7,5 +7,6 @@
 @import "./motion.css";
 
 .font-pangolin {
-  font-family: "Pangolin", cursive;
+  font-family: "Pangolin", "Comic Sans MS", "Bradley Hand", "Segoe Print",
+    cursive;
 }
