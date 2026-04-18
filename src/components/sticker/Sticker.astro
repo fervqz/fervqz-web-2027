@@ -29,7 +29,7 @@ const defaultImageClasses = "h-auto drop-shadow-sm drop-shadow-zinc-900/30";
   data-sticker={draggable ? "true" : undefined}
   data-sticker-edit-mode={draggable ? "false" : undefined}
   data-sticker-interacting={draggable ? "false" : undefined}
-  class="relative z-20 inline-flex overflow-visible touch-none select-none transition-transform ease-out duration-150"
+  class="relative z-20 inline-flex overflow-visible select-none transition-transform ease-out duration-150"
   style="transform: translate3d(0px, 0px, 0px);"
 >
   <div
@@ -81,5 +81,14 @@ const defaultImageClasses = "h-auto drop-shadow-sm drop-shadow-zinc-900/30";
   [data-sticker-edit-mode="false"] [data-sticker-motion],
   [data-sticker-interacting="true"] [data-sticker-motion] {
     animation: none;
+  }
+
+  [data-sticker-edit-mode="false"] {
+    touch-action: auto;
+  }
+
+  [data-sticker-edit-mode="true"],
+  [data-sticker-interacting="true"] {
+    touch-action: none;
   }
 </style>

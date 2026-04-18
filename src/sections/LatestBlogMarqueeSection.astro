@@ -15,7 +15,10 @@ const marqueePosts = posts.slice(0, 6);
 
 {
   marqueePosts.length > 0 && (
-    <Section variant="content" class="px-4 mx-auto w-full max-w-7xl md:py-12">
+    <Section
+      variant="content"
+      class="px-0 md:px-4 mx-auto w-full max-w-7xl md:py-12"
+    >
       <Container>
         <Heading as="h2" variant="section" class="text-center">
           ✍️ Latest Blog Entries
@@ -23,7 +26,7 @@ const marqueePosts = posts.slice(0, 6);
       </Container>
 
       <div
-        class="group relative overflow-hidden mask-[linear-gradient(90deg,transparent,rgb(0_0_0/1)_10%,rgb(0_0_0/1)_90%,transparent)] motion-reduce:overflow-x-auto motion-reduce:mask-none"
+        class="group relative overflow-hidden md:mask-[linear-gradient(90deg,transparent,rgb(0_0_0/1)_10%,rgb(0_0_0/1)_90%,transparent)] motion-reduce:overflow-x-auto motion-reduce:mask-none"
         aria-label="Latest blog posts"
       >
         <div class="latest-blog-marquee-track flex w-max gap-5 py-4 animate-[latest-blog-marquee-scroll_30s_linear_infinite] group-hover:[animation-play-state:paused] motion-reduce:animate-none">

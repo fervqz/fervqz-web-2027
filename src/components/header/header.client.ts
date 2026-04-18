@@ -24,15 +24,7 @@ export const initHeaderInteractions = () => {
     const getTheme = () => root.dataset.theme || "light";
 
     const setButtonState = (button: HTMLButtonElement, theme: string) => {
-        const moonIcon = button.querySelector<HTMLElement>(
-            '[data-theme-toggle-icon="moon"]',
-        );
-        const sunIcon = button.querySelector<HTMLElement>(
-            '[data-theme-toggle-icon="sun"]',
-        );
-
-        if (moonIcon) moonIcon.hidden = theme === "dark";
-        if (sunIcon) sunIcon.hidden = theme !== "dark";
+        button.dataset.themeState = theme;
 
         const nextLabel =
             theme === "dark" ? "Switch to light mode" : "Switch to dark mode";

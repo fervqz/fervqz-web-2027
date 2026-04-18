@@ -42,22 +42,16 @@ const baseClass =
       data-icon-button-has-tooltip={tooltipText ? "true" : "false"}
       {...props}
     >
-      <span
-        data-theme-toggle-icon={primaryIconKey}
-        aria-hidden="true"
-        hidden={false}
-      >
-        <Icon name={icon} class={iconClass} />
-      </span>
-      {secondaryIcon && (
-        <span
-          data-theme-toggle-icon={secondaryIconKey}
-          aria-hidden="true"
-          hidden
-        >
-          <Icon name={secondaryIcon} class={iconClass} />
+      <span data-icon-button-icon-stack aria-hidden="true">
+        <span data-theme-toggle-icon={primaryIconKey}>
+          <Icon name={icon} class={iconClass} />
         </span>
-      )}
+        {secondaryIcon && (
+          <span data-theme-toggle-icon={secondaryIconKey}>
+            <Icon name={secondaryIcon} class={iconClass} />
+          </span>
+        )}
+      </span>
       <slot />
 
       {tooltipText && (
@@ -74,22 +68,16 @@ const baseClass =
       data-icon-button-has-tooltip={tooltipText ? "true" : "false"}
       {...props}
     >
-      <span
-        data-theme-toggle-icon={primaryIconKey}
-        aria-hidden="true"
-        hidden={false}
-      >
-        <Icon name={icon} class={iconClass} />
-      </span>
-      {secondaryIcon && (
-        <span
-          data-theme-toggle-icon={secondaryIconKey}
-          aria-hidden="true"
-          hidden
-        >
-          <Icon name={secondaryIcon} class={iconClass} />
+      <span data-icon-button-icon-stack aria-hidden="true">
+        <span data-theme-toggle-icon={primaryIconKey}>
+          <Icon name={icon} class={iconClass} />
         </span>
-      )}
+        {secondaryIcon && (
+          <span data-theme-toggle-icon={secondaryIconKey}>
+            <Icon name={secondaryIcon} class={iconClass} />
+          </span>
+        )}
+      </span>
       <slot />
 
       {tooltipText && (
@@ -154,6 +142,13 @@ const baseClass =
       if (button.dataset.iconButtonTooltipInitialized === "true") return;
       if (button.dataset.iconButtonHasTooltip !== "true") return;
 
+      const isThemeToggle = button.hasAttribute("data-theme-toggle");
+      const isTouchDevice = globalThis.matchMedia(
+        "(hover: none), (pointer: coarse)",
+      ).matches;
+
+      if (isThemeToggle && isTouchDevice) return;
+
       const tooltip = button.querySelector<HTMLElement>(
         "[data-icon-button-tooltip-content]",
       );
@@ -191,6 +186,41 @@ const baseClass =
 </script>
 
 <style>
+  [data-icon-button-icon-stack] {
+    display: inline-grid;
+    place-items: center;
+  }
+
+  [data-icon-button-icon-stack] > [data-theme-toggle-icon] {
+    grid-area: 1 / 1;
+  }
+
+  [data-theme-toggle] [data-theme-toggle-icon] {
+    transition:
+      opacity 240ms ease,
+      transform 280ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  [data-theme-toggle] [data-theme-toggle-icon="moon"] {
+    opacity: 1;
+    transform: rotate(0deg) scale(1);
+  }
+
+  [data-theme-toggle] [data-theme-toggle-icon="sun"] {
+    opacity: 0;
+    transform: rotate(90deg) scale(0.7);
+  }
+
+  [data-theme-toggle][data-theme-state="dark"] [data-theme-toggle-icon="moon"] {
+    opacity: 0;
+    transform: rotate(-90deg) scale(0.7);
+  }
+
+  [data-theme-toggle][data-theme-state="dark"] [data-theme-toggle-icon="sun"] {
+    opacity: 1;
+    transform: rotate(0deg) scale(1);
+  }
+
   [data-icon-button-tooltip-content] {
     position: fixed;
     z-index: 100000;

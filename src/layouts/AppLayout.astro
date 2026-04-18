@@ -39,7 +39,7 @@ const {
     />
     <slot name="head" />
   </head>
-  <body class={bodyClass}>
+  <body class:list={[bodyClass, "relative isolate"]}>
     <slot />
   </body>
 </html>
