@@ -1,10 +1,14 @@
 ---
 import { Icon } from "astro-icon/components";
+import type { HTMLAttributes } from "astro/types";
 
 type As = "button" | "a";
 
-interface Props {
+interface Props extends Omit<HTMLAttributes<"button">, "type" | "class"> {
   as?: As;
+  href?: string;
+  target?: string;
+  rel?: string;
   icon: string;
   secondaryIcon?: string;
   tooltip?: string;
