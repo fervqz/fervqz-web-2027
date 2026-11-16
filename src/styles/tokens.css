@@ -20,8 +20,8 @@
   --link-hover-color: rgb(55 48 163);
   --placeholder-text-color: rgb(148 163 184);
   --nav-link-color: #0f172a;
-  --nav-link-hover-color: var(--accent);
-  --nav-link-active-color: var(--accent);
+  --nav-link-hover-color: var(--accent-text);
+  --nav-link-active-color: var(--accent-text);
   --blockquote-border: #cbd5e1;
   --blockquote-text: #475569;
   --dots-color: #adadad;
@@ -31,14 +31,15 @@
   --code-bg: #1f1f1f;
   --code-border: #3c3c3c;
   --code-text: #d4d4d4;
-  --selection-bg: rgb(125 85 199 / 0.3);
+  --selection-bg: rgb(230 173 51 / 0.38);
   --selection-text: #181717;
-  --accent: #7d55c7; /* Pantone 2665 C */
-  --accent-hover: #6a42b5;
-  --accent-contrast: #ffffff;
-  --accent-soft: rgb(125 85 199 / 0.1);
+  --accent: #f0c05a; /* Pantone 14-0848 Mimosa */
+  --accent-hover: #e6ad33;
+  --accent-contrast: #1b1405;
+  --accent-text: #8a5a00;
+  --accent-soft: rgb(240 192 90 / 0.22);
   --card-shadow: 0 1px 2px rgb(15 23 42 / 0.05), 0 12px 32px -12px rgb(15 23 42 / 0.18);
-  --card-shadow-hover: 0 2px 4px rgb(15 23 42 / 0.06), 0 22px 44px -14px rgb(125 85 199 / 0.3);
+  --card-shadow-hover: 0 2px 4px rgb(15 23 42 / 0.06), 0 22px 44px -14px rgb(230 173 51 / 0.38);
 }
 
 html[data-theme="dark"] {
@@ -63,8 +64,8 @@ html[data-theme="dark"] {
   --link-hover-color: #bfdbfe;
   --placeholder-text-color: rgb(148 163 184);
   --nav-link-color: #e2e8f0;
-  --nav-link-hover-color: var(--accent);
-  --nav-link-active-color: var(--accent);
+  --nav-link-hover-color: var(--accent-text);
+  --nav-link-active-color: var(--accent-text);
   --blockquote-border: #475569;
   --blockquote-text: #cbd5e1;
   --dots-color: #334155;
@@ -74,12 +75,13 @@ html[data-theme="dark"] {
   --code-bg: #1e1e1e;
   --code-border: #3c3c3c;
   --code-text: #d4d4d4;
-  --selection-bg: rgb(150 120 211 / 0.42);
+  --selection-bg: rgb(240 192 90 / 0.4);
   --selection-text: #fff7ed;
-  --accent: #9678d3; /* Pantone 2655 C */
-  --accent-hover: #b197e3;
-  --accent-contrast: #0b0f19;
-  --accent-soft: rgb(150 120 211 / 0.16);
+  --accent: #f0c05a; /* Pantone 14-0848 Mimosa */
+  --accent-hover: #f6d27f;
+  --accent-contrast: #1b1405;
+  --accent-text: #f0c05a;
+  --accent-soft: rgb(240 192 90 / 0.14);
   --card-shadow: 0 1px 2px rgb(0 0 0 / 0.4), 0 14px 36px -14px rgb(0 0 0 / 0.7);
-  --card-shadow-hover: 0 2px 4px rgb(0 0 0 / 0.5), 0 22px 44px -14px rgb(150 120 211 / 0.32);
+  --card-shadow-hover: 0 2px 4px rgb(0 0 0 / 0.5), 0 22px 44px -14px rgb(240 192 90 / 0.3);
 }
