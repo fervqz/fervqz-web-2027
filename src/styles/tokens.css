@@ -31,15 +31,15 @@
   --code-bg: #1f1f1f;
   --code-border: #3c3c3c;
   --code-text: #d4d4d4;
-  --selection-bg: rgb(230 173 51 / 0.38);
+  --selection-bg: rgb(163 166 58 / 0.4);
   --selection-text: #181717;
-  --accent: #f0c05a; /* Pantone 14-0848 Mimosa */
-  --accent-hover: #e6ad33;
-  --accent-contrast: #1b1405;
-  --accent-text: #8a5a00;
-  --accent-soft: rgb(240 192 90 / 0.22);
+  --accent: #b7b94a; /* avocado oil */
+  --accent-hover: #a3a63a;
+  --accent-contrast: #1a1c05;
+  --accent-text: #5b6110;
+  --accent-soft: rgb(183 185 74 / 0.22);
   --card-shadow: 0 1px 2px rgb(15 23 42 / 0.05), 0 12px 32px -12px rgb(15 23 42 / 0.18);
-  --card-shadow-hover: 0 2px 4px rgb(15 23 42 / 0.06), 0 22px 44px -14px rgb(230 173 51 / 0.38);
+  --card-shadow-hover: 0 2px 4px rgb(15 23 42 / 0.06), 0 22px 44px -14px rgb(163 166 58 / 0.4);
 }
 
 html[data-theme="dark"] {
@@ -75,13 +75,13 @@ html[data-theme="dark"] {
   --code-bg: #1e1e1e;
   --code-border: #3c3c3c;
   --code-text: #d4d4d4;
-  --selection-bg: rgb(240 192 90 / 0.4);
+  --selection-bg: rgb(183 185 74 / 0.42);
   --selection-text: #fff7ed;
-  --accent: #f0c05a; /* Pantone 14-0848 Mimosa */
-  --accent-hover: #f6d27f;
-  --accent-contrast: #1b1405;
-  --accent-text: #f0c05a;
-  --accent-soft: rgb(240 192 90 / 0.14);
+  --accent: #b7b94a; /* avocado oil */
+  --accent-hover: #cfd264;
+  --accent-contrast: #1a1c05;
+  --accent-text: #c9cc62;
+  --accent-soft: rgb(183 185 74 / 0.16);
   --card-shadow: 0 1px 2px rgb(0 0 0 / 0.4), 0 14px 36px -14px rgb(0 0 0 / 0.7);
-  --card-shadow-hover: 0 2px 4px rgb(0 0 0 / 0.5), 0 22px 44px -14px rgb(240 192 90 / 0.3);
+  --card-shadow-hover: 0 2px 4px rgb(0 0 0 / 0.5), 0 22px 44px -14px rgb(183 185 74 / 0.32);
 }
