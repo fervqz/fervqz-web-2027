@@ -22,26 +22,26 @@ Findings from the repo review, ordered by priority. Tick items off as they land.
 
 - [ ] **Compress `public/3d-models/v60-dryer-3d.glb`** (16 MB). Use `gltf-transform` with Draco or meshopt and resized textures; target under 2 MB. Add a poster and lazy load it.
 - [ ] **Investigate why `dist/_astro` ships original PNGs** next to the WebP versions (about 30 MB `dist`). Something references the raw files instead of `<Image>`.
-- [ ] **Delete unused assets** (about 10 MB): `src/assets/img/devices/*-mock.png`, `f1lmlog-2.png`, `mock-2.png`, `blog-placeholder-2/3.jpg`, 27 `sticker-test-*.svg` files, duplicate `project-*.png` copies, `.DS_Store` files, unused `public/fonts/atkinson-*.woff`.
+- [x] **Delete unused assets** (about 10 MB): `src/assets/img/devices/*-mock.png`, `f1lmlog-2.png`, `mock-2.png`, `blog-placeholder-2/3.jpg`, 27 `sticker-test-*.svg` files, duplicate `project-*.png` copies, `.DS_Store` files, unused `public/fonts/atkinson-*.woff`.
 - [ ] Subset fonts to latin only (`@fontsource/*/latin.css`), consider dropping Pangolin, and preload the main body font.
 - [ ] Run Lighthouse on home, projects and a project page; targets: LCP under 2.5 s, CLS under 0.1, INP under 200 ms, scores of 95 or more.
 - [ ] Check the `three` peer warning from `@google/model-viewer` 4.4.0 (wants 0.183, gets 0.182) and confirm the V60 model still renders.
 
 ## SEO
 
-- [ ] Add a real **404 page** (`src/pages/404.astro`).
-- [ ] `/about` is `noindex` but listed in the sitemap, and `/all` duplicates the homepage. Remove or `noindex` and filter them from the sitemap.
+- [x] Add a real **404 page** (`src/pages/404.astro`).
+- [x] `/about` is `noindex` but listed in the sitemap, and `/all` duplicates the homepage. Remove or `noindex` and filter them from the sitemap.
 - [ ] Add a real Open Graph image (every page falls back to `blog-placeholder-1.jpg`), plus per-page descriptions.
 - [ ] Add structured data beyond `WebSite` (`Person`, `Article` for posts).
 
 ## Code quality
 
-- [ ] Remove unused imports flagged by `astro check` (`ProjectsFailsSection`, `Text`, `Icon`, `Section`, `slug`, unused `Props`).
+- [x] Remove unused imports flagged by `astro check` (`ProjectsFailsSection`, `Text`, `Icon`, `Section`, `slug`, unused `Props`).
 - [ ] `src/pages/blog/index.astro` uses a top-level `Astro.redirect` when the blog is disabled; for a static site skip building that page instead.
 - [ ] Add ESLint and a CI workflow (GitHub Actions or Netlify build check) running `pnpm check` and `pnpm build`.
 - [ ] Extend the pre-commit hook beyond images (typecheck, `pnpm audit`).
-- [ ] README: remove the GSAP mention (not a dependency) and mention `fnm`, `.node-version` and Netlify.
-- [ ] Rename `package.json` `name` (`fervqz-web-v2`) to match the repo, and remove the empty `docs/` folder.
+- [x] README: remove the GSAP mention (not a dependency) and mention `fnm`, `.node-version` and Netlify.
+- [x] Rename `package.json` `name` (`fervqz-web-v2`) to match the repo, and remove the empty `docs/` folder.
 - [ ] Replace the deprecated `exiftool.write` signature in `scripts/strip-image-metadata.mjs`.
 
 ## Tooling and housekeeping

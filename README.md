@@ -1,4 +1,4 @@
-# Fervqz Web v2
+# Fervqz Web
 
 Personal portfolio and blog built with Astro, MDX, Tailwind CSS v4, and Astro Content Collections.
 
@@ -9,7 +9,12 @@ Personal portfolio and blog built with Astro, MDX, Tailwind CSS v4, and Astro Co
 - MDX
 - Astro Content Collections
 - Astro Icon
-- GSAP
+
+## Setup
+
+- Node version is pinned in `.node-version` and managed with [fnm](https://github.com/Schniz/fnm) (`fnm use`).
+- Package manager is pnpm.
+- Deployed on Netlify; build settings and headers live in `netlify.toml`.
 
 ## Scripts
 
