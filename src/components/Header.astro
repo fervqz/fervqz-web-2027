@@ -140,14 +140,22 @@ const isHomePage = Astro.url.pathname === "/";
   }
 
   [data-contact-link="true"] {
-    border: 1px solid transparent;
+    padding: 0.6rem 1rem;
+    border: 1px solid color-mix(in oklab, var(--nav-link-color) 16%, transparent);
     border-radius: 9999px;
+    background-color: black;
+    color: white;
+    box-shadow: 0 10px 24px
+      color-mix(in oklab, var(--surface-color) 28%, transparent);
     transition:
-      padding 220ms ease,
-      border-color 220ms ease,
       background-color 220ms ease,
       box-shadow 220ms ease,
       color 220ms ease;
+  }
+
+  [data-contact-link="true"]:hover {
+    background: rgb(34, 34, 34);
+    color: white;
   }
 
   [data-site-header][data-scrolled="true"] .header-bar {
@@ -162,19 +170,6 @@ const isHomePage = Astro.url.pathname === "/";
       color-mix(in oklab, var(--surface-color) 40%, transparent);
     backdrop-filter: blur(14px);
     -webkit-backdrop-filter: blur(14px);
-  }
-
-  [data-site-header][data-scrolled="true"] [data-contact-link="true"] {
-    padding: 0.6rem 1rem;
-    border-color: color-mix(in oklab, var(--nav-link-color) 16%, transparent);
-    background-color: black;
-    color: white;
-    box-shadow: 0 10px 24px
-      color-mix(in oklab, var(--surface-color) 28%, transparent);
-  }
-
-  [data-site-header][data-scrolled="true"] [data-contact-link="true"]:hover {
-    background: rgb(34, 34, 34);
   }
 
   .mobile-menu-toggle[aria-expanded="true"] {
