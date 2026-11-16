@@ -1,7 +1,7 @@
 ---
 import { Icon } from "astro-icon/components";
 import Container from "./ui/Container.astro";
-import MagneticButton from "./ui/MagneticButton.astro";
+import LinkButton from "./ui/LinkButton.astro";
 import SectionHeader from "./ui/SectionHeader.astro";
 import Text from "./ui/Text.astro";
 ---
@@ -19,12 +19,12 @@ import Text from "./ui/Text.astro";
     <Text class="relative max-w-xl">
       Have a product, a design system or a wild idea? I'd like to hear about it.
     </Text>
-    <MagneticButton
+    <LinkButton
       href="/contact"
       class="relative px-6 py-3 [--button-bg:var(--accent)] [--button-border:var(--accent)] [--button-text:var(--accent-contrast)] [--button-hover-bg:var(--accent-hover)] [--button-hover-text:var(--accent-contrast)]"
     >
       Get in touch
       <Icon name="lucide:arrow-up-right" class="ml-2 size-4" />
-    </MagneticButton>
+    </LinkButton>
   </section>
 </Container>

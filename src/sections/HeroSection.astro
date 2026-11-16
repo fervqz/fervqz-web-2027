@@ -6,7 +6,7 @@ import HeroTitle from "../components/HeroTitle.astro";
 import Sticker from "../components/sticker/Sticker.astro";
 import avatar from "../assets/img/avatar.svg";
 import { Icon } from "astro-icon/components";
-import MagneticButton from "../components/ui/MagneticButton.astro";
+import LinkButton from "../components/ui/LinkButton.astro";
 ---
 
 <Container>
@@ -35,16 +35,16 @@ import MagneticButton from "../components/ui/MagneticButton.astro";
         <div
           class="mt-8 flex flex-wrap items-center justify-center gap-3 md:justify-start"
         >
-          <MagneticButton
+          <LinkButton
             href="/projects"
             class="px-6 py-3 [--button-bg:var(--accent)] [--button-border:var(--accent)] [--button-text:var(--accent-contrast)] [--button-hover-bg:var(--accent-hover)] [--button-hover-text:var(--accent-contrast)]"
           >
             View projects
             <Icon name="lucide:arrow-up-right" class="ml-2 size-4" />
-          </MagneticButton>
-          <MagneticButton href="/contact" class="px-6 py-3">
+          </LinkButton>
+          <LinkButton href="/contact" class="px-6 py-3">
             Get in touch
-          </MagneticButton>
+          </LinkButton>
         </div>
       </div>
     </div>

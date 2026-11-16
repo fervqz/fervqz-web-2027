@@ -2,7 +2,7 @@
 import { Image } from "astro:assets";
 import Container from "../components/ui/Container.astro";
 import SectionHeader from "../components/ui/SectionHeader.astro";
-import MagneticButton from "../components/ui/MagneticButton.astro";
+import LinkButton from "../components/ui/LinkButton.astro";
 import Section from "../components/ui/Section.astro";
 import { Icon } from "astro-icon/components";
 import project1 from "../assets/img/project-1.png";
@@ -21,14 +21,14 @@ const images = [
     <SectionHeader eyebrow="01 — Projects" title="Explore my projects" />
 
     <div class="mt-10 flex justify-center">
-      <MagneticButton
+      <LinkButton
         href="/projects"
         class="px-6 py-3"
         style="--button-bg: var(--bg-color)"
       >
         Explore Projects Gallery
         <Icon name="lucide:arrow-up-right" class="ml-2 size-4" />
-      </MagneticButton>
+      </LinkButton>
     </div>
   </Container>
 
