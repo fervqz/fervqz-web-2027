@@ -4,6 +4,7 @@ import { BLOG_ENABLED, SITE_DESCRIPTION, SITE_TITLE } from "../consts";
 import AppLayout from "../layouts/AppLayout.astro";
 import DotsBackground from "../components/DotsBackground.astro";
 import Header from "../components/Header.astro";
+import ContactCta from "../components/ContactCta.astro";
 import Footer from "../components/Footer.astro";
 import ExperienceTimelineSection from "../sections/ExperienceTimelineSection.astro";
 import HeroSection from "../sections/HeroSection.astro";
@@ -30,6 +31,7 @@ const latestPosts = BLOG_ENABLED
     <ProjectsShowcaseSection />
     <LatestBlogMarqueeSection posts={latestPosts} />
     <ExperienceTimelineSection experience={experience} />
+    <ContactCta />
     <Footer />
   </main>
 </AppLayout>

@@ -11,6 +11,15 @@ const { class: className, ...props } = Astro.props;
 </div>
 
 <style>
+  .typography :global(p),
+  .typography :global(li) {
+    font-family: "Zalando Sans Variable", "Zalando Sans", "Inter", "Segoe UI",
+      Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-size: 1.0625rem;
+    letter-spacing: 0;
+    line-height: 1.75;
+  }
+
   .typography :global(h1),
   .typography :global(h2),
   .typography :global(h3),

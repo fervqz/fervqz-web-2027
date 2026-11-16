@@ -17,8 +17,9 @@ const {
 } = Astro.props;
 
 const variantClasses: Record<CardVariant, string> = {
-  default: "border border-(--surface-border) bg-(--surface-color) p-5",
-  soft: "border border-(--surface-border) bg-(--surface-color) p-4",
+  default:
+    "border border-(--surface-border) bg-(--surface-color) p-5 shadow-(--card-shadow) transition-[box-shadow,transform] duration-300 ease-out hover:shadow-(--card-shadow-hover)",
+  soft: "border border-(--surface-border) bg-(--surface-color) p-4 shadow-(--card-shadow)",
 };
 
 const Tag = as;

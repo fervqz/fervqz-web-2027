@@ -2,7 +2,7 @@
 import { Image } from "astro:assets";
 import type { CollectionEntry } from "astro:content";
 import Container from "../components/ui/Container.astro";
-import Heading from "../components/ui/Heading.astro";
+import SectionHeader from "../components/ui/SectionHeader.astro";
 import Section from "../components/ui/Section.astro";
 
 interface Props {
@@ -20,9 +20,7 @@ const marqueePosts = posts.slice(0, 6);
       class="px-0 md:px-4 mx-auto w-full max-w-7xl md:py-12"
     >
       <Container>
-        <Heading as="h2" variant="section" class="text-center">
-          ✍️ Latest Blog Entries
-        </Heading>
+        <SectionHeader eyebrow="02 — Writing" title="Latest blog entries" />
       </Container>
 
       <div

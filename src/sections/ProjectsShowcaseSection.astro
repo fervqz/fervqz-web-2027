@@ -1,7 +1,7 @@
 ---
 import { Image } from "astro:assets";
 import Container from "../components/ui/Container.astro";
-import Heading from "../components/ui/Heading.astro";
+import SectionHeader from "../components/ui/SectionHeader.astro";
 import MagneticButton from "../components/ui/MagneticButton.astro";
 import Section from "../components/ui/Section.astro";
 import { Icon } from "astro-icon/components";
@@ -18,9 +18,7 @@ const images = [
 
 <Section variant="content" class="px-4 mx-auto max-w-7xl space-y-18">
   <Container>
-    <Heading as="h1" variant="section" class="text-center"
-      >💻 Explore My Projects</Heading
-    >
+    <SectionHeader eyebrow="01 — Projects" title="Explore my projects" />
 
     <div class="mt-10 flex justify-center">
       <MagneticButton
