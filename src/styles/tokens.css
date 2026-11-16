@@ -31,14 +31,14 @@
   --code-bg: #1f1f1f;
   --code-border: #3c3c3c;
   --code-text: #d4d4d4;
-  --selection-bg: rgb(249 115 22 / 0.42);
+  --selection-bg: rgb(0 112 193 / 0.28);
   --selection-text: #181717;
-  --accent: #f4511e;
-  --accent-hover: #d84315;
+  --accent: #0070c1;
+  --accent-hover: #005a9e;
   --accent-contrast: #ffffff;
-  --accent-soft: rgb(244 81 30 / 0.1);
+  --accent-soft: rgb(0 112 193 / 0.1);
   --card-shadow: 0 1px 2px rgb(15 23 42 / 0.05), 0 12px 32px -12px rgb(15 23 42 / 0.18);
-  --card-shadow-hover: 0 2px 4px rgb(15 23 42 / 0.06), 0 22px 44px -14px rgb(244 81 30 / 0.28);
+  --card-shadow-hover: 0 2px 4px rgb(15 23 42 / 0.06), 0 22px 44px -14px rgb(0 112 193 / 0.28);
 }
 
 html[data-theme="dark"] {
@@ -74,12 +74,12 @@ html[data-theme="dark"] {
   --code-bg: #1e1e1e;
   --code-border: #3c3c3c;
   --code-text: #d4d4d4;
-  --selection-bg: rgb(249 115 22 / 0.36);
+  --selection-bg: rgb(86 156 214 / 0.4);
   --selection-text: #fff7ed;
-  --accent: #ff7a50;
-  --accent-hover: #ff946f;
+  --accent: #569cd6;
+  --accent-hover: #7bb6e8;
   --accent-contrast: #0b0f19;
-  --accent-soft: rgb(255 122 80 / 0.14);
+  --accent-soft: rgb(86 156 214 / 0.16);
   --card-shadow: 0 1px 2px rgb(0 0 0 / 0.4), 0 14px 36px -14px rgb(0 0 0 / 0.7);
-  --card-shadow-hover: 0 2px 4px rgb(0 0 0 / 0.5), 0 22px 44px -14px rgb(255 122 80 / 0.28);
+  --card-shadow-hover: 0 2px 4px rgb(0 0 0 / 0.5), 0 22px 44px -14px rgb(86 156 214 / 0.3);
 }
