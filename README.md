@@ -13,15 +13,15 @@ Personal portfolio and blog built with Astro, MDX, Tailwind CSS v4, and Astro Co
 
 ## Scripts
 
-| Command                    | Action                                    |
-| :------------------------- | :---------------------------------------- |
-| `npm install`              | Install dependencies                      |
-| `npm run dev`              | Start development server                  |
-| `npm run dev:host`         | Start development server on local network |
-| `npm run build`            | Build production output                   |
-| `npm run preview`          | Preview production build locally          |
-| `npm run precommit:images` | Strip metadata from staged images         |
-| `npm run astro`            | Run Astro CLI commands                    |
+| Command                 | Action                                    |
+| :---------------------- | :---------------------------------------- |
+| `pnpm install`          | Install dependencies                      |
+| `pnpm dev`              | Start development server                  |
+| `pnpm dev:host`         | Start development server on local network |
+| `pnpm build`            | Build production output                   |
+| `pnpm preview`          | Preview production build locally          |
+| `pnpm precommit:images` | Strip metadata from staged images         |
+| `pnpm astro`            | Run Astro CLI commands                    |
 
 ## Content
 
