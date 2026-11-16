@@ -1,6 +1,6 @@
 ---
 import { getCollection } from "astro:content";
-import { SITE_DESCRIPTION, SITE_TITLE } from "../consts";
+import { BLOG_ENABLED, SITE_DESCRIPTION, SITE_TITLE } from "../consts";
 import AppLayout from "../layouts/AppLayout.astro";
 import DotsBackground from "../components/DotsBackground.astro";
 import Header from "../components/Header.astro";
@@ -13,9 +13,11 @@ import ProjectsSoftwareSection from "../sections/ProjectsSoftwareSection.astro";
 import BlogPageHeader from "../sections/BlogPageHeader.astro";
 import BlogPostsSection from "../sections/BlogPostsSection.astro";
 
-const posts = (await getCollection("blog", ({ data }) => !data.hidden)).sort(
-  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
-);
+const posts = BLOG_ENABLED
+  ? (await getCollection("blog", ({ data }) => !data.hidden)).sort(
+      (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+    )
+  : [];
 ---
 
 <AppLayout
@@ -29,10 +31,14 @@ const posts = (await getCollection("blog", ({ data }) => !data.hidden)).sort(
     <HeroSection />
     <ProjectsSoftwareSection />
     <ProjectsHardwareSection />
-    <div class="space-y-8">
-      <BlogPageHeader />
-      <BlogPostsSection posts={posts} />
-    </div>
+    {
+      BLOG_ENABLED && (
+        <div class="space-y-8">
+          <BlogPageHeader />
+          <BlogPostsSection posts={posts} />
+        </div>
+      )
+    }
     <ExperienceTimelineSection experience={experience} />
     <Footer />
   </main>

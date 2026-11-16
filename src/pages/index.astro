@@ -1,6 +1,6 @@
 ---
 import { getCollection } from "astro:content";
-import { SITE_DESCRIPTION, SITE_TITLE } from "../consts";
+import { BLOG_ENABLED, SITE_DESCRIPTION, SITE_TITLE } from "../consts";
 import AppLayout from "../layouts/AppLayout.astro";
 import DotsBackground from "../components/DotsBackground.astro";
 import Header from "../components/Header.astro";
@@ -11,9 +11,11 @@ import LatestBlogMarqueeSection from "../sections/LatestBlogMarqueeSection.astro
 import ProjectsShowcaseSection from "../sections/ProjectsShowcaseSection.astro";
 import { experience } from "../lib/experience";
 
-const latestPosts = (await getCollection("blog", ({ data }) => !data.hidden))
-  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
-  .slice(0, 8);
+const latestPosts = BLOG_ENABLED
+  ? (await getCollection("blog", ({ data }) => !data.hidden))
+      .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+      .slice(0, 8)
+  : [];
 ---
 
 <AppLayout

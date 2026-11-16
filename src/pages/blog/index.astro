@@ -3,10 +3,14 @@ import { getCollection } from "astro:content";
 import Footer from "../../components/Footer.astro";
 import DotsBackground from "../../components/DotsBackground.astro";
 import Header from "../../components/Header.astro";
-import { SITE_TITLE } from "../../consts";
+import { BLOG_ENABLED, SITE_TITLE } from "../../consts";
 import AppLayout from "../../layouts/AppLayout.astro";
 import BlogPageHeader from "../../sections/BlogPageHeader.astro";
 import BlogPostsSection from "../../sections/BlogPostsSection.astro";
+
+if (!BLOG_ENABLED) {
+  return Astro.redirect("/", 307);
+}
 
 const posts = (await getCollection("blog", ({ data }) => !data.hidden)).sort(
   (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
