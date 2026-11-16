@@ -1,0 +1,32 @@
+---
+import DotsBackground from "../components/DotsBackground.astro";
+import Footer from "../components/Footer.astro";
+import Header from "../components/Header.astro";
+import MagneticButton from "../components/ui/MagneticButton.astro";
+import Container from "../components/ui/Container.astro";
+import Heading from "../components/ui/Heading.astro";
+import Text from "../components/ui/Text.astro";
+import { SITE_TITLE } from "../consts";
+import AppLayout from "../layouts/AppLayout.astro";
+---
+
+<AppLayout
+  title={`Page not found | ${SITE_TITLE}`}
+  description="The page you are looking for does not exist."
+  robots="noindex,follow"
+  bodyClass="flex min-h-screen flex-col px-4"
+>
+  <DotsBackground />
+  <main class="flex flex-col gap-12">
+    <Header />
+    <Container class="flex flex-col items-center gap-6 py-16 text-center">
+      <Text as="p" tone="muted" class="text-sm uppercase tracking-[0.2em]">
+        404
+      </Text>
+      <Heading as="h1" variant="hero">Page not found</Heading>
+      <Text>The page you are looking for does not exist or has moved.</Text>
+      <MagneticButton href="/" class="px-6 py-3">Back to home</MagneticButton>
+    </Container>
+    <Footer />
+  </main>
+</AppLayout>

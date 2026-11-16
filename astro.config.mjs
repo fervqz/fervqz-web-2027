@@ -14,7 +14,10 @@ export default defineConfig({
 	devToolbar: {
 		enabled: false,
 	},
-	integrations: [mdx(), sitemap(), icon()],
+	integrations: [mdx(), sitemap({
+			filter: (page) =>
+				!page.endsWith('/about/') && !page.endsWith('/all/'),
+		}), icon()],
 	vite: {
 		plugins: [tailwindcss()],
 	},
